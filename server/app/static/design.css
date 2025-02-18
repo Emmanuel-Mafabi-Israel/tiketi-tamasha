@@ -1,0 +1,413 @@
+/*
+    GLORY BE TO GOD,
+    TIKETI TAMASHA - BACKEND,
+    By Israel Mafabi Emmanuel
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --tiketi-tamasha-cool-black: rgb(0, 0, 0);
+    --tiketi-tamasha-cool-gray : rgb(134, 134, 139);
+    --tiketi-tamasha-cool-gray-: rgb(180, 180, 186);
+    --tiketi-tamasha-cool-white: white;
+    --tiketi-tamasha-cool-blue : rgb(55, 144, 245);
+
+    --tiketi-tamasha-theme-cool-blue     : #1956d2;
+    --tiketi-tamasha-theme-cool-dark-blue: #081630;
+
+    --tiketi-tamasha-default-font: "Poppins", sans-serif;
+}
+
+* {
+    font-family: var(--tiketi-tamasha-default-font);
+
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    outline: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+
+    transition: 500ms;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--tiketi-tamasha-cool-gray);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--tiketi-tamasha-cool-white);
+}
+
+body {
+    background: var(--tiketi-tamasha-theme-cool-dark-blue);
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+
+    width: 100vw;
+    min-width: 280px;
+    min-height: 100vh;
+
+    .tiketi-tamasha {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        width: 100vw;
+        height: 100vh;
+
+        .tiketi-tamasha-logo {
+            color: var(--tiketi-tamasha-cool-gray-);
+    
+            font-size: 45px;
+            font-weight: normal;
+    
+            display: flex;
+            align-items: center;
+            justify-content: center;
+    
+            width: fit-content;
+            height: fit-content;
+
+            .gray {
+                color: var(--tiketi-tamasha-cool-white);
+            }
+
+            .tiketi-tamasha-logo-image {
+                width: 128px;
+                height: 128px;
+            }
+
+            .tiketi-tamasha-logo-title {
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
+                flex-direction: column;
+
+                width: fit-content;
+                height: fit-content;
+
+                .head {
+                    color: var(--tiketi-tamasha-cool-white);
+
+                    font-size: 2rem;
+
+                    width: fit-content;
+                    height: fit-content;
+                }
+
+                .enbold {
+                    color: var(--tiketi-tamasha-cool-white);
+
+                    font-size: 2rem;
+
+                    width: fit-content;
+                    height: fit-content;
+                }
+            }
+        }
+
+        .tiketi-tamasha-subheading {
+            color: var(--tiketi-tamasha-cool-gray-);
+    
+            font-size: 14px;
+            font-weight: normal;
+    
+            display: flex;
+            align-items: center;
+            justify-content: center;
+    
+            width: fit-content;
+            height: fit-content;
+
+            .flag {
+                color: var(--tiketi-tamasha-cool-blue);
+            }
+        }
+    }
+
+    .tiketi-tamasha-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+
+        padding-left: 7px;
+        padding-right: 7px;
+
+        width: 100vw;
+        height: 70px;
+
+        .tiketi-tamasha-logo {
+            color: var(--tiketi-tamasha-cool-gray-);
+    
+            font-size: 45px;
+            font-weight: normal;
+    
+            display: flex;
+            align-items: center;
+            justify-content: center;
+    
+            width: fit-content;
+            height: fit-content;
+
+            .gray {
+                color: var(--tiketi-tamasha-cool-white);
+            }
+
+            .tiketi-tamasha-logo-image {
+                width: 42px;
+                height: 42px;
+            }
+
+            .tiketi-tamasha-logo-title {
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
+                flex-direction: column;
+
+                width: fit-content;
+                height: fit-content;
+
+                .head {
+                    color: var(--tiketi-tamasha-cool-white);
+
+                    font-size: 12px;
+
+                    width: fit-content;
+                    height: fit-content;
+                }
+
+                .enbold {
+                    color: var(--tiketi-tamasha-cool-white);
+
+                    font-size: 12px;
+
+                    width: fit-content;
+                    height: fit-content;
+                }
+            }
+        }
+
+        .tiketi-tamasha-subheading {
+            color: var(--tiketi-tamasha-cool-white);
+    
+            font-size: 12px;
+            font-weight: normal;
+    
+            display: flex;
+            align-items: center;
+            justify-content: center;
+    
+            width: fit-content;
+            height: fit-content;
+        }
+    }
+
+    .tiketi-tamasha-body {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+
+        width: 100vw;
+        min-height: calc(100vh - 140px);
+
+        .tiketi-tamasha-list {
+            /* background: var(--tiketi-tamasha-cool-gray); */
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction: column;
+
+            padding: 14px;
+
+            width: 100vw;
+            height: fit-content;
+
+            .tiketi-tamasha-code-links {
+                color: var(--tiketi-tamasha-cool-gray-);
+                font-size: 13px;
+
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+
+                padding-left: 14px;
+
+                width: fit-content;
+                height: 21px;
+
+                a {
+                    color: var(--tiketi-tamasha-cool-blue);
+
+                    text-decoration: none;
+                }
+            }
+
+            .tiketi-tamasha-code-table {
+                color: var(--tiketi-tamasha-cool-gray-);
+                font-size: 12px;
+
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
+                flex-direction: column;
+
+                padding-left: 14px;
+
+                margin: 4px;
+
+                width: fit-content;
+                height: fit-content;
+
+                strong {
+                    color: var(--tiketi-tamasha-cool-white);
+
+                    font-size: 14px;
+                }
+
+                ul {
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: flex-start;
+                    flex-direction: column;
+
+                    width: 100vw;
+                    height: fit-content;
+
+                    li {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        .name {
+                            color: var(--tiketi-tamasha-cool-gray-);
+                        }
+
+                        .type {
+                            color: var(--tiketi-tamasha-cool-white);
+                        }
+                    }
+                }
+            }
+
+            .tiketi-tamasha-code-email {
+                color: var(--tiketi-tamasha-cool-gray-);
+                font-size: 13px;
+
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+
+                padding-left: 14px;
+
+                width: fit-content;
+                height: 21px;
+
+                .index {
+                    min-width: 34px;
+                }
+
+                .white {
+                    color: var(--tiketi-tamasha-cool-white);
+                    cursor: pointer;
+                }
+
+                .white:hover {
+                    color: var(--tiketi-tamasha-cool-blue);
+                }
+            }
+        }
+    }
+
+    .tiketi-tamasha-footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        width: 100vw;
+        height: 70px;
+
+        .tiketi-tamasha-logo {
+            color: var(--tiketi-tamasha-cool-gray-);
+    
+            font-size: 45px;
+            font-weight: normal;
+    
+            display: flex;
+            align-items: center;
+            justify-content: center;
+    
+            width: fit-content;
+            height: fit-content;
+
+            .gray {
+                color: var(--tiketi-tamasha-cool-white);
+            }
+
+            .tiketi-tamasha-logo-image {
+                width: 42px;
+                height: 42px;
+            }
+
+            .tiketi-tamasha-logo-title {
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
+                flex-direction: column;
+
+                width: fit-content;
+                height: fit-content;
+
+                .head {
+                    color: var(--tiketi-tamasha-cool-white);
+
+                    font-size: 12px;
+
+                    width: fit-content;
+                    height: fit-content;
+                }
+
+                .enbold {
+                    color: var(--tiketi-tamasha-cool-white);
+
+                    font-size: 12px;
+
+                    width: fit-content;
+                    height: fit-content;
+                }
+            }
+        }
+
+        .tiketi-tamasha-developers {
+            color: var(--tiketi-tamasha-cool-gray-);
+    
+            font-size: 12px;
+            font-weight: normal;
+    
+            display: flex;
+            align-items: center;
+            justify-content: center;
+    
+            width: fit-content;
+            height: fit-content;
+
+        }
+    }
+}

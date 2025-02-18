@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TiketiTamasha</title>
+        <link rel="icon" href="{{ url_for('static', filename='assets/tiketi-tamasha-icon-high-res-white.svg') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
+    </head>
+    <body>
+        <div class="tiketi-tamasha">
+            <div class="tiketi-tamasha-logo">
+                <img class="tiketi-tamasha-logo-image" src="{{ url_for('static', filename='assets/tiketi-tamasha-icon-high-res-white.svg') }}" alt="tiketi-tamasha">
+                <div class="tiketi-tamasha-logo-title">
+                    <div class="head">Tiketi</div>
+                    <div class="enbold"><b>Tamasha</b></div>
+                </div>
+            </div>
+            <div class="tiketi-tamasha-subheading">Tiketi Tamasha&nbsp;by Tamasha Developers:&nbsp;<div class="flag">debug</div></div>
+        </div>
+    </body>
+</html>
