@@ -11,10 +11,12 @@
     "react-dom": "^19.0.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
-    "serialize-javascript": ">=6.0.2"
+    "serialize-javascript": ">=6.0.2",
+    "postcss": ">=8.4.31"
   },
   "devDependencies": {
-    "serialize-javascript": ">=6.0.2"
+    "serialize-javascript": ">=6.0.2",
+    "postcss": ">=8.4.31"
   },
   "scripts": {
     "start": "react-scripts start",
