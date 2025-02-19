@@ -51,6 +51,7 @@ def register():
     password     = data.get('password')
     role         = data.get('role', 'customer')  # Default role is 'customer'
     phone_number = data.get('phone_number')
+    name         = data.get('name') # Getting the name from the payload.
 
     if not email or not password or not phone_number:
         return jsonify({'message': 'Email, password and phone number are required'}), 400
@@ -68,7 +69,7 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         #Create the user Profile once the user has been created.
-        new_user_profile = UserProfile(user_id=new_user.id)
+        new_user_profile = UserProfile(user_id=new_user.id, name=name) #Passing in the name from the registration
         db.session.add(new_user_profile)
         db.session.commit()
 
@@ -77,6 +78,7 @@ def register():
         db.session.rollback()
         logging.error(f"Error creating user: {e}")
         return jsonify({'message': f'Error creating user: {str(e)}'}), 500
+
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
@@ -117,10 +119,38 @@ def delete_user(user):
 # --- Event Routes ---
 @event_bp.route('/events', methods=['GET'])
 def get_events():
-    # TODO: Implement searching based on location, tags, or categories
-    # TODO: Implement pagination
-    events = Event.query.all()
-    return jsonify([event_schema.dump(event) for event in events]), 200
+    # retrieves a list of events, with support for searching, filtering and pagination.
+
+    location = request.args.get('location')
+    tag = request.args.get('tag')
+    category = request.args.get('category')
+
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+
+    query = Event.query
+
+    if location:
+        query = query.filter(Event.location.ilike(f"%{location}%"))  # Case-insensitive search
+
+    if tag:
+        query = query.filter(Event.tags.ilike(f"%{tag}%"))
+
+    if category:
+        query = query.filter(Event.category == category)
+
+    pagination = query.paginate(page=page, per_page=per_page)
+    events = pagination.items
+
+    event_list = [event_schema.dump(event) for event in events] 
+
+    return jsonify({
+        'events': event_list,
+        'total_pages': pagination.pages,
+        'current_page': pagination.page,
+        'total_events': pagination.total,
+        'per_page': per_page
+    }), 200
 
 @event_bp.route('/events', methods=['POST'])
 @jwt_required()
@@ -137,8 +167,9 @@ def create_event(user):
     try:
         start_date_str = data.get('start_date')
         end_date_str   = data.get('end_date')
-        start_date     = parser.parse(start_date_str)
-        end_date       = parser.parse(end_date_str)
+        ticket_tiers = data.get('ticket_tiers')
+        start_date = parser.parse(start_date_str)
+        end_date   = parser.parse(end_date_str)
 
         new_event = Event(
             organizer_id=user.id,
@@ -149,17 +180,17 @@ def create_event(user):
             tags=data.get('tags'),
             start_date=start_date,
             end_date=end_date,
-            image_url=data.get('image_url')
+            image_url=data.get('image_url'),
+            ticket_tiers=ticket_tiers #Ticket tiers
         )
-
         db.session.add(new_event)
         db.session.commit()
         return jsonify(event_schema.dump(new_event)), 201
     except Exception as e:
         db.session.rollback()
         logging.error(f"Error creating event: {e}")
-        return jsonify({'message': f'Error creating event: {str(e)}'}), 500
-    
+        return jsonify({'message': f'Error creating event: {str(e)}'}), 500 
+
 @event_bp.route('/events/<int:event_id>', methods=['DELETE'])
 @jwt_required()
 @get_user_from_token
@@ -190,6 +221,16 @@ def delete_event(user, event_id):
         logging.error(f"Error deleting event: {e}")
         return jsonify({'message': f'Error deleting event: {str(e)}'}), 500
 
+@auth_bp.route('/my_events', methods=['GET'])
+@jwt_required()
+@get_user_from_token
+def get_my_events(user):
+    # Using the tickets relationship to get the events 🤯
+    events = [ticket.event for ticket in user.tickets]  # Get all the tickets for the current user
+    serialized_events = [event_schema.dump(event) for event in events]
+
+    return jsonify(serialized_events), 200
+
 # --- Ticket Routes ---
 @ticket_bp.route('/tickets', methods=['POST'])
 @jwt_required()
@@ -203,24 +244,20 @@ def purchase_ticket(user):
     if not event:
         return jsonify({'message': 'Event not found'}), 404
 
-    # Determine price based on ticket_type (Implement Pricing Logic)
-    if ticket_type == 'Early Bird':
-        price = 50.00
-    elif ticket_type == 'VIP':
-        price = 100.00
-    else:
-        price = 25.00
+     # Check if the ticket_type is valid for this event
+    if ticket_type not in event.ticket_tiers:
+        return jsonify({'message': 'Invalid ticket type for this event'}), 400
 
     try:
         new_ticket = Ticket(
             event_id=event_id,
             customer_id=user.id,
-            ticket_type=ticket_type,
-            price=price
+            ticket_type=ticket_type
         )
         db.session.add(new_ticket)
         db.session.commit()
-        return ticket_schema.jsonify(new_ticket), 201
+        
+        return jsonify(ticket_schema.dump(new_ticket)), 201
     except Exception as e:
         db.session.rollback()
         logging.error(f"Error purchasing ticket: {e}")

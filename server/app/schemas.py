@@ -18,6 +18,7 @@ class UserProfileSchema(SQLAlchemyAutoSchema):
         load_instance = True
 
 class EventSchema(SQLAlchemyAutoSchema):
+    ticket_tiers = fields.Dict(keys=fields.String(), values=fields.Dict())
     class Meta:
         model = Event
         load_instance = True
@@ -31,9 +32,3 @@ class PaymentSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Payment
         load_instance = True
-
-# class RoleSchema(SQLAlchemyAutoSchema):
-#     class Meta:
-#         model = Role
-#         load_instance = True
-# -> No Longer needed!

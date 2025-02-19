@@ -3,11 +3,26 @@
 # BY ISRAEL MAFABI EMMANUEL,
 # TAMASHA DEVELOPERS
 
-# app/models.py
 from extensions import db
 from sqlalchemy import ForeignKey, UniqueConstraint, CheckConstraint
 from sqlalchemy.orm import validates
 from datetime import datetime
+import sqlalchemy.types as types
+import json
+
+class JSONEncodedDict(types.TypeDecorator):
+    """Enables JSON storage by encoding and decoding on the fly."""
+    impl = types.TEXT
+
+    def process_bind_param(self, value, dialect):
+        if value is not None:
+            return json.dumps(value)
+        return value
+
+    def process_result_value(self, value, dialect):
+        if value is not None:
+            return json.loads(value)
+        return value
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -20,7 +35,7 @@ class User(db.Model):
     # Relationships
     events        = db.relationship('Event', backref='organizer', lazy=True) # Organizers create events
     tickets       = db.relationship('Ticket', backref='customer', lazy=True) # Customers buy tickets
-    profile       = db.relationship('UserProfile', back_populates='user', uselist=False, cascade='all, delete-orphan')
+    profile       = db.relationship('UserProfile', back_populates='user', uselist=False, cascade='all, delete-orphan') # User Profile
 
     def __repr__(self):
         return f"<User id:{self.id}, email:{self.email}, role:{self.role}>"
@@ -46,7 +61,7 @@ class Event(db.Model):
     start_date   = db.Column(db.DateTime, nullable=False)
     end_date     = db.Column(db.DateTime, nullable=False)
     image_url    = db.Column(db.String(255), nullable=True)
-
+    ticket_tiers = db.Column(JSONEncodedDict)
     # Relationships
     tickets = db.relationship('Ticket', backref='event', lazy=True)
 
@@ -59,24 +74,10 @@ class Ticket(db.Model):
     event_id      = db.Column(db.Integer, ForeignKey('events.id'), nullable=False)
     customer_id   = db.Column(db.Integer, ForeignKey('users.id'), nullable=False)
     ticket_type   = db.Column(db.String(50), nullable=False)  # e.g., 'Early Bird', 'VIP', 'Regular'
-    price         = db.Column(db.Float, nullable=False)
     purchase_date = db.Column(db.DateTime, server_default=db.func.now())
 
-    #Enforce that price is always positive.
-    __table_args__ = (
-        CheckConstraint('price >= 0', name='check_positive_price'),
-    )
-
-    @validates('price')
-    def validate_price(self, key, price):
-        if not isinstance(price, (int, float)):
-            raise ValueError("Price must be a number")
-        if price < 0:
-            raise ValueError("Price cannot be negative")
-        return price
-    
     def __repr__(self):
-        return f"<Ticket id:{self.id}, event_id:{self.event_id}, type:{self.ticket_type}, price:{self.price}>"
+        return f"<Ticket id:{self.id}, event_id:{self.event_id}, type:{self.ticket_type}>"
 
 # table for storing payment transactions
 class Payment(db.Model):
@@ -94,18 +95,3 @@ class Payment(db.Model):
 
     def __repr__(self):
         return f"<Payment id:{self.id}, ticket_id:{self.ticket_id}, amount:{self.amount}, status:{self.status}>"
-
-# class Role(db.Model): #Role Based Authorization
-#     __tablename__ = 'roles'
-#     id          = db.Column(db.Integer, primary_key=True)
-#     name        = db.Column(db.String(80), unique=True, nullable=False)
-#     description = db.Column(db.String(255), nullable=True)
-
-#     # Relationships
-#     users       = db.relationship('User', secondary='user_roles', backref='roles')
-
-# # Association table for User and Roles (Many-to-Many)
-# user_roles = db.Table('user_roles',
-#     db.Column('user_id', db.Integer, ForeignKey('users.id'), primary_key=True),
-#     db.Column('role_id', db.Integer, ForeignKey('roles.id'), primary_key=True)
-# ) -> No Longer Needed!
