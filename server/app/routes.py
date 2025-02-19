@@ -7,30 +7,32 @@ import os
 import logging  # Import logging
 from functools import wraps
 from datetime import datetime
+from dateutil import parser
 
 from flask import Blueprint, request, jsonify, render_template
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from extensions import db  # Import db instance
-from .models import User, Event, Ticket, Payment, Role  # Import models
-from .schemas import UserSchema, EventSchema, TicketSchema, PaymentSchema  # Import schemas
+from .models import User, Event, Ticket, Payment, UserProfile  # Import models
+from .schemas import UserSchema, EventSchema, TicketSchema, PaymentSchema,  UserProfileSchema # Import schemas
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Define blueprints
-auth_bp   = Blueprint('auth', __name__)     # Authentication endpoints
-event_bp  = Blueprint('event', __name__)    # Event management endpoints
-ticket_bp = Blueprint('ticket', __name__)   # Ticket purchase endpoints
+auth_bp   = Blueprint('auth', __name__)   # Authentication endpoints
+event_bp  = Blueprint('event', __name__)  # Event management endpoints
+ticket_bp = Blueprint('ticket', __name__) # Ticket purchase endpoints
 
 # Initialize schemas
-user_schema    = UserSchema()
-event_schema   = EventSchema()
-ticket_schema  = TicketSchema()
-payment_schema = PaymentSchema()
+user_schema         = UserSchema()
+event_schema        = EventSchema()
+ticket_schema       = TicketSchema()
+payment_schema      = PaymentSchema()
+user_profile_schema = UserProfileSchema()
 
-# User Retrieval:  Gets the user object from the JWT identity (email)
+# User Retrieval Decorator:  Gets the user object from the JWT identity (email)
 def get_user_from_token(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -44,38 +46,49 @@ def get_user_from_token(func):
 # --- Authentication Routes ---
 @auth_bp.route('/register', methods=['POST'])
 def register():
-    data = request.get_json()
-    email = data.get('email')
-    password = data.get('password')
+    data         = request.get_json()
+    email        = data.get('email')
+    password     = data.get('password')
+    role         = data.get('role', 'customer')  # Default role is 'customer'
+    phone_number = data.get('phone_number')
 
-    if not email or not password:
-        return jsonify({'message': 'Email and password are required'}), 400
+    if not email or not password or not phone_number:
+        return jsonify({'message': 'Email, password and phone number are required'}), 400
+
+    if role not in ('customer', 'organizer'):
+        return jsonify({'message': 'Invalid role specified'}), 400
 
     if User.query.filter_by(email=email).first():
         return jsonify({'message': 'User already exists'}), 400
 
     hashed_password = generate_password_hash(password)
-    new_user = User(email=email, password_hash=hashed_password)
+    new_user        = User(email=email, password_hash=hashed_password, role=role, phone_number=phone_number)
 
     try:
         db.session.add(new_user)
         db.session.commit()
-        return user_schema.jsonify(new_user), 201
+        #Create the user Profile once the user has been created.
+        new_user_profile = UserProfile(user_id=new_user.id)
+        db.session.add(new_user_profile)
+        db.session.commit()
+
+        return jsonify(user_schema.dump(new_user)), 201
     except Exception as e:
         db.session.rollback()
-        logging.error(f"Error creating user: {e}")  # Log the error
+        logging.error(f"Error creating user: {e}")
         return jsonify({'message': f'Error creating user: {str(e)}'}), 500
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
-    data = request.get_json()
-    email = data.get('email')
+    data     = request.get_json()
+    email    = data.get('email')
     password = data.get('password')
 
     user = User.query.filter_by(email=email).first()
 
     if user and check_password_hash(user.password_hash, password):
-        access_token = create_access_token(identity=email)
+        # Add the user's role to the JWT claims
+        access_token = create_access_token(identity=email, additional_claims={'role': user.role})
         return jsonify(access_token=access_token), 200
     else:
         return jsonify({'message': 'Invalid credentials'}), 401
@@ -84,7 +97,7 @@ def login():
 @jwt_required()
 @get_user_from_token
 def get_user_details(user):
-    return user_schema.jsonify(user), 200
+    return jsonify(user_schema.dump(user)), 200
 
 #  ---- User Deletion -----
 @auth_bp.route('/user', methods=['DELETE'])
@@ -111,14 +124,22 @@ def get_events():
 
 @event_bp.route('/events', methods=['POST'])
 @jwt_required()
-@get_user_from_token  #Use decorator to ensure the user is fetched.
+@get_user_from_token
 def create_event(user):
     # Only organizers can create events
-    if user.role != 'organizer':
+    claims = get_jwt() #Get the JWT Claims
+    role   = claims.get('role')
+
+    if role != 'organizer':
         return jsonify({'message': 'Unauthorized: Only organizers can create events'}), 403
 
     data = request.get_json()
     try:
+        start_date_str = data.get('start_date')
+        end_date_str   = data.get('end_date')
+        start_date     = parser.parse(start_date_str)
+        end_date       = parser.parse(end_date_str)
+
         new_event = Event(
             organizer_id=user.id,
             title=data.get('title'),
@@ -126,28 +147,56 @@ def create_event(user):
             location=data.get('location'),
             category=data.get('category'),
             tags=data.get('tags'),
-            start_date=data.get('start_date'),
-            end_date=data.get('end_date'),
+            start_date=start_date,
+            end_date=end_date,
             image_url=data.get('image_url')
         )
 
         db.session.add(new_event)
         db.session.commit()
-
-        return event_schema.jsonify(new_event), 201
+        return jsonify(event_schema.dump(new_event)), 201
     except Exception as e:
         db.session.rollback()
         logging.error(f"Error creating event: {e}")
-
         return jsonify({'message': f'Error creating event: {str(e)}'}), 500
+    
+@event_bp.route('/events/<int:event_id>', methods=['DELETE'])
+@jwt_required()
+@get_user_from_token
+def delete_event(user, event_id):
+    """Deletes an event with the given ID.  Only the event organizer can delete the event."""
+
+    claims = get_jwt()  # Get our JWT claims
+    role = claims.get('role')
+
+    if role != 'organizer':
+        return jsonify({'message': 'Unauthorized: Only organizers can delete events'}), 403
+
+    event = Event.query.get(event_id)
+
+    if not event:
+        return jsonify({'message': 'Event not found'}), 404
+
+    # Check if the current user is the organizer of the event
+    if event.organizer_id != user.id:
+        return jsonify({'message': 'Unauthorized: You are not the organizer of this event'}), 403
+
+    try:
+        db.session.delete(event)
+        db.session.commit()
+        return jsonify({'message': 'Event deleted successfully'}), 200
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error deleting event: {e}")
+        return jsonify({'message': f'Error deleting event: {str(e)}'}), 500
 
 # --- Ticket Routes ---
 @ticket_bp.route('/tickets', methods=['POST'])
 @jwt_required()
 @get_user_from_token
 def purchase_ticket(user):
-    data = request.get_json()
-    event_id = data.get('event_id')
+    data        = request.get_json()
+    event_id    = data.get('event_id')
     ticket_type = data.get('ticket_type')
 
     event = Event.query.get(event_id)
@@ -169,10 +218,8 @@ def purchase_ticket(user):
             ticket_type=ticket_type,
             price=price
         )
-
         db.session.add(new_ticket)
         db.session.commit()
-
         return ticket_schema.jsonify(new_ticket), 201
     except Exception as e:
         db.session.rollback()

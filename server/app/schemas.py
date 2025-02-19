@@ -4,12 +4,18 @@
 # TAMASHA DEVELOPERS
 
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-from .models import User, Event, Ticket, Payment, Role
+from marshmallow import fields
+from .models import User, UserProfile, Event, Ticket, Payment
 
 class UserSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = User
         load_instance = True  # though this is Optional 😜
+
+class UserProfileSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = UserProfile
+        load_instance = True
 
 class EventSchema(SQLAlchemyAutoSchema):
     class Meta:
@@ -26,7 +32,8 @@ class PaymentSchema(SQLAlchemyAutoSchema):
         model = Payment
         load_instance = True
 
-class RoleSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = Role
-        load_instance = True
+# class RoleSchema(SQLAlchemyAutoSchema):
+#     class Meta:
+#         model = Role
+#         load_instance = True
+# -> No Longer needed!
