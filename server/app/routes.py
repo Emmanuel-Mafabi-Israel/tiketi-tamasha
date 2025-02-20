@@ -272,10 +272,13 @@ def purchase_ticket(user):
     account_reference = str(new_ticket.id)  # Use ticket ID as account reference
     transaction_desc = f"Ticket purchase for {event.title} ({ticket_type})"
 
+    callback_url = os.getenv("MPESA_CALLBACK_URL")
+    print(f"OUR CALLBACK URL: {callback_url}")
+
     success, message, checkout_request_id = services.initiate_mpesa_stk_push(
         phone_number=phone_number,
         amount=amount,  # The amount from the request
-        callback_url=os.getenv("MPESA_CALLBACK_URL"),
+        callback_url=callback_url,
         account_reference=account_reference,
         transaction_desc=transaction_desc
     )
@@ -307,6 +310,9 @@ def mpesa_callback():
     MPESA callback URL to handle transaction confirmation.
     MPESA will POST data to this endpoint.
     """
+
+    print("MPESA CALLBACK HIT") # ADD LOGGING HERE
+    logging.info("MPESA CALLBACK WAS HIT! - entering the callback route")
     try:
         mpesa_data = request.get_json()
         logging.info(f"MPESA Callback data: {mpesa_data}") #Log to confirm that we are receiving the callback
@@ -358,7 +364,7 @@ def debug():
 @auth_bp.route('/debug/models/', methods=['GET'])
 def debug_models():
     # This retrieves the metadata of the database tables for debugging
-    metadata = db.metadata.tables # Get all tables' metadata
+    metadata = db.metadata.tables  # Get all tables' metadata
     return render_template('models.html', metadata=metadata)
 
 @auth_bp.route('/debug/users/', methods=['GET'])
@@ -367,6 +373,21 @@ def debug_users():
     users = User.query.all()
     emails = [(index + 1, user.email) for index, user in enumerate(users)]
     return render_template('emails.html', emails=emails)
+
+@auth_bp.route('/mpesa_config', methods=['GET'])
+def mpesa_config():
+    config = {
+        "MPESA_BUSINESS_SHORT_CODE": os.getenv("MPESA_BUSINESS_SHORT_CODE"),
+        "MPESA_PASSKEY": os.getenv("MPESA_PASSKEY"),
+        "MPESA_CONSUMER_KEY": os.getenv("MPESA_CONSUMER_KEY"),
+        "MPESA_CONSUMER_SECRET": os.getenv("MPESA_CONSUMER_SECRET"),
+        "MPESA_CALLBACK_URL": os.getenv("MPESA_CALLBACK_URL")
+    }
+    return jsonify(config), 200
+
+@auth_bp.route('/mpesa_access_token', methods=['GET'])
+def mpesa_access_token():
+    return services.debug_access() #TODO: REMOVE IN PRODUCTION
 
 # --- Error Handlers ---
 @auth_bp.errorhandler(404)

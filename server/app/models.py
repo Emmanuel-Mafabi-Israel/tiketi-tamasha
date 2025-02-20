@@ -1,3 +1,4 @@
+# models.py
 # GLORY BE TO GOD,
 # TIKETI TAMASHA MODEL FILE,
 # BY ISRAEL MAFABI EMMANUEL,
@@ -10,19 +11,19 @@ from datetime import datetime
 import sqlalchemy.types as types
 import json
 
-class JSONEncodedDict(types.TypeDecorator):
-    """Enables JSON storage by encoding and decoding on the fly."""
-    impl = types.TEXT
-
-    def process_bind_param(self, value, dialect):
-        if value is not None:
-            return json.dumps(value)
-        return value
-
-    def process_result_value(self, value, dialect):
-        if value is not None:
-            return json.loads(value)
-        return value
+# class JSONEncodedDict(types.TypeDecorator):
+#     """Enables JSON storage by encoding and decoding on the fly."""
+#     impl = types.TEXT
+#
+#     def process_bind_param(self, value, dialect):
+#         if value is not None:
+#             return json.dumps(value)
+#         return value
+#
+#     def process_result_value(self, value, dialect):
+#         if value is not None:
+#             return json.loads(value)
+#         return value
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -39,7 +40,7 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<User id:{self.id}, email:{self.email}, role:{self.role}>"
-    
+
 class UserProfile(db.Model):
     __tablename__ = 'user_profiles'
     id      = db.Column(db.Integer, primary_key=True)
@@ -61,7 +62,7 @@ class Event(db.Model):
     start_date   = db.Column(db.DateTime, nullable=False)
     end_date     = db.Column(db.DateTime, nullable=False)
     image_url    = db.Column(db.String(255), nullable=True)
-    ticket_tiers = db.Column(JSONEncodedDict)
+    ticket_tiers = db.Column(types.JSON) # Use the built-in JSON type
     # Relationships
     tickets = db.relationship('Ticket', backref='event', lazy=True)
 
@@ -78,23 +79,6 @@ class Ticket(db.Model):
 
     def __repr__(self):
         return f"<Ticket id:{self.id}, event_id:{self.event_id}, type:{self.ticket_type}>"
-
-# table for storing payment transactions
-# class Payment(db.Model):
-#     __tablename__ = 'payments'
-#     id             = db.Column(db.Integer, primary_key=True)
-#     ticket_id      = db.Column(db.Integer, ForeignKey('tickets.id'), nullable=False)
-#     payment_date   = db.Column(db.DateTime, server_default=db.func.now())
-#     amount         = db.Column(db.Float, nullable=False)
-#     transaction_id = db.Column(db.String(255), nullable=True)  # Store MPESA transaction ID
-#     payment_method = db.Column(db.String(50), nullable=False)  # e.g., "MPESA"
-#     status         = db.Column(db.String(50), nullable=False)  # e.g., "pending", "completed", "failed"
-    
-#     # Relationship
-#     ticket         = db.relationship('Ticket', backref='payments', lazy=True)
-
-#     def __repr__(self):
-#         return f"<Payment id:{self.id}, ticket_id:{self.ticket_id}, amount:{self.amount}, status:{self.status}>"
 
 # models.py
 class Payment(db.Model):

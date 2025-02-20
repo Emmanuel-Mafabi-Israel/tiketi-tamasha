@@ -1,20 +1,16 @@
-"""mafabi: creations.
+"""mafabi: initial migrations.
 
-Revision ID: ed738986b75c
-Revises:
-Create Date: 2025-02-19 23:57:19.711357
+Revision ID: c655620228d5
+Revises: 
+Create Date: 2025-02-21 00:55:27.733743
 
 """
 from alembic import op
 import sqlalchemy as sa
 
-# Import your models here
-import sys
-sys.path.append('.')  # Add the project root to the Python path
-from app.models import JSONEncodedDict  # Import the specific model you need
 
 # revision identifiers, used by Alembic.
-revision = 'ed738986b75c'
+revision = 'c655620228d5'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -42,7 +38,7 @@ def upgrade():
     sa.Column('start_date', sa.DateTime(), nullable=False),
     sa.Column('end_date', sa.DateTime(), nullable=False),
     sa.Column('image_url', sa.String(length=255), nullable=True),
-    sa.Column('ticket_tiers', JSONEncodedDict(), nullable=True),
+    sa.Column('ticket_tiers', sa.JSON(), nullable=True),
     sa.ForeignKeyConstraint(['organizer_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

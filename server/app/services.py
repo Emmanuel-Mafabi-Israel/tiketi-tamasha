@@ -57,11 +57,11 @@ def initiate_mpesa_stk_push(phone_number, amount, callback_url, account_referenc
     PASSKEY             = os.getenv("MPESA_PASSKEY")
     TIMESTAMP           = datetime.now().strftime("%Y%m%d%H%M%S")
     PASSWORD            = encode_password(BUSINESS_SHORT_CODE, PASSKEY, TIMESTAMP)
-    PARTY_B             = BUSINESS_SHORT_CODE
     CALLBACK_URL        = callback_url
-    PARTY_A             = phone_number
     ACCOUNT_REFERENCE   = account_reference
     TRANSACTION_DESC    = transaction_desc
+    PARTY_A             = phone_number  # The Sender - customer
+    PARTY_B             = BUSINESS_SHORT_CODE # The Recipient
 
     STK_PUSH_URL = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"  # we'll use production URL in production
     # Access Token URL
@@ -118,6 +118,7 @@ def initiate_mpesa_stk_push(phone_number, amount, callback_url, account_referenc
     except Exception as e:
         logging.error(f"Error initiating MPESA STK Push: {e}")
         return False, f"Error initiating MPESA STK Push: {str(e)}", None
+    
 def encode_password(shortcode, passkey, timestamp):
     """
     Encodes the password using the provided shortcode, passkey and timestamp.
@@ -128,3 +129,13 @@ def encode_password(shortcode, passkey, timestamp):
     password_string = shortcode + passkey + timestamp
     encoded_string = base64.b64encode(password_string.encode())
     return encoded_string.decode('utf-8')
+
+def debug_access_token():
+    # STK_PUSH_URL     = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
+    # Access Token URL
+    ACCESS_TOKEN_URL = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
+    CONSUMER_KEY = os.getenv("MPESA_CONSUMER_KEY")
+    CONSUMER_SECRET = os.getenv("MPESA_CONSUMER_SECRET")
+
+    access_token_response = (requests.get(ACCESS_TOKEN_URL, auth=(CONSUMER_KEY, CONSUMER_SECRET))).json()
+    return access_token_response
