@@ -3,11 +3,15 @@
 # BY ISRAEL MAFABI EMMANUEL
 # TAMASHA DEVELOPERS
 
-import os
+import os  # For accessing environment variables
 import logging  # Import logging
 from functools import wraps
-from datetime import datetime
 from dateutil import parser
+from dotenv import load_dotenv
+
+from . import services  # Import the services module
+import base64  # Import Base64
+from datetime import datetime
 
 from flask import Blueprint, request, jsonify, render_template
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt
@@ -16,6 +20,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from extensions import db  # Import db instance
 from .models import User, Event, Ticket, Payment, UserProfile  # Import models
 from .schemas import UserSchema, EventSchema, TicketSchema, PaymentSchema,  UserProfileSchema # Import schemas
+
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -234,34 +240,111 @@ def get_my_events(user):
 # --- Ticket Routes ---
 @ticket_bp.route('/tickets', methods=['POST'])
 @jwt_required()
-@get_user_from_token
+@get_user_from_token #The first parameter will be a user.
 def purchase_ticket(user):
-    data        = request.get_json()
-    event_id    = data.get('event_id')
-    ticket_type = data.get('ticket_type')
+    """Purchases a ticket for an event using MPESA STK push."""
+    data         = request.get_json()
+    event_id     = data.get('event_id')
+    ticket_type  = data.get('ticket_type')
+    phone_number = data.get('phone_number')  # Get phone number from the request
+    amount       = data.get('amount')  # Get the ticket amount from the request.
 
     event = Event.query.get(event_id)
     if not event:
         return jsonify({'message': 'Event not found'}), 404
 
-     # Check if the ticket_type is valid for this event
     if ticket_type not in event.ticket_tiers:
         return jsonify({'message': 'Invalid ticket type for this event'}), 400
 
-    try:
-        new_ticket = Ticket(
-            event_id=event_id,
-            customer_id=user.id,
-            ticket_type=ticket_type
+    if not phone_number:
+        return jsonify({'message': 'Phone number is required'}), 400
+    # 1. Create a *Pending* Ticket
+    new_ticket = Ticket(
+        event_id=event_id,
+        customer_id=user.id,
+        ticket_type=ticket_type
+    )
+
+    db.session.add(new_ticket)
+    db.session.flush()  # Get the ticket ID immediately but do not commit
+
+    # 2. Initiate MPESA STK Push
+    account_reference = str(new_ticket.id)  # Use ticket ID as account reference
+    transaction_desc = f"Ticket purchase for {event.title} ({ticket_type})"
+
+    success, message, checkout_request_id = services.initiate_mpesa_stk_push(
+        phone_number=phone_number,
+        amount=amount,  # The amount from the request
+        callback_url=os.getenv("MPESA_CALLBACK_URL"),
+        account_reference=account_reference,
+        transaction_desc=transaction_desc
+    )
+
+    if success:
+        # 3. Create a *Pending* Payment Record
+        new_payment = Payment(
+            ticket_id=new_ticket.id,
+            amount=amount,
+            payment_method='MPESA',
+            status='pending',
+            transaction_id=checkout_request_id  # Store checkout_request_id
         )
-        db.session.add(new_ticket)
-        db.session.commit()
-        
-        return jsonify(ticket_schema.dump(new_ticket)), 201
-    except Exception as e:
+        db.session.add(new_payment)
+        db.session.commit()  # Now commit both ticket and pending payment
+
+        return jsonify({
+            'message': 'MPESA STK push initiated.  Awaiting payment confirmation.',
+            'checkout_request_id': checkout_request_id  # Return ID to frontend for potential status checks
+        }), 200
+    else:
+        # If STK push fails, rollback the ticket creation
         db.session.rollback()
-        logging.error(f"Error purchasing ticket: {e}")
-        return jsonify({'message': f'Error purchasing ticket: {str(e)}'}), 500
+        return jsonify({'message': f'MPESA STK push failed: {message}'}), 500
+
+@ticket_bp.route('/mpesa_callback', methods=['POST'])
+def mpesa_callback():
+    """
+    MPESA callback URL to handle transaction confirmation.
+    MPESA will POST data to this endpoint.
+    """
+    try:
+        mpesa_data = request.get_json()
+        logging.info(f"MPESA Callback data: {mpesa_data}") #Log to confirm that we are receiving the callback
+        # Extract relevant information from the MPESA callback data
+        checkout_request_id = mpesa_data['Body']['stkCallback']['CheckoutRequestID']
+        result_code = mpesa_data['Body']['stkCallback']['ResultCode']
+        result_desc = mpesa_data['Body']['stkCallback']['ResultDesc']
+
+        # Find the corresponding payment record,
+        payment = Payment.query.filter_by(transaction_id=checkout_request_id).first()
+
+        if not payment:
+            logging.warning(f"Payment record not found for CheckoutRequestID: {checkout_request_id}")
+            return jsonify({'message': 'Payment record not found'}), 404
+
+        if result_code == 0:  # Successful transaction
+            # Extract MPESA transaction ID (Receipt Number)
+            mpesa_receipt_number = mpesa_data['Body']['stkCallback']['CallbackMetadata']['Item'][1]['Value']
+
+            payment.status = 'completed'
+            payment.transaction_id = mpesa_receipt_number # Store actual MPESA transaction ID
+            db.session.commit()
+
+            logging.info(f"Payment completed successfully. Ticket ID: {payment.ticket_id}, MPESA Receipt: {mpesa_receipt_number}")
+
+            return jsonify({'message': 'Payment received successfully'}), 200
+        else:
+            # Payment failed
+            payment.status = 'failed'
+            db.session.commit()
+
+            logging.error(f"Payment failed. CheckoutRequestID: {checkout_request_id}, ResultCode: {result_code}, ResultDesc: {result_desc}")
+
+            return jsonify({'message': f'Payment failed: {result_desc}'}), 400
+
+    except Exception as e:
+        logging.error(f"Error processing MPESA callback: {e}")
+        return jsonify({'message': f'Error processing MPESA callback: {str(e)}'}), 500
 
 # --- Debug Routes ---
 @auth_bp.route('/', methods=['GET'])

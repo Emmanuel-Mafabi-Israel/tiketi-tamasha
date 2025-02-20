@@ -80,16 +80,33 @@ class Ticket(db.Model):
         return f"<Ticket id:{self.id}, event_id:{self.event_id}, type:{self.ticket_type}>"
 
 # table for storing payment transactions
+# class Payment(db.Model):
+#     __tablename__ = 'payments'
+#     id             = db.Column(db.Integer, primary_key=True)
+#     ticket_id      = db.Column(db.Integer, ForeignKey('tickets.id'), nullable=False)
+#     payment_date   = db.Column(db.DateTime, server_default=db.func.now())
+#     amount         = db.Column(db.Float, nullable=False)
+#     transaction_id = db.Column(db.String(255), nullable=True)  # Store MPESA transaction ID
+#     payment_method = db.Column(db.String(50), nullable=False)  # e.g., "MPESA"
+#     status         = db.Column(db.String(50), nullable=False)  # e.g., "pending", "completed", "failed"
+    
+#     # Relationship
+#     ticket         = db.relationship('Ticket', backref='payments', lazy=True)
+
+#     def __repr__(self):
+#         return f"<Payment id:{self.id}, ticket_id:{self.ticket_id}, amount:{self.amount}, status:{self.status}>"
+
+# models.py
 class Payment(db.Model):
     __tablename__ = 'payments'
     id             = db.Column(db.Integer, primary_key=True)
     ticket_id      = db.Column(db.Integer, ForeignKey('tickets.id'), nullable=False)
     payment_date   = db.Column(db.DateTime, server_default=db.func.now())
     amount         = db.Column(db.Float, nullable=False)
-    transaction_id = db.Column(db.String(255), nullable=True)  # Store MPESA transaction ID
+    transaction_id = db.Column(db.String(255), nullable=True)  # Store MPESA transaction ID/CheckoutRequestID
     payment_method = db.Column(db.String(50), nullable=False)  # e.g., "MPESA"
-    status         = db.Column(db.String(50), nullable=False)  # e.g., "pending", "completed", "failed"
-    
+    status         = db.Column(db.String(50), nullable=False, default='pending')  # e.g., "pending", "completed", "failed"  <-- ADD DEFAULT
+
     # Relationship
     ticket         = db.relationship('Ticket', backref='payments', lazy=True)
 
