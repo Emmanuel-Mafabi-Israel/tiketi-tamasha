@@ -1,0 +1,30 @@
+/* styles/EventDetails.css */
+.event-details-container {
+    padding: 40px;
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  .event-title {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .event-image {
+    width: 100%;
+    border-radius: 10px;
+  }
+  
+  .event-description {
+    margin-top: 15px;
+    line-height: 1.5;
+  }
+  
+  .buy-ticket-button {
+    background: #ffcc00;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  

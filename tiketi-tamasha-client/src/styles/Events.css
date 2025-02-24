@@ -1,0 +1,37 @@
+/* styles/Events.css */
+.events-container {
+    padding: 50px;
+    text-align: center;
+  }
+  
+  .event-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .event-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    text-align: left;
+  }
+  
+  .event-card img {
+    width: 100%;
+    border-radius: 5px;
+  }
+  
+  .event-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .event-date {
+    color: gray;
+    font-size: 0.9rem;
+  }
+  

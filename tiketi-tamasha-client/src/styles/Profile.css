@@ -1,0 +1,25 @@
+/* styles/Profile.css */
+.profile-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 40px;
+    text-align: center;
+  }
+  
+  .profile-pic {
+    width: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+  
+  .profile-info {
+    font-size: 1.2rem;
+  }
+  
+  .edit-button {
+    background: #ffcc00;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  

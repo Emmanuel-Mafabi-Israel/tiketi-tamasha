@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 🌍 Global Styles - styles/globals.css */
+
+/* ✅ Universal Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ✅ Root Colors & Variables */
+:root {
+  --primary-color: #003366;  /* Deep Blue */
+  --secondary-color: #0066cc; /* Lighter Blue */
+  --accent-color: #ffcc00;    /* Yellow */
+  --text-color: #ffffff;      /* White */
+  --background-gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+/* ✅ Body */
+body {
+  background: var(--background-gradient);
+  color: var(--text-color);
+  font-size: 16px;
+  line-height: 1.6;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ✅ Global Buttons */
+button {
+  cursor: pointer;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* ✅ Primary Button */
+.btn-primary {
+  background-color: var(--accent-color);
+  color: black;
+  font-weight: bold;
+  padding: 12px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background-color: #e6b800;
+}
+
+/* ✅ Secondary Button */
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #004d99;
+}
+
+/* ✅ Form Input Fields */
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border: 2px solid var(--accent-color);
+}
+
+/* ✅ Container Utility */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* ✅ Global Footer */
+.footer {
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-top: 20px;
+}
