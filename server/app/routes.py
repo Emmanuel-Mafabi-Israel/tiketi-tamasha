@@ -107,7 +107,35 @@ def login():
 def get_user_details(user):
     return jsonify(user_schema.dump(user)), 200
 
-#  ---- User Deletion -----
+# ---- User Account Edit ----
+# Profile Edit Route
+@auth_bp.route('/user', methods=['PUT'])
+@jwt_required()
+@get_user_from_token
+def update_user_profile(user):
+    data = request.get_json()
+
+    if 'email' in data:
+        email = data['email']
+        if User.query.filter(User.email == email, User.id != user.id).first():
+            return jsonify({'message': 'Email already in use'}), 400
+        user.email = email
+
+    if 'phone_number' in data:
+        user.phone_number = data['phone_number']
+
+    if 'name' in data:
+        user.profile.name = data['name']
+
+    try:
+        db.session.commit()
+        return jsonify({'message': 'User profile updated successfully'}), 200
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error updating user profile: {e}")
+        return jsonify({'message': f'Error updating user profile: {str(e)}'}), 500
+
+#  ---- User Deletion ----
 @auth_bp.route('/user', methods=['DELETE'])
 @jwt_required()
 @get_user_from_token
@@ -193,6 +221,46 @@ def create_event(user):
         db.session.rollback()
         logging.error(f"Error creating event: {e}")
         return jsonify({'message': f'Error creating event: {str(e)}'}), 500 
+    
+# ---- edit event ----
+@event_bp.route('/events/<int:event_id>', methods=['PUT'])
+@jwt_required()
+@get_user_from_token
+def update_event(user, event_id):
+    claims = get_jwt()  # Get our JWT claims
+    role = claims.get('role')
+
+    if role != 'organizer':
+        return jsonify({'message': 'Unauthorized: Only organizers can update events'}), 403
+
+    event = Event.query.get(event_id)
+
+    if not event:
+        return jsonify({'message': 'Event not found'}), 404
+
+    # Check if the current user is the organizer of the event
+    if event.organizer_id != user.id:
+        return jsonify({'message': 'Unauthorized: You are not the organizer of this event'}), 403
+
+    data = request.get_json()
+    if 'title' in data:
+        event.title = data['title']
+    if 'description' in data:
+        event.description = data['description']
+    if 'location' in data:
+        event.location = data['location']
+    if 'start_date' in data:
+        event.start_date = parser.parse(data['start_date'])
+    if 'end_date' in data:
+        event.end_date = parser.parse(data['end_date'])
+
+    try:
+        db.session.commit()
+        return jsonify({'message': 'Event updated successfully'}), 200
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error updating event: {e}")
+        return jsonify({'message': f'Error updating event: {str(e)}'}), 500
 
 @event_bp.route('/events/<int:event_id>', methods=['DELETE'])
 @jwt_required()
