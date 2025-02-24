@@ -11,19 +11,6 @@ from datetime import datetime
 import sqlalchemy.types as types
 import json
 
-# class JSONEncodedDict(types.TypeDecorator):
-#     """Enables JSON storage by encoding and decoding on the fly."""
-#     impl = types.TEXT
-#
-#     def process_bind_param(self, value, dialect):
-#         if value is not None:
-#             return json.dumps(value)
-#         return value
-#
-#     def process_result_value(self, value, dialect):
-#         if value is not None:
-#             return json.loads(value)
-#         return value
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -41,6 +28,7 @@ class User(db.Model):
     def __repr__(self):
         return f"<User id:{self.id}, email:{self.email}, role:{self.role}>"
 
+
 class UserProfile(db.Model):
     __tablename__ = 'user_profiles'
     id      = db.Column(db.Integer, primary_key=True)
@@ -49,6 +37,7 @@ class UserProfile(db.Model):
     name    = db.Column(db.String(120), nullable=True) #Can store username/name
     # Relationships
     user    = db.relationship('User', back_populates='profile')
+
 
 class Event(db.Model):
     __tablename__ = 'events'
@@ -69,6 +58,7 @@ class Event(db.Model):
     def __repr__(self):
         return f"<Event id:{self.id}, title:{self.title}>"
 
+
 class Ticket(db.Model):
     __tablename__ = 'tickets'
     id            = db.Column(db.Integer, primary_key=True)
@@ -79,6 +69,7 @@ class Ticket(db.Model):
 
     def __repr__(self):
         return f"<Ticket id:{self.id}, event_id:{self.event_id}, type:{self.ticket_type}>"
+
 
 # models.py
 class Payment(db.Model):

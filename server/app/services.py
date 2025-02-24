@@ -3,139 +3,169 @@
 # BY ISRAEL MAFABI EMMANUEL
 # TAMASHA DEVELOPERS
 
-# Here we'll be handling tasks such as:
-#   - Payment processing (MPESA integration)
-#   - Sending email notifications
-#   - Image resizing and uploading to Cloudinary
-#   - Data validation
-#   - Any other business logic that doesn't belong in the routes.
-
-# def process_mpesa_payment(ticket, amount, phone_number):
-#     # Placeholder for MPESA integration logic
-#     print(f"Processing MPESA payment for ticket {ticket.id}, amount {amount}, phone {phone_number}")
-#     # Implement MPESA API calls here
-#     # Update payment status in the database
-#     return True  # Or False if payment fails
-
-# def send_email_notification(email, subject, body):
-#     # Placeholder for email sending logic
-#     print(f"Sending email to {email} with subject '{subject}'")
-#     # Implement SendGrid API calls here
-#     return True
 
 import os
+import base64
+import requests
 from dotenv import load_dotenv
-import base64  #For password encoding
+from datetime import datetime
+# from .models import Payment
 
 load_dotenv() # Load environment variables from .env
-import requests
-import logging
-from datetime import datetime
-from .models import Payment
 
-# Configure logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+BUSINESS_SHORTCODE: str = os.getenv("MPESA_BUSINESS_SHORTCODE")
+PASSKEY: str = os.getenv("MPESA_PASSKEY")
+CONSUMER_KEY: str = os.getenv("MPESA_CONSUMER_KEY")
+CONSUMER_SECRET_KEY: str = os.getenv("MPESA_CONSUMER_SECRET_KEY")
 
-def initiate_mpesa_stk_push(phone_number, amount, callback_url, account_reference, transaction_desc):
+
+def url(environment: int = 0, request: int = 0) -> str:
     """
-    Initiates an MPESA STK Push request.
-    Args:
+        A function for selecting the required url
+        based on environment selection.
+
+        request type:
+        0 -> request development
+        1 -> request live
+
+        environment type:
+        0 -> local environment - development environment
+        1 -> live/deployment
+
+        :returns
+        -> returns a string -> concerning the url (environment based...)
+    """
+    development_generate_url = os.getenv("DEVELOPMENT_GENERATE_URL")
+    live_generate_url = os.getenv("LIVE_GENERATE_URL")
+    development_process_request_url = os.getenv("DEVELOPMENT_PROCESS_REQUEST_URL")
+    live_process_request_url = os.getenv("LIVE_PROCESS_REQUEST_URL")
+    if request != 0:
+        # request session
+        if environment != 0:
+            return live_process_request_url
+        return development_process_request_url
+    else:
+        # default... normal mode
+        if environment != 0:
+            return live_generate_url
+        return development_generate_url
+
+
+def generate_access_token():
+    """
+        A function for generating the access token
+        for authentication over APIs
+
+        :returns
+        -> No return values...
+    """
+    try:
+        # encoding the credentials
+        # following the structure: [key:key]
+        encoded_credentials: base64 = base64.b64encode(f"{CONSUMER_KEY}:{CONSUMER_SECRET_KEY}".encode()).decode()
+        # setting up the header... ~ Authorization
+        headers: dict = {
+            "Authorization": f"Basic {encoded_credentials}",
+            "Content-Type": "application/json"
+        }
+        # send the request and parse the response...
+        response = requests.get(url(environment=0, request=0), headers=headers).json()
+
+        print(f"debug[auth key]: {encoded_credentials}")
+        print(f"debug[response status]: {response}")
+
+        # check for errors and afterwards return the access token...
+        # since if positive a dict will be returned...
+        if "access_token" in response:
+            return response["access_token"]
+        else:
+            raise Exception(f"error: failed to get access token: {response["error_description"]}")
+    except Exception as e:
+        raise Exception(f"error: failed to get access token: {e}")
+
+
+
+def encode_password(shortcode: str, passkey: str, timestamp: str) -> str:
+    """
+        A function for creating the password...
+        Encodes the password using the provided shortcode, passkey and timestamp.
+
+        :argument
+        shortcode: refers to the business short code.
+        passkey: mpesa passkey from - daraja api.
+        timestamp: time value...
+
+        :returns
+        returns a string -> The encoded password string
+    """
+    password_string: str = shortcode + passkey + timestamp
+    encoded_string: bytes = base64.b64encode(password_string.encode())
+    return encoded_string.decode('utf-8')
+
+
+def initiate_mpesa_stk_push(phone_number: str, amount: int, callback_url: str, account_reference: str,
+                            transaction_description: str):
+    """
+        A function that initiates an MPESA STK Push request.
+
+        :arg
         phone_number: The customer's phone number (e.g., "2547XXXXXXXX").
         amount: The amount to be paid.
         callback_url: The URL on your server that MPESA will call back to with the payment status.
-        account_reference:  Your unique reference for the transaction (e.g., ticket ID).
-        transaction_desc: A description of the transaction.
+        account_reference:  Your unique reference for the transaction
+        transaction_description: A description of the transaction.
 
-    Returns:
-        A tuple: (success, message, checkout_request_id)
+        :returns
+        returns a tuple: (success, message, checkout_request_id)
         success: True if the STK push was initiated successfully, False otherwise.
         message: A message indicating the status of the request.
         checkout_request_id: The MPESA CheckoutRequestID (used for querying the transaction status).
     """
+    access_token = generate_access_token()
+    timestamp: str = datetime.now().strftime('%Y%m%d%H%M%S')
 
-    BUSINESS_SHORT_CODE = os.getenv("MPESA_BUSINESS_SHORT_CODE")
-    PASSKEY             = os.getenv("MPESA_PASSKEY")
-    TIMESTAMP           = datetime.now().strftime("%Y%m%d%H%M%S")
-    PASSWORD            = encode_password(BUSINESS_SHORT_CODE, PASSKEY, TIMESTAMP)
-    CALLBACK_URL        = callback_url
-    ACCOUNT_REFERENCE   = account_reference
-    TRANSACTION_DESC    = transaction_desc
-    PARTY_A             = phone_number  # The Sender - customer
-    PARTY_B             = BUSINESS_SHORT_CODE # The Recipient
+    headers: dict = {
+        "Authorization": f"Bearer {access_token}",
+        "Content-Type": "application/json"
+    }
 
-    STK_PUSH_URL = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"  # we'll use production URL in production
-    # Access Token URL
-    ACCESS_TOKEN_URL = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
-    # Consumer Key
-    CONSUMER_KEY        = os.getenv("MPESA_CONSUMER_KEY")
-    # Consumer Secret
-    CONSUMER_SECRET     = os.getenv("MPESA_CONSUMER_SECRET")
+    print(f"debug[callback url]: {callback_url}") # for debugging purposes...
+    # body, stk push payload...
+    stk_push_payload: dict = {
+        "BusinessShortCode": BUSINESS_SHORTCODE,
+        "Password": encode_password(BUSINESS_SHORTCODE, PASSKEY, timestamp),
+        "Timestamp": timestamp,
+        "TransactionType": "CustomerPayBillOnline",
+        "Amount": amount,
+        "PartyA": phone_number,  # the sender
+        "PartyB": BUSINESS_SHORTCODE,
+        "PhoneNumber": phone_number,
+        "CallBackURL": callback_url,
+        "AccountReference": account_reference,  # Any value... -> MAFABI
+        "TransactionDesc": transaction_description  # Any value... -> MAFABI
+    }
 
     try:
-        # Get the access token from the API
-        access_token_response = requests.get(ACCESS_TOKEN_URL, auth=(CONSUMER_KEY, CONSUMER_SECRET))
-        access_token_response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
-
-        access_token_data = access_token_response.json()
-        access_token = access_token_data.get("access_token")
-
-        # STK Push Payload
-
-        stk_push_payload = {
-            "BusinessShortCode": BUSINESS_SHORT_CODE,
-            "Password": PASSWORD,
-            "Timestamp": TIMESTAMP,
-            "TransactionType": "CustomerPayBillOnline",
-            "Amount": amount,
-            "PartyA": PARTY_A,
-            "PartyB": PARTY_B,
-            "PhoneNumber": PARTY_A,
-            "CallBackURL": CALLBACK_URL,
-            "AccountReference": ACCOUNT_REFERENCE,
-            "TransactionDesc": TRANSACTION_DESC
-        }
-
-        headers = {
-            "Authorization": f"Bearer {access_token}"
-        }
-
-        # Initiate STK Push
-        response = requests.post(STK_PUSH_URL, json=stk_push_payload, headers=headers)
+        response = requests.post(url(environment=0, request=1), json=stk_push_payload, headers=headers)
         response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
+        response_json: any = response.json()
 
-        response_json = response.json()
-
-        checkout_request_id = response_json.get("CheckoutRequestID")
+        checkout_request_id: any = response_json.get('CheckoutRequestID')
         if checkout_request_id:
             return True, "STK push initiated successfully", checkout_request_id
         else:
-            error_message = response_json.get("errorMessage")
-            return False, f"STK push failed: {error_message}", None
+            error_message: any = response_json.get('errorMesssage')
+            return False, f"STK push failed: {str(error_message)}", None
+        # return response_json
+    except requests.exceptions.RequestException as error_message:
+        return False, f"STK push failed: {error_message}", None
+    except Exception as error_message:
+        return False, f"Error initiating MPESA STK Push: {error_message}", None
 
-    except requests.exceptions.RequestException as e:
-        logging.error(f"MPESA STK Push request failed: {e}")
-        return False, f"MPESA STK Push request failed: {str(e)}", None
-    except Exception as e:
-        logging.error(f"Error initiating MPESA STK Push: {e}")
-        return False, f"Error initiating MPESA STK Push: {str(e)}", None
-    
-def encode_password(shortcode, passkey, timestamp):
-    """
-    Encodes the password using the provided shortcode, passkey and timestamp.
-
-    Returns:
-         The encoded password string
-    """
-    password_string = shortcode + passkey + timestamp
-    encoded_string = base64.b64encode(password_string.encode())
-    return encoded_string.decode('utf-8')
 
 def debug_access_token():
-    # STK_PUSH_URL     = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
+    # STK_PUSH_URL     = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest" -> request processing route...
     # Access Token URL
-    ACCESS_TOKEN_URL = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
-    CONSUMER_KEY = os.getenv("MPESA_CONSUMER_KEY")
-    CONSUMER_SECRET = os.getenv("MPESA_CONSUMER_SECRET")
-
-    access_token_response = (requests.get(ACCESS_TOKEN_URL, auth=(CONSUMER_KEY, CONSUMER_SECRET))).json()
-    return access_token_response
+    print(f"debug[generate - url]: {url(environment=0, request=0)}")
+    # access_token_response = generate_access_token()
+    return generate_access_token()

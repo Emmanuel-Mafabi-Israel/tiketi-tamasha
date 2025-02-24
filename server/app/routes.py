@@ -112,7 +112,6 @@ def get_user_details(user):
 @jwt_required()
 @get_user_from_token
 def delete_user(user):
-    # Add checks to ensure the user is allowed to delete (e.g., only delete own account)
     try:
         db.session.delete(user)
         db.session.commit()
@@ -128,20 +127,17 @@ def get_events():
     # retrieves a list of events, with support for searching, filtering and pagination.
 
     location = request.args.get('location')
-    tag = request.args.get('tag')
+    tag      = request.args.get('tag')
     category = request.args.get('category')
 
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
 
     query = Event.query
-
     if location:
         query = query.filter(Event.location.ilike(f"%{location}%"))  # Case-insensitive search
-
     if tag:
         query = query.filter(Event.tags.ilike(f"%{tag}%"))
-
     if category:
         query = query.filter(Event.category == category)
 
@@ -162,12 +158,12 @@ def get_events():
 @jwt_required()
 @get_user_from_token
 def create_event(user):
-    # Only organizers can create events
+    # Only organizers can create events!
     claims = get_jwt() #Get the JWT Claims
     role   = claims.get('role')
 
     if role != 'organizer':
-        return jsonify({'message': 'Unauthorized: Only organizers can create events'}), 403
+        return jsonify({'message': 'Unauthorized: Only organizers can create events'}), 403 # -> development purposes only!
 
     data = request.get_json()
     try:
@@ -189,6 +185,7 @@ def create_event(user):
             image_url=data.get('image_url'),
             ticket_tiers=ticket_tiers #Ticket tiers
         )
+
         db.session.add(new_event)
         db.session.commit()
         return jsonify(event_schema.dump(new_event)), 201
@@ -257,7 +254,7 @@ def purchase_ticket(user):
         return jsonify({'message': 'Invalid ticket type for this event'}), 400
 
     if not phone_number:
-        return jsonify({'message': 'Phone number is required'}), 400
+        return jsonify({'message': 'Phone number is required.'}), 400
     # 1. Create a *Pending* Ticket
     new_ticket = Ticket(
         event_id=event_id,
@@ -270,21 +267,23 @@ def purchase_ticket(user):
 
     # 2. Initiate MPESA STK Push
     account_reference = str(new_ticket.id)  # Use ticket ID as account reference
-    transaction_desc = f"Ticket purchase for {event.title} ({ticket_type})"
+    transaction_description = f"Ticket purchase for {event.title} ({ticket_type})"
 
     callback_url = os.getenv("MPESA_CALLBACK_URL")
-    print(f"OUR CALLBACK URL: {callback_url}")
 
     success, message, checkout_request_id = services.initiate_mpesa_stk_push(
         phone_number=phone_number,
         amount=amount,  # The amount from the request
         callback_url=callback_url,
         account_reference=account_reference,
-        transaction_desc=transaction_desc
+        transaction_description=transaction_description
     )
 
     if success:
         # 3. Create a *Pending* Payment Record
+        # we'll change this once we receive the callback return
+        # if the return is a success that is...
+        # otherwise, we'll change it to failed.
         new_payment = Payment(
             ticket_id=new_ticket.id,
             amount=amount,
@@ -292,6 +291,7 @@ def purchase_ticket(user):
             status='pending',
             transaction_id=checkout_request_id  # Store checkout_request_id
         )
+
         db.session.add(new_payment)
         db.session.commit()  # Now commit both ticket and pending payment
 
@@ -307,11 +307,10 @@ def purchase_ticket(user):
 @ticket_bp.route('/mpesa_callback', methods=['POST'])
 def mpesa_callback():
     """
-    MPESA callback URL to handle transaction confirmation.
-    MPESA will POST data to this endpoint.
+        MPESA callback URL to handle transaction confirmation.
+        MPESA will POST data to this endpoint.
     """
-
-    print("MPESA CALLBACK HIT") # ADD LOGGING HERE
+    print("debug[callback return]: MPESA CALLBACK HIT")
     logging.info("MPESA CALLBACK WAS HIT! - entering the callback route")
     try:
         mpesa_data = request.get_json()
@@ -331,13 +330,12 @@ def mpesa_callback():
         if result_code == 0:  # Successful transaction
             # Extract MPESA transaction ID (Receipt Number)
             mpesa_receipt_number = mpesa_data['Body']['stkCallback']['CallbackMetadata']['Item'][1]['Value']
-
+            # we've confirmed the payment, then let us update the
+            # payment status -> completed...
             payment.status = 'completed'
             payment.transaction_id = mpesa_receipt_number # Store actual MPESA transaction ID
             db.session.commit()
-
             logging.info(f"Payment completed successfully. Ticket ID: {payment.ticket_id}, MPESA Receipt: {mpesa_receipt_number}")
-
             return jsonify({'message': 'Payment received successfully'}), 200
         else:
             # Payment failed
@@ -387,7 +385,7 @@ def mpesa_config():
 
 @auth_bp.route('/mpesa_access_token', methods=['GET'])
 def mpesa_access_token():
-    return services.debug_access() #TODO: REMOVE IN PRODUCTION
+    return services.debug_access_token() #TODO: REMOVE IN PRODUCTION
 
 # --- Error Handlers ---
 @auth_bp.errorhandler(404)
