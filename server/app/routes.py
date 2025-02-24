@@ -266,7 +266,7 @@ def purchase_ticket(user):
     db.session.flush()  # Get the ticket ID immediately but do not commit
 
     # 2. Initiate MPESA STK Push
-    account_reference = str(new_ticket.id)  # Use ticket ID as account reference
+    account_reference = str(f"TIKETITAMASHA Ticket ID:[{new_ticket.id}] for the event [{event.title}]")  # Use ticket ID as account reference
     transaction_description = f"Ticket purchase for {event.title} ({ticket_type})"
 
     callback_url = os.getenv("MPESA_CALLBACK_URL")
@@ -320,16 +320,27 @@ def mpesa_callback():
         result_code = mpesa_data['Body']['stkCallback']['ResultCode']
         result_desc = mpesa_data['Body']['stkCallback']['ResultDesc']
 
+        mpesa_receipt_number = None # just for initialization...
+        items = None
+
+        if 'CallbackMetadata' in mpesa_data['Body']['stkCallback']:
+            items = mpesa_data['Body']['stkCallback']['CallbackMetadata']['Item']
+            # Process the items
+            for item in items:
+                if item['Name'] == 'MpesaReceiptNumber':
+                    mpesa_receipt_number = item['Value']
+                    break
+                        
         # Find the corresponding payment record,
         payment = Payment.query.filter_by(transaction_id=checkout_request_id).first()
+
+        print(f"debug[callback metadata]: {items}")
 
         if not payment:
             logging.warning(f"Payment record not found for CheckoutRequestID: {checkout_request_id}")
             return jsonify({'message': 'Payment record not found'}), 404
 
         if result_code == 0:  # Successful transaction
-            # Extract MPESA transaction ID (Receipt Number)
-            mpesa_receipt_number = mpesa_data['Body']['stkCallback']['CallbackMetadata']['Item'][1]['Value']
             # we've confirmed the payment, then let us update the
             # payment status -> completed...
             payment.status = 'completed'
@@ -338,13 +349,18 @@ def mpesa_callback():
             logging.info(f"Payment completed successfully. Ticket ID: {payment.ticket_id}, MPESA Receipt: {mpesa_receipt_number}")
             return jsonify({'message': 'Payment received successfully'}), 200
         else:
-            # Payment failed
-            payment.status = 'failed'
-            db.session.commit()
+            if result_code == 1032:
+                # cancelled request...
+                payment.status = 'cancelled'
+                db.session.commit()
 
-            logging.error(f"Payment failed. CheckoutRequestID: {checkout_request_id}, ResultCode: {result_code}, ResultDesc: {result_desc}")
+                return jsonify({'message': f'Payment cancelled: {result_desc}'}), 200
+            else:
+                # Payment failed
+                payment.status = 'failed'
+                db.session.commit()
 
-            return jsonify({'message': f'Payment failed: {result_desc}'}), 400
+                return jsonify({'message': f'Payment failed: {result_desc}'}), 400
 
     except Exception as e:
         logging.error(f"Error processing MPESA callback: {e}")
