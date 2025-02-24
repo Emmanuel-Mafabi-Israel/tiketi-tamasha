@@ -211,7 +211,8 @@ def create_event(user):
             start_date=start_date,
             end_date=end_date,
             image_url=data.get('image_url'),
-            ticket_tiers=ticket_tiers #Ticket tiers
+            ticket_tiers=ticket_tiers, # Ticket tiers
+            total_tickets=data.get('total_tickets', 100)  # Default total tickets available
         )
 
         db.session.add(new_event)
@@ -220,8 +221,8 @@ def create_event(user):
     except Exception as e:
         db.session.rollback()
         logging.error(f"Error creating event: {e}")
-        return jsonify({'message': f'Error creating event: {str(e)}'}), 500 
-    
+        return jsonify({'message': f'Error creating event: {str(e)}'}), 500
+
 # ---- edit event ----
 @event_bp.route('/events/<int:event_id>', methods=['PUT'])
 @jwt_required()
@@ -302,6 +303,25 @@ def get_my_events(user):
 
     return jsonify(serialized_events), 200
 
+# upcoming events... having it in calendar
+@auth_bp.route('/user/upcoming_events', methods=['GET'])
+@jwt_required()
+@get_user_from_token
+def get_user_upcoming_events(user):
+    current_time = datetime.now()
+    upcoming_events = []
+
+    for ticket in user.tickets:
+        event = ticket.event
+        if event.start_date > current_time:
+            upcoming_events.append(event_schema.dump(event))
+    
+    return jsonify({
+        'message': 'Upcoming events retrieved successfully',
+        'upcoming_events': upcoming_events
+    }), 200
+
+
 # --- Ticket Routes ---
 @ticket_bp.route('/tickets', methods=['POST'])
 @jwt_required()
@@ -323,6 +343,11 @@ def purchase_ticket(user):
 
     if not phone_number:
         return jsonify({'message': 'Phone number is required.'}), 400
+
+    # Check ticket availability
+    if event.tickets_sold >= event.total_tickets:
+        return jsonify({'message': 'No tickets available for this event'}), 400
+
     # 1. Create a *Pending* Ticket
     new_ticket = Ticket(
         event_id=event_id,
@@ -349,9 +374,6 @@ def purchase_ticket(user):
 
     if success:
         # 3. Create a *Pending* Payment Record
-        # we'll change this once we receive the callback return
-        # if the return is a success that is...
-        # otherwise, we'll change it to failed.
         new_payment = Payment(
             ticket_id=new_ticket.id,
             amount=amount,
@@ -360,12 +382,16 @@ def purchase_ticket(user):
             transaction_id=checkout_request_id  # Store checkout_request_id
         )
 
+        # Increment tickets sold
+        # event.tickets_sold += 1 -> only after payment has been confirmed...
+
         db.session.add(new_payment)
         db.session.commit()  # Now commit both ticket and pending payment
 
         return jsonify({
-            'message': 'MPESA STK push initiated.  Awaiting payment confirmation.',
-            'checkout_request_id': checkout_request_id  # Return ID to frontend for potential status checks
+            'message': 'MPESA STK push initiated. Awaiting payment confirmation.',
+            'checkout_request_id': checkout_request_id,  # Return ID to frontend for potential status checks
+            'account_reference': account_reference
         }), 200
     else:
         # If STK push fails, rollback the ticket creation
@@ -413,6 +439,11 @@ def mpesa_callback():
             # payment status -> completed...
             payment.status = 'completed'
             payment.transaction_id = mpesa_receipt_number # Store actual MPESA transaction ID
+
+            # we increment tickets sold...
+            event = payment.ticket.event
+            event.tickets_sold += 1
+
             db.session.commit()
             logging.info(f"Payment completed successfully. Ticket ID: {payment.ticket_id}, MPESA Receipt: {mpesa_receipt_number}")
             return jsonify({'message': 'Payment received successfully'}), 200

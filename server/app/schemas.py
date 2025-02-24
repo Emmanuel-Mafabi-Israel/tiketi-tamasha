@@ -23,6 +23,9 @@ class EventSchema(SQLAlchemyAutoSchema):
         model = Event
         load_instance = True
 
+    total_tickets = fields.Int()
+    tickets_sold = fields.Int()
+
 class TicketSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Ticket

@@ -39,21 +39,25 @@ class UserProfile(db.Model):
     user    = db.relationship('User', back_populates='profile')
 
 
+# models.py
 class Event(db.Model):
     __tablename__ = 'events'
-    id           = db.Column(db.Integer, primary_key=True)
-    organizer_id = db.Column(db.Integer, ForeignKey('users.id'), nullable=False)
-    title        = db.Column(db.String(255), nullable=False)
-    description  = db.Column(db.Text, nullable=True)
-    location     = db.Column(db.String(255), nullable=False)
-    category     = db.Column(db.String(100), nullable=True)
-    tags         = db.Column(db.String(255), nullable=True)
-    start_date   = db.Column(db.DateTime, nullable=False)
-    end_date     = db.Column(db.DateTime, nullable=False)
-    image_url    = db.Column(db.String(255), nullable=True)
-    ticket_tiers = db.Column(types.JSON) # Use the built-in JSON type
+    id             = db.Column(db.Integer, primary_key=True)
+    organizer_id   = db.Column(db.Integer, ForeignKey('users.id'), nullable=False)
+    title          = db.Column(db.String(255), nullable=False)
+    description    = db.Column(db.Text, nullable=True)
+    location       = db.Column(db.String(255), nullable=False)
+    category       = db.Column(db.String(100), nullable=True)
+    tags           = db.Column(db.String(255), nullable=True)
+    start_date     = db.Column(db.DateTime, nullable=False)
+    end_date       = db.Column(db.DateTime, nullable=False)
+    image_url      = db.Column(db.String(255), nullable=True)
+    ticket_tiers   = db.Column(types.JSON)  # Use the built-in JSON type
+    total_tickets  = db.Column(db.Integer, nullable=False, default=100)  # Default total tickets available
+    tickets_sold   = db.Column(db.Integer, nullable=False, default=0)  # Default tickets sold
+
     # Relationships
-    tickets = db.relationship('Ticket', backref='event', lazy=True)
+    tickets        = db.relationship('Ticket', backref='event', lazy=True)
 
     def __repr__(self):
         return f"<Event id:{self.id}, title:{self.title}>"

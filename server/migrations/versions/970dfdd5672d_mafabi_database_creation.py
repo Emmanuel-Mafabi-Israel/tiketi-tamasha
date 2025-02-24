@@ -1,8 +1,8 @@
-"""mafabi:db creation.
+"""mafabi, database creation
 
-Revision ID: 48c3b209fec7
+Revision ID: 970dfdd5672d
 Revises: 
-Create Date: 2025-02-24 12:13:06.213959
+Create Date: 2025-02-24 18:35:29.667721
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '48c3b209fec7'
+revision = '970dfdd5672d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -39,6 +39,8 @@ def upgrade():
     sa.Column('end_date', sa.DateTime(), nullable=False),
     sa.Column('image_url', sa.String(length=255), nullable=True),
     sa.Column('ticket_tiers', sa.JSON(), nullable=True),
+    sa.Column('total_tickets', sa.Integer(), nullable=False),
+    sa.Column('tickets_sold', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['organizer_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
