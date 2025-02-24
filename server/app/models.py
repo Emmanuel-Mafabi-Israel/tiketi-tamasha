@@ -32,16 +32,27 @@ class Event(db.Model):
     description  = db.Column(db.Text, nullable=True)
     location     = db.Column(db.String(255), nullable=False)
     category     = db.Column(db.String(100), nullable=True)  # 'Music', 'Sports', 'Conference'
-    tags         = db.Column(db.String(255), nullable=True)  # Comma-separated tags
+    tags         = db.Column(db.String(255), nullable=True)  # Stored as comma-separated values
     start_date   = db.Column(db.DateTime, nullable=False)
     end_date     = db.Column(db.DateTime, nullable=False)
     image_url    = db.Column(db.String(255), nullable=True)  # Cloudinary URL
 
-    # Relationships
     tickets      = db.relationship('Ticket', backref='event', lazy=True)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Ensure datetime conversion
+        if isinstance(self.start_date, str):
+            self.start_date = datetime.fromisoformat(self.start_date)
+        if isinstance(self.end_date, str):
+            self.end_date = datetime.fromisoformat(self.end_date)
+        # Convert list to comma-separated string
+        if isinstance(self.tags, list):
+            self.tags = ",".join(self.tags)
 
     def __repr__(self):
         return f"<Event id:{self.id}, title:{self.title}>"
+
 
 class Ticket(db.Model):
     __tablename__ = 'tickets'

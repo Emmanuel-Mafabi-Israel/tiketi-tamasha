@@ -60,7 +60,7 @@ def register():
     try:
         db.session.add(new_user)
         db.session.commit()
-        return user_schema.jsonify(new_user), 201
+        return user_schema.dump(new_user), 201
     except Exception as e:
         db.session.rollback()
         logging.error(f"Error creating user: {e}")  # Log the error
@@ -84,7 +84,7 @@ def login():
 @jwt_required()
 @get_user_from_token
 def get_user_details(user):
-    return user_schema.jsonify(user), 200
+    return user_schema.dump(user), 200
 
 #  ---- User Deletion -----
 @auth_bp.route('/user', methods=['DELETE'])
@@ -134,7 +134,7 @@ def create_event(user):
         db.session.add(new_event)
         db.session.commit()
 
-        return event_schema.jsonify(new_event), 201
+        return event_schema.dump(new_event), 201
     except Exception as e:
         db.session.rollback()
         logging.error(f"Error creating event: {e}")
@@ -150,7 +150,7 @@ def purchase_ticket(user):
     event_id = data.get('event_id')
     ticket_type = data.get('ticket_type')
 
-    event = Event.query.get(event_id)
+    event = db.session.get(Event, event_id) 
     if not event:
         return jsonify({'message': 'Event not found'}), 404
 
@@ -173,7 +173,7 @@ def purchase_ticket(user):
         db.session.add(new_ticket)
         db.session.commit()
 
-        return ticket_schema.jsonify(new_ticket), 201
+        return ticket_schema.dump(new_ticket), 201
     except Exception as e:
         db.session.rollback()
         logging.error(f"Error purchasing ticket: {e}")

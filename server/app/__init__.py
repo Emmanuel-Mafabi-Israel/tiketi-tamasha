@@ -4,14 +4,25 @@
 # TAMASHA DEVELOPERS
 
 # app/__init__.py
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 from flask import Flask, render_template
 from flask_cors import CORS
 from extensions import db, jwt, migrate
+from dotenv import load_dotenv
+from config import config
 
-def create_app():
+load_dotenv()
+
+def create_app(config_name="default"):
     app = Flask(__name__)
-    app.config.from_object('app.config.Config')
+    
+    if config_name not in config:
+        raise ValueError(f"Invalid config name: {config_name}. Must be one of {list(config.keys())}")
 
+    app.config.from_object(config[config_name])  # ✅ Use config dictionary
+    
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
