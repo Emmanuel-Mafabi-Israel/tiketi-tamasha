@@ -1,8 +1,9 @@
 import React from "react";
+import "../styles/Footer.css";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white text-center p-4 mt-10">
+    <footer className="footer">
       <p>&copy; {new Date().getFullYear()} Tiketi Tamasha. All rights reserved.</p>
     </footer>
   );

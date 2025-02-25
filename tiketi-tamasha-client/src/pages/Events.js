@@ -1,18 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { fetchEvents } from "../api/eventService";
 import EventCard from "../components/EventCard";
 import "../styles/Events.css";
 
 const Events = () => {
-  const sampleEvents = [
-    { id: 1, title: "Music Concert", date: "2025-03-10", location: "Nairobi" },
-    { id: 2, title: "Tech Expo", date: "2025-04-15", location: "Mombasa" },
-  ];
+  const [events, setEvents] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchEvents().then(setEvents);
+  }, []);
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold">Upcoming Events</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {sampleEvents.map(event => <EventCard key={event.id} event={event} />)}
+    <div className="events-container">
+      <h1>Upcoming Events</h1>
+      <div className="event-list">
+        {events.map(event => (
+          <EventCard key={event.id} event={event} onClick={() => navigate(`/events/${event.id}`)} />
+        ))}
       </div>
     </div>
   );

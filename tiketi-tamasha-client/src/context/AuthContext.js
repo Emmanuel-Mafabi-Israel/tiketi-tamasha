@@ -1,4 +1,5 @@
-import { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
+import { loginUser, registerUser, logoutUser } from "../api/authService";
 
 export const AuthContext = createContext();
 
@@ -6,17 +7,40 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      // Fetch user data from backend
-      fetch("https://your-backend-url.com/api/auth/me", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((res) => res.json())
-        .then((data) => setUser(data.user))
-        .catch(() => setUser(null));
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUser(storedUser);
     }
   }, []);
 
-  return <AuthContext.Provider value={{ user, setUser }}>{children}</AuthContext.Provider>;
+  const login = async (credentials, navigate) => {
+    const response = await loginUser(credentials);
+    if (response.token) {
+      setUser(response.user);
+      localStorage.setItem("user", JSON.stringify(response.user));
+      navigate(response.user.role === "organizer" ? "/organizer-dashboard" : "/dashboard");
+    }
+  };
+
+  const register = async (userData, navigate) => {
+    const response = await registerUser(userData);
+    if (response.token) {
+      setUser(response.user);
+      localStorage.setItem("user", JSON.stringify(response.user));
+      navigate(response.user.role === "organizer" ? "/organizer-dashboard" : "/dashboard");
+    }
+  };
+
+  // ✅ Define logout function properly
+  const logout = () => {
+    logoutUser(); // Call the function from `authService.js`
+    setUser(null);
+    localStorage.removeItem("user");
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, login, register, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };

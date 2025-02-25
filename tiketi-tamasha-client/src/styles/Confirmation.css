@@ -1,35 +1,33 @@
-.dashboard-container {
+.confirmation-container {
     text-align: center;
     padding: 50px;
-    background: #f9f9f9;
+    background: #f0fff0;
   }
   
   h1 {
-    font-size: 2.5rem;
-    color: #333;
+    font-size: 2rem;
+    color: #28a745;
   }
   
   p {
     font-size: 1.2rem;
-    margin-bottom: 20px;
   }
   
-  .dashboard-actions {
+  .confirmation-actions {
     display: flex;
     justify-content: center;
     gap: 15px;
   }
   
   button {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 15px;
+    background: #ffcc00;
+    color: black;
+    padding: 10px;
     border-radius: 5px;
     cursor: pointer;
   }
   
   button:hover {
-    background: #0056b3;
+    background: #e6b800;
   }
   
