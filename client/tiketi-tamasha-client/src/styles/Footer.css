@@ -1,0 +1,23 @@
+.footer {
+    background: #0b0a30; /* ✅ Matches landing page background */
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 14px;
+    font-weight: bold;
+    position: relative;
+    width: 100%;
+}
+
+/* ✅ Footer Links */
+.footer a {
+    color: #ff6600; /* ✅ Call-to-action color */
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+}
+
+.footer a:hover {
+    color: #cc5500; /* ✅ Darker on hover */
+}
