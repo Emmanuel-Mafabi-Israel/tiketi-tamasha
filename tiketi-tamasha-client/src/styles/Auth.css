@@ -29,16 +29,11 @@
 }
 
 /* 📌 Adjust Icon Positions */
-.icon-1 { top: 30%; left: 8%; transform: rotate(-25deg) scale(1.1); }
-.icon-2 { top: 18%; right: 8%; transform: rotate(20deg) scale(1.1); }
-.icon-3 { bottom: 20%; left: 12%; transform: rotate(-10deg) scale(1.1); }
-.icon-4 { bottom: 35%; right: 10%; transform: rotate(8deg) scale(1.1); }
-.icon-5 { 
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%) scale(3.5); 
-    opacity: 0.1; /* Large faded center note */
-}
+.icon-1 { top: 28%; left: 18%; transform: rotate(-35deg) scale(0.9); }
+.icon-2 { top: 26.5%; right: 20%; transform: rotate(35deg) scale(0.7); }
+.icon-3 { bottom: 37%; left: 48%; transform: translate(-50%, -50%) scale(5.2); opacity: 0.1; } /* ✅ Large center note */
+.icon-4 { bottom: 30%; right: 20%; transform: rotate(10deg) scale(0.9); }
+.icon-5 { top: 67%; left: 24%; transform: rotate(16deg) scale(0.9); }
 
 /* 3️⃣ Auth Card (Form Container) */
 .auth-card {
