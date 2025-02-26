@@ -1,0 +1,117 @@
+/* Home.css */
+.home-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	height: 100vh;
+	background: linear-gradient(135deg, #000, #062b7b);
+	color: white;
+	padding: 20px;
+	position: relative;
+	overflow: hidden;
+}
+
+/* ✅ Background Music Icons */
+.hero-icons {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	pointer-events: none;
+	/* ✅ Ensures icons don't block interactions */
+}
+
+/* ✅ Individual Icon Styles */
+.hero-icon {
+	position: absolute;
+	opacity: 0.1;
+	/* ✅ Slightly reduced transparency */
+	width: 120px;
+	/* ✅ Adjusted size */
+	height: auto;
+}
+
+/* ✅ Positioning Each Icon */
+.icon-1 {
+	top: 28%;
+	left: 18%;
+	transform: rotate(-35deg) scale(0.9);
+}
+
+.icon-2 {
+	top: 26.5%;
+	right: 20%;
+	transform: rotate(35deg) scale(0.7);
+}
+
+.icon-3 {
+	bottom: 37%;
+	left: 48%;
+	transform: translate(-50%, -50%) scale(5.2);
+	opacity: 0.1;
+}
+
+/* ✅ Large center note */
+.icon-4 {
+	bottom: 30%;
+	right: 20%;
+	transform: rotate(10deg) scale(0.9);
+}
+
+.icon-5 {
+	top: 67%;
+	left: 24%;
+	transform: rotate(16deg) scale(0.9);
+}
+
+/* ✅ Hero Section Text */
+.hero-title {
+	font-size: 3rem;
+	font-weight: 500;
+	font-family: "Poppins", sans-serif;
+}
+
+.highlight {
+	font-weight: 700;
+	color: #ffffff;
+}
+
+/* ✅ Gradient effect for "Right Here" */
+
+.fade-text {
+	font-weight: 100;
+	background: linear-gradient(to right, #0058ff, #c9e0ff);
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-family: "Poppins";
+}
+
+.hero-text {
+	font-size: 1.2rem;
+	max-width: 550px;
+	margin-top: 10px;
+	font-family: "Poppins";
+}
+
+/* ✅ Register Button */
+.hero-btn {
+	margin-top: 22px;
+	padding: 12px 60px;
+	background: white;
+	color: #2D2929;
+	border-radius: 110px;
+	font-size: 1.1rem;
+	cursor: pointer;
+	border: none;
+	transition: 0.3s;
+	font-family: "Poppins";
+}
+
+.hero-btn:hover {
+	opacity: 0.8;
+	color: white;
+}

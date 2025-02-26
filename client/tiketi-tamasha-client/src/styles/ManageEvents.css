@@ -1,0 +1,33 @@
+.manage-events-container {
+    padding: 50px;
+    text-align: center;
+    background: #0b0a30; /* ✅ Matches dark theme */
+    color: white;
+}
+
+/* ✅ Event Item Styling */
+.event-item {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2); /* ✅ Softer glow effect */
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+/* ✅ Delete Button Styling */
+button {
+    background: red;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: darkred; /* ✅ Darker red on hover */
+}
