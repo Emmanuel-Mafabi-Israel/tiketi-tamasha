@@ -32,11 +32,11 @@
 }
 
 /* ✅ Positioning Each Icon */
-.icon-1 { top: 27%; left: 15%; transform: rotate(-48deg) scale(0.9); }
-.icon-2 { top: 25%; right: 10%; transform: rotate(25deg) scale(1.2); }
-.icon-3 { bottom: 37%; left: 48%; transform: translate(-50%, -50%) scale(5); opacity: 0.1; } /* ✅ Large center note */
-.icon-4 { bottom: 8%; right: 12%; transform: rotate(10deg) scale(1.2); }
-.icon-5 { top: 75%; left: 10%; transform: rotate(16deg) scale(1.2); }
+.icon-1 { top: 28%; left: 18%; transform: rotate(-35deg) scale(0.9); }
+.icon-2 { top: 26.5%; right: 20%; transform: rotate(35deg) scale(0.7); }
+.icon-3 { bottom: 37%; left: 48%; transform: translate(-50%, -50%) scale(5.2); opacity: 0.1; } /* ✅ Large center note */
+.icon-4 { bottom: 30%; right: 20%; transform: rotate(10deg) scale(0.9); }
+.icon-5 { top: 67%; left: 24%; transform: rotate(16deg) scale(0.9); }
 
 /* ✅ Hero Section Text */
 .hero-title {
