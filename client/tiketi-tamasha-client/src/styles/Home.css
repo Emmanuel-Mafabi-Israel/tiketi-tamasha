@@ -1,117 +1,94 @@
-/* Home.css */
-.home-container {
+@import url('globals.css');
+
+.tiketi-tamasha-landing-page {
+	background: transparent;
+
 	display: flex;
-	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	text-align: center;
-	height: 100vh;
-	background: linear-gradient(135deg, #000, #062b7b);
-	color: white;
-	padding: 20px;
+
 	position: relative;
 	overflow: hidden;
-}
 
-/* ✅ Background Music Icons */
-.hero-icons {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	pointer-events: none;
-	/* ✅ Ensures icons don't block interactions */
-}
+	width: 100vw;
+	height: calc(100vh - 120px);
 
-/* ✅ Individual Icon Styles */
-.hero-icon {
-	position: absolute;
-	opacity: 0.1;
-	/* ✅ Slightly reduced transparency */
-	width: 120px;
-	/* ✅ Adjusted size */
-	height: auto;
-}
+	.tiketi-tamasha-doodle-background {
+		background-size: cover;
 
-/* ✅ Positioning Each Icon */
-.icon-1 {
-	top: 28%;
-	left: 18%;
-	transform: rotate(-35deg) scale(0.9);
-}
+		position: absolute;
 
-.icon-2 {
-	top: 26.5%;
-	right: 20%;
-	transform: rotate(35deg) scale(0.7);
-}
+		z-index: 1;
 
-.icon-3 {
-	bottom: 37%;
-	left: 48%;
-	transform: translate(-50%, -50%) scale(5.2);
-	opacity: 0.1;
-}
+		width: 80%;
+		height: 80%;
+	}
 
-/* ✅ Large center note */
-.icon-4 {
-	bottom: 30%;
-	right: 20%;
-	transform: rotate(10deg) scale(0.9);
-}
+	.tiketi-tamasha-landing-page-center {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
 
-.icon-5 {
-	top: 67%;
-	left: 24%;
-	transform: rotate(16deg) scale(0.9);
-}
+		gap: 2px;
 
-/* ✅ Hero Section Text */
-.hero-title {
-	font-size: 3rem;
-	font-weight: 500;
-	font-family: "Poppins", sans-serif;
-}
+		z-index: 2;
 
-.highlight {
-	font-weight: 700;
-	color: #ffffff;
-}
+		min-width: 400px;
+		min-height: 400px;
 
-/* ✅ Gradient effect for "Right Here" */
+		.tiketi-tamasha-landing-heading {
+			font-size: 32px;
+			font-weight: normal;
 
-.fade-text {
-	font-weight: 100;
-	background: linear-gradient(to right, #0058ff, #c9e0ff);
-	background-clip: border-box;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	font-family: "Poppins";
-}
+			width: fit-content;
+			height: fit-content;
 
-.hero-text {
-	font-size: 1.2rem;
-	max-width: 550px;
-	margin-top: 10px;
-	font-family: "Poppins";
-}
+			b {
+				font-weight: 300;
+				text-decoration: underline;
+			}
 
-/* ✅ Register Button */
-.hero-btn {
-	margin-top: 22px;
-	padding: 12px 60px;
-	background: white;
-	color: #2D2929;
-	border-radius: 110px;
-	font-size: 1.1rem;
-	cursor: pointer;
-	border: none;
-	transition: 0.3s;
-	font-family: "Poppins";
-}
+			.fade-text {
+				font-weight: 400;
+				background: linear-gradient(to right, #0058ff, #c9e0ff);
+				background-clip: border-box;
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				font-family: "Poppins";
+			}
+		}
 
-.hero-btn:hover {
-	opacity: 0.8;
-	color: white;
+		.tiketi-tamasha-landing-explainer {
+			color: var(--tiketi-tamasha-cool-white);
+			font-size: 16px;
+
+			text-align: center;
+
+			width: fit-content;
+			height: fit-content;
+		}
+
+		.tiketi-tamasha-btn {
+            background: var(--tiketi-tamasha-cool-white);
+            border-radius: 20px;
+
+            color: var(--tiketi-tamasha-cool-black);
+
+            font-size: 13px;
+            font-weight: normal;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: 0px;
+            padding: 0px;
+
+            gap: 4px;
+
+            width: 150px;
+            height: 35px;
+        }
+	}
 }

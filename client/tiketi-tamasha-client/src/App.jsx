@@ -1,3 +1,12 @@
+/*
+	GLORY BE TO GOD,
+	TIKETI TAMASHA,
+	BY TAMASHA DEV,
+
+	ISRAEL MAFABI EMMANUEL
+	-> STARTING PAGE...
+*/
+
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import AppRoutes from "./routes";
@@ -5,16 +14,16 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { AuthProvider } from "./context/AuthContext";
 
-const App = () => {
+export default function App() {
 	return (
 		<AuthProvider>
 			<Router>
-				<Navbar />
-				<AppRoutes />
-				<Footer />
+				<div className="tiketi-tamasha-container">
+					<Navbar />
+					<AppRoutes />
+					<Footer />
+				</div>
 			</Router>
 		</AuthProvider>
 	);
 };
-
-export default App;

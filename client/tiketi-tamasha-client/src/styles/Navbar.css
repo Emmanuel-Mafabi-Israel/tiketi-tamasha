@@ -1,202 +1,183 @@
-/* ✅ Navbar container */
-.navbar {
+@import url('globals.css');
+
+.tiketi-tamasha-navbar {
+    background: transparent;
+
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
-    padding: 0.1px 12px;
-    background: linear-gradient(135deg, #000, #001645);
-    color: white;
-}
 
-/* ✅ Logo Container */
-.logo {
-    cursor: pointer;
-    text-decoration: none;
-    font-family: "Poppins", Bold;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
+    padding-left: 21px;
+    padding-right: 21px;
 
-/* ✅ Icon Styling */
-.logo img {
-    width: 70px;
-    height: auto;
-}
+    overflow-y: hidden;
 
-/* ✅ Stack Tiketi & Tamasha */
-.logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.0;
-}
+    width: 100vw;
+    height: 70px;
 
-/* ✅ Style Tiketi */
-.logo-light {
-    font-weight: 400;
-    font-size: 1.4rem;
-    color: white;
-}
+    .tiketi-tamasha-logo {
+        color: var(--tiketi-tamasha-cool-gray-);
 
-/* ✅ Style Tamasha */
-.logo-bold {
-    font-weight: 700;
-    font-size: 1.6rem;
-    color: white;
-}
+        font-size: 45px;
+        font-weight: normal;
 
-/* ✅ Style the navigation links */
-.nav-links {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin: 0;
-    padding: 0;
-    flex-wrap: wrap;
-}
-
-/* ✅ Ensures each list item aligns properly */
-.nav-links li {
-    display: flex;
-    align-items: center;
-}
-
-/* ✅ Fix Explore Events text color */
-.nav-links a {
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 500;
-    transition: color 0.3s ease-in-out;
-    color: white;
-    /* ✅ White for consistency */
-}
-
-/* ✅ Hover effect */
-.nav-links a:hover {
-    color: #f8fbfd;
-    /* ✅ Matches gradient effect */
-}
-
-/* ✅ General Button Style (Register Button) */
-.auth-btn {
-    padding: 12px 52px;
-    border: 8px solid #041948;
-    border-radius: 80px;
-    background: white;
-    color: #2D2929;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 15px;
-}
-
-/* ✅ Hover effect */
-.auth-btn:hover {
-    background-color: #e9ecf0;
-    color: white;
-}
-
-/* ✅ Login Button Specific Style */
-.login-btn {
-    padding: 10px 20px;
-    border: 2px solid white;
-    border-radius: 5px;
-    background-color: white;
-    color: black !important;
-    /* Ensures text stays visible */
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 15px;
-}
-
-/* ✅ Hover effect for login button */
-.login-btn:hover {
-    background-color: #4a90e2;
-    /* Slight blue for better contrast */
-    color: white !important;
-    border-color: #4a90e2;
-    /* Ensure border matches the background */
-}
-
-
-/* ✅ Style the logout button */
-.logout-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-/* ✅ Red hover effect for logout */
-.logout-btn:hover {
-    color: #ff4d4d;
-}
-
-/* ✅ Mobile responsiveness */
-@media screen and (max-width: 768px) {
-    .navbar {
-        padding: 15px 20px;
-    }
-
-    .nav-links {
-        flex-direction: column;
+        display: flex;
         align-items: center;
-        gap: 10px;
+        justify-content: center;
+
+        cursor: pointer;
+
+        width: fit-content;
+        height: fit-content;
+
+        .gray {
+            color: var(--tiketi-tamasha-cool-white);
+        }
+
+        .tiketi-tamasha-logo-image {
+            width: 42px;
+            height: 42px;
+        }
+
+        .tiketi-tamasha-logo-title {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction: column;
+
+            width: fit-content;
+            height: fit-content;
+
+            .head {
+                color: var(--tiketi-tamasha-cool-white);
+
+                font-size: 12px;
+
+                width: fit-content;
+                height: fit-content;
+            }
+
+            .enbold {
+                color: var(--tiketi-tamasha-cool-white);
+
+                font-size: 12px;
+
+                width: fit-content;
+                height: fit-content;
+            }
+        }
     }
 
-    .auth-btn,
-    .login-btn {
-        width: 100%;
-        text-align: center;
-        margin-left: 0;
+    .tiketi-tamasha-nav-links {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        width: fit-content;
+        height: fit-content;
+
+        .tiketi-tamasha-navbar-signed {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 21px;
+
+            padding-left: 14px;
+            padding-right: 14px;
+            
+            width: fit-content;
+            height: 70px;
+
+            a {
+                text-decoration: none;
+
+                width: fit-content;
+                height: fit-content;
+            }
+        }
+
+        .tiketi-tamasha-navbar-unsigned {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 21px;
+            
+            overflow-y: hidden;
+
+            width: fit-content;
+            height: 70px;
+
+            a {
+                text-decoration: none;
+
+                width: fit-content;
+                height: fit-content;
+            }
+        }
+
+        .tiketi-tamasha-btn {
+            background: var(--tiketi-tamasha-cool-white);
+            border-radius: 20px;
+
+            color: var(--tiketi-tamasha-cool-black);
+
+            font-size: 13px;
+            font-weight: normal;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: 0px;
+            padding: 0px;
+
+            gap: 4px;
+
+            width: 122px;
+            height: 35px;
+        }
+
+        .tiketi-tamasha-btn.special {
+            background: transparent;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 4px;
+
+            padding: 0px;
+
+            width: fit-content;
+            height: fit-content;
+
+            .text {
+                color: var(--tiketi-tamasha-cool-white);
+
+                font-size: 13.333px;
+                font-weight: normal;
+
+                width: fit-content;
+                height: fit-content;
+            }
+
+            .explore {
+                width: 20px;
+            }
+        }
     }
-}
 
-/* ✅ Explore Events Button */
-.explore-link {
-    display: flex;
-    align-items: center;
-    font-size: 18px;
-    font-weight: 500;
-    color: white;
-    text-decoration: none;
-    gap: 10px;
-    background-color: transparent;
-    padding: 8px 16px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease-in-out;
-}
+    .tiketi-tamasha-subheading {
+        color: var(--tiketi-tamasha-cool-white);
 
-/* ✅ Explore Events Hover Effect */
-.explore-link:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-}
+        font-size: 12px;
+        font-weight: normal;
 
-/* ✅ Style for the Explore Events Arrow */
-.explore-icon {
-    font-size: 12px;
-    color: #FFFFFF;
-    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
-    font-family: "Poppins";
-}
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-/* ✅ Hover Effect for Arrow */
-.explore-link:hover .explore-icon {
-    color: white;
-    transform: translateX(3px);
+        width: fit-content;
+        height: fit-content;
+    }
 }

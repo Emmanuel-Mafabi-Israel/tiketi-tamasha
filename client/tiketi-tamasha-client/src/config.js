@@ -1,5 +1,5 @@
 const CONFIG = {
-	API_BASE_URL: "http://localhost:5000/api", // Change this when deploying
+	API_BASE_URL: "http://127.0.0.1:5000/", // Change this when deploying
 	CLOUDINARY: {
 		CLOUD_NAME: "dt14zctwu",
 		API_KEY: "875974658393365",

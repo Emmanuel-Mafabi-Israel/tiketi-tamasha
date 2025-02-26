@@ -1,26 +1,33 @@
-/* ✅ Footer container */
-footer {
+/*
+	GLORY BE TO GOD,
+	TIKETI TAMASHA - FRONTEND,
+	BY TIKETI TAMASHA DEVELOPERS,
+
+	UPGRADE,
+	BY ISRAEL MAFABI EMMANUEL
+
+	STYLING AND DESIGN -> Footer
+*/
+
+@import url('globals.css');
+
+.tiketi-tamasha-footer {
     background: transparent;
-    color: white;
-    text-align: center;
-    padding: 7px 0;
-    font-size: 12px;
-    font-weight: 500;
-    width: 100%;
-    font-family: "Poppins";
-}
 
-/* ✅ Footer Links */
-.footer a {
-    color: #4a90e2;
-    /* ✅ Matches gradient effect */
-    text-decoration: none;
-    font-weight: bold;
-    margin: 0 10px;
-    transition: all 0.3s ease;
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-.footer a:hover {
-    color: #b0c4de;
-    /* ✅ Matches gradient hover effect */
+    width: 100vw;
+    height: 50px;
+
+    p {
+        color: var(--tiketi-tamasha-cool-white);
+
+        margin: 0px;
+        padding: 0px;
+
+        height: fit-content;
+        width: fit-content;
+    }
 }
