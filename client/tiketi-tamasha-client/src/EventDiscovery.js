@@ -1,6 +1,9 @@
 import React from "react";
 import "./EventDiscovery.css"; // Import the CSS file
-import logo from "./tiketi-tamasha-icon-high-res-white.svg"
+
+// ✅ Import assets from the `src/assets/` folder
+import logo from "./assets/tiketi-tamasha-logo.svg";  
+import highResImage from "./assets/high_res/tiketi-augmented-reality.jpg";  
 
 const categories = [
   { name: "Research", events: "1K Events", icon: "🔬" },
@@ -16,7 +19,7 @@ const popularEvents = [
     name: "AR Gadgets",
     date: "Thu, Feb 27, 2:00 PM",
     location: "University of Adelaide",
-    image: "https://source.unsplash.com/100x100/?vr",
+    image: highResImage, // ✅ Using imported image
   },
   {
     name: "Climate Change",
@@ -35,8 +38,11 @@ const popularEvents = [
 const EventDiscovery = () => {
   return (
     <div className="event-discovery">
-      <header>
-        <div className="logo">🎟️ <strong>Tiketi Tamasha</strong></div>
+      <header className="header-container">
+        <div className="logo-container">
+          <img src={logo} alt="Tiketi Tamasha Logo" className="logo-img" />
+          <span className="site-name">Tiketi Tamasha</span>
+        </div>
         <button className="login-btn">Login</button>
       </header>
 

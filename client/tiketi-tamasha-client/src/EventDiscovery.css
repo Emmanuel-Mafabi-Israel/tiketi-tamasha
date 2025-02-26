@@ -1,110 +1,155 @@
-/* Import Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
 /* General Styles */
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: "Arial", sans-serif;
     background: linear-gradient(to right, #0d1b2a, #1b263b);
     color: white;
     margin: 0;
     padding: 0;
-}
-
-/* Container */
-.event-discovery {
+  }
+  
+  /* Container */
+  .event-discovery {
     max-width: 1200px;
     margin: auto;
     padding: 20px;
-}
+    text-align: center;
+  }
+  
 
-/* Navbar */
-header {
+  /* Header */
+.header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40px;
-    background: linear-gradient(to right, #0d1b2a, #1b263b);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.logo-container {
+    padding: 15px 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .logo-container {
     display: flex;
     align-items: center;
     gap: 10px;
-}
-
-.logo-container img {
-    height: 40px; /* Adjust the size of the logo */
-}
-
-.logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
-}
-
-.logo-text strong {
-    font-size: 18px;
-    font-weight: 700;
-}
-
-.logo-text span {
-    font-size: 12px;
-    font-weight: 400;
-    opacity: 0.8;
-}
-
-/* Login Button */
-.login-btn {
+  }
+  
+  .logo-img {
+    width: 40px; /* Adjust logo size */
+    height: auto;
+  }
+  
+  .site-name {
+    font-size: 22px;
+    font-weight: bold;
+  }
+  
+  .login-btn {
     background: white;
     color: black;
     border: none;
-    padding: 12px 24px;
-    border-radius: 25px;
+    padding: 8px 16px;
+    border-radius: 20px;
     cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
+    font-weight: bold;
     transition: 0.3s;
-}
-
-.login-btn:hover {
+  }
+  
+  .login-btn:hover {
     background: #ddd;
-}
+  }
 
-/* Categories */
-.categories h2,
-.popular-events h2 {
+  
+  /* Categories Section */
+  .categories h2,
+  .popular-events h2 {
     text-align: center;
-    margin-bottom: 15px;
-    font-size: 20px;
-    font-weight: 600;
-}
-
-.category-list {
+    margin-bottom: 20px;
+    font-size: 22px;
+  }
+  
+  .category-list {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 15px;
-}
-
-.category-card {
+    gap: 20px;
+  }
+  
+  .category-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 15px 20px;
+    border-radius: 15px;
+    min-width: 180px;
+    text-align: center;
+    transition: 0.3s;
+  }
+  
+  .category-card:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+  
+  .category-card .icon {
+    font-size: 28px;
+    margin-right: 12px;
+  }
+  
+  .category-info h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .category-info p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    opacity: 0.8;
+  }
+  
+  /* Popular Events */
+  .event-list {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+  }
+  
+  .event-card {
     display: flex;
     align-items: center;
     background: rgba(255, 255, 255, 0.1);
     padding: 15px;
-    border-radius: 10px;
-    min-width: 160px;
-    text-align: center;
+    border-radius: 15px;
+    width: 300px;
     transition: 0.3s;
-}
-
-.category-card:hover {
+  }
+  
+  .event-card:hover {
     background: rgba(255, 255, 255, 0.2);
-}
-
-/* Footer */
-footer {
+  }
+  
+  .event-card img {
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+    margin-right: 12px;
+  }
+  
+  .event-info h3 {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .event-info p {
+    margin: 4px 0;
+    font-size: 13px;
+    opacity: 0.8;
+  }
+  
+  /* Footer */
+  footer {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 30px;
+    font-size: 14px;
     opacity: 0.7;
-}
+  }
+  

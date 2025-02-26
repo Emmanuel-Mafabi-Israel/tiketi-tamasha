@@ -1,22 +1,17 @@
-import React from "react";
 import EventDiscovery from "./EventDiscovery";
 
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        
-        {/* ✅ Correctly placed EventDiscovery component */}
-        <EventDiscovery />
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-        </a>
+      <header className="header-container">
+        <div className="logo-container">
+          <img src="/path-to-your-logo.png" alt="Tiketi Tamasha Logo" className="logo-img" />
+          <h1 className="site-name">Tiketi Tamasha</h1>
+        </div>
+        <button className="login-btn">Login</button>
       </header>
+      <EventDiscovery />
     </div>
   );
 }
