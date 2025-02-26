@@ -8,7 +8,6 @@
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.9",
-    "postcss": ">=8.4.31",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
@@ -18,7 +17,6 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "postcss": ">=8.4.31",
     "serialize-javascript": ">=6.0.2"
   },
   "scripts": {

@@ -1,20 +1,47 @@
 /* ✅ Navbar container */
 .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.1px 12px;
+  background: linear-gradient(135deg, #000, #001645);
+  color: white;
+}
+/* ✅ Logo Container */
+.logo {
+    cursor: pointer;
+    text-decoration: none;
+    font-family: "Poppins", Bold;
     display: flex;
-    justify-content: space-between;  /* ✅ Ensures space between logo & nav items */
     align-items: center;
-    padding: 15px 50px;
-    background-color: #0b0a30;
+    gap: 5px;
+}
+
+/* ✅ Icon Styling */
+.logo img {
+    width: 70px;
+    height: auto;
+}
+
+/* ✅ Stack Tiketi & Tamasha */
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.0;
+}
+
+/* ✅ Style Tiketi */
+.logo-light {
+    font-weight: 400;
+    font-size: 1.4rem;
     color: white;
 }
 
-/* ✅ Make the logo clickable */
-.logo {
-    cursor: pointer;
-    font-size: 1.8rem;
-    font-weight: bold;
+/* ✅ Style Tamasha */
+.logo-bold {
+    font-weight: 700;
+    font-size: 1.6rem;
     color: white;
-    text-decoration: none;
 }
 
 /* ✅ Style the navigation links */
@@ -22,10 +49,10 @@
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 20px;  /* ✅ Adds spacing between links */
+    gap: 20px;
     margin: 0;
     padding: 0;
-    flex-wrap: wrap;  /* ✅ Prevents elements from squeezing */
+    flex-wrap: wrap;
 }
 
 /* ✅ Ensures each list item aligns properly */
@@ -36,25 +63,25 @@
 
 /* ✅ Fix Explore Events text color */
 .nav-links a {
-    color: rgb(218, 218, 218) !important;
     text-decoration: none;
     font-size: 16px;
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease-in-out;
+    color: white; /* ✅ White for consistency */
 }
 
 /* ✅ Hover effect */
 .nav-links a:hover {
-    color: #4caf50;  /* ✅ Green hover effect */
+    color: #f8fbfd; /* ✅ Matches gradient effect */
 }
 
 /* ✅ General Button Style (Register Button) */
 .auth-btn {
-    padding: 10px 20px;
-    border: 2px solid white;
-    border-radius: 5px;
-    background-color: white;
-    color: #0b0a30;
+    padding: 12px 52px;
+    border: 8px solid #041948;
+    border-radius: 80px;
+    background: white;
+    color: #2D2929;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
@@ -63,22 +90,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 15px;  /* ✅ Prevents button from being squeezed */
+    margin-left: 15px;
 }
 
 /* ✅ Hover effect */
 .auth-btn:hover {
-    background-color: transparent;
-    color: white;
+    background-color: #e9ecf0;
+    color:white;
 }
-
 /* ✅ Login Button Specific Style */
 .login-btn {
     padding: 10px 20px;
     border: 2px solid white;
     border-radius: 5px;
     background-color: white;
-    color: black !important;  /* ✅ Set text color to black */
+    color: black !important; /* Ensures text stays visible */
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
@@ -92,9 +118,11 @@
 
 /* ✅ Hover effect for login button */
 .login-btn:hover {
-    background-color: transparent;
+    background-color: #4a90e2; /* Slight blue for better contrast */
     color: white !important;
+    border-color: #4a90e2; /* Ensure border matches the background */
 }
+
 
 /* ✅ Style the logout button */
 .logout-btn {
@@ -127,6 +155,40 @@
     .auth-btn, .login-btn {
         width: 100%;
         text-align: center;
-        margin-left: 0;  /* ✅ Prevents extra spacing on mobile */
+        margin-left: 0;
     }
+}
+
+/* ✅ Explore Events Button */
+.explore-link {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+    gap: 10px;
+    background-color: transparent;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* ✅ Explore Events Hover Effect */
+.explore-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ✅ Style for the Explore Events Arrow */
+.explore-icon {
+    font-size: 12px;
+    color: #FFFFFF;
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+    font-family: "Poppins";
+}
+
+/* ✅ Hover Effect for Arrow */
+.explore-link:hover .explore-icon {
+    color: white;
+    transform: translateX(3px);
 }

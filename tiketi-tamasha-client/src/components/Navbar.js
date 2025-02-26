@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { FaExternalLinkAlt } from "react-icons/fa";
 import "../styles/Navbar.css";
-
+import logoIcon from "../assets/logo.svg/tiketi-tamasha-icon-high-res-white.svg"; // ✅ Import the logo
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -10,13 +11,23 @@ const Navbar = () => {
 
   return ( 
     <nav className="navbar">
-      {/*  Make "Tiketi Tamasha" Clickable */}
+      {/* ✅ Updated logo section */}
       <div className="logo" onClick={() => navigate("/")}>
-        Tiketi Tamasha
+        <img src={logoIcon} alt="Tiketi Tamasha Logo" />
+        <div className="logo-text">
+          <span className="logo-light">Tiketi</span>
+          <span className="logo-bold">Tamasha</span>
+        </div>
       </div>
 
       <ul className="nav-links">
-        <li><Link to="/events">Explore Events</Link></li>
+        <li>
+          <Link to="/events" className="explore-link">
+            Explore Events 
+            <FaExternalLinkAlt className="explore-icon" />
+          </Link>
+        </li>
+
         {user ? (
           <>
             <li>
@@ -30,7 +41,6 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            {/*  Updated Login button to match Register button styling */}
             <li>
               <Link to="/login" className="auth-btn">Login</Link>
             </li>

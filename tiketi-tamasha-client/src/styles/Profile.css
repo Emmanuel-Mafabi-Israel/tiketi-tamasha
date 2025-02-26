@@ -36,9 +36,9 @@ button {
 }
 
 button:hover {
-  background: #0056b3;
+  background: #f6faff;
+  background-color: transparent;
 }
-
 .ticket-list {
   margin-top: 20px;
 }

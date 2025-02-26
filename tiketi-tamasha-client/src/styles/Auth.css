@@ -1,136 +1,178 @@
-/* ✅ Center auth forms */
+/* 1️⃣ Full-Screen Auth Container */
 .auth-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: #0b0a30; /* ✅ Matched Home Page */
-}
+    background: linear-gradient(135deg, #000, #062b7b);
+    color: white;
+    padding: 8px 0;
+    position: relative;
+    overflow: hidden;
+  }
 
-/* ✅ Auth card styling */
-.auth-card {
-    background: white;
-    padding: 35px;
-    border-radius: 10px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+/* 2️⃣ Background Icons */
+.auth-icons {
+    position: absolute;
     width: 100%;
-    max-width: 420px;
-    text-align: center;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none; /* Prevents icons from blocking interactions */
 }
 
-/* ✅ Tabs for Personal/Business selection */
+.auth-icon {
+    position: absolute;
+    opacity: 0.2;
+    width: 50px;
+    height: auto;
+}
+
+/* 📌 Adjust Icon Positions */
+.icon-1 { top: 30%; left: 8%; transform: rotate(-25deg) scale(1.1); }
+.icon-2 { top: 18%; right: 8%; transform: rotate(20deg) scale(1.1); }
+.icon-3 { bottom: 20%; left: 12%; transform: rotate(-10deg) scale(1.1); }
+.icon-4 { bottom: 35%; right: 10%; transform: rotate(8deg) scale(1.1); }
+.icon-5 { 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%) scale(3.5); 
+    opacity: 0.1; /* Large faded center note */
+}
+
+/* 3️⃣ Auth Card (Form Container) */
+.auth-card {
+    
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(0px);
+    border-radius: 20px;
+    box-shadow: 0 0px 2px rgb(224, 196, 196);
+    padding: 5rem; /* Reduced padding for smaller card */
+    width: 90%; /* 90% width of parent container */
+    max-width: 400px; /* Max width to ensure it doesn't become too wide */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1.9rem;
+    align-items: center; /* Align contents to center */
+    justify-content: center; /* Vertically center the contents */
+    background-color: rgba(2, 17, 61, 0.76);
+}
+
+/* 4️⃣ Logo + Title Row */
+.auth-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1.9rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.auth-title img {
+    width: 35px;
+    height: 35px;
+}
+
+/* 5️⃣ Account Type Tab Styling */
 .tab-container {
     display: flex;
     justify-content: space-between;
-    border-bottom: 2px solid #ddd;
-    margin-bottom: 20px;
+    gap: 10px;
 }
 
 .tab {
-    flex: 1;
-    padding: 12px;
-    background: white;
-    color: #0b0a30;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 5px 5px 0 0;
-}
-
-.tab.selected {
-    background-color: #007bff;
+    width: 48%;
+    padding: 10px;
+    background: transparent;
     color: white;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    border-radius: 8px;
 }
 
-/* ✅ Input fields */
-.auth-card input {
+.tab.active {
+    background-color: white;
+    color: #020e2b;
+}
+
+/* 6️⃣ Input Fields */
+.auth-input {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: border 0.3s ease-in-out;
-}
-
-.auth-card input:focus {
-    border-color: #007bff;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 1rem;
     outline: none;
 }
 
-/* ✅ Password input with toggle */
-.password-container {
-    position: relative;
+.auth-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
 }
 
-.password-toggle {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #555;
-}
-
-/* ✅ Submit button (Now Matches Home Page) */
+/* 7️⃣ Button Styling for auth-card (Register / Login buttons) */
 .auth-button {
-    width: 100%;
-    padding: 12px;
-    background: white;  /* ✅ Matched Home Page */
-    color: #0b0a30;  /* ✅ Dark Text Like Home Page */
-    border: 2px solid white;
-    border-radius: 5px;
+    width: 60%;
+    padding: 13px;
+    background: #ffffff;  /* Set background color */
+    color: rgb(7, 6, 6);  /* Set text color to white */
+    border: none;
+    border-radius: 60px;
+    font-family: Poppins;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 16px;
-    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease-in-out;
 }
 
 .auth-button:hover {
-    opacity: 0.8;
+    background: rgba(255, 255, 255, 0.2);  /* Change to a darker blue on hover */
+    transform: scale(1.03); /* Slight scaling for better interaction */
 }
 
-/* ✅ Disabled Submit Button */
-.auth-button:disabled {
-    background: #ddd;
-    color: #888;
-    cursor: not-allowed;
+/* 8️⃣ Footer Text & Links */
+.auth-footer {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    
 }
 
-/* ✅ Register/Login link */
-.auth-card p {
-    margin-top: 15px;
-    font-size: 14px;
-}
-
-.auth-card a {
-    color: #007bff;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.auth-card a:hover {
+.auth-footer a {
+    color: #ffffff;
     text-decoration: underline;
+    font-weight: 500;
 }
 
-/* ✅ Error Message Styling */
-.error-message {
-    color: #ff4d4d;  /* Bright red */
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    text-align: left; /* Align with input fields */
-}
-
-/* ✅ Responsive Design */
-@media (max-width: 500px) {
+/* 9️⃣ Mobile Responsiveness */
+@media (max-width: 480px) {
     .auth-card {
-        padding: 25px;
+        padding: 1.5rem;
         max-width: 90%;
     }
 
+    .auth-input {
+        font-size: 0.95rem;
+    }
+
+    .auth-title {
+        font-size: 1.3rem;
+    }
+
+    .auth-button {
+        padding: 12px;
+    }
+
+    /* Adjust Tabs on Smaller Screens */
+    .tab-container {
+        flex-direction: column;
+    }
+
     .tab {
-        font-size: 14px;
-        padding: 10px;
+        width: 100%;
     }
 }
