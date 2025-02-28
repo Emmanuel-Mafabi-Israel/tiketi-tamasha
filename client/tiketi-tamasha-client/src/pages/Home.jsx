@@ -4,7 +4,7 @@ import "../styles/Home.css";
 
 import doodle_background from '../assets/tamasha_doodle_background.svg';
 
-const Home = () => {
+export default function Home() {
 	const navigate = useNavigate();
 
 	return (
@@ -19,5 +19,3 @@ const Home = () => {
 		</div>
 	);
 };
-
-export default Home;

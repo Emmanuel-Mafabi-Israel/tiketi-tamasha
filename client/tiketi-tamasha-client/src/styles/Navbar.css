@@ -113,6 +113,18 @@
                 width: fit-content;
                 height: fit-content;
             }
+
+            .tiketi-tamasha-navbar-unsigned-btns {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 21px;
+
+                overflow-y: hidden;
+
+                width: inherit;
+                height: inherit;
+            }
         }
 
         .tiketi-tamasha-btn {

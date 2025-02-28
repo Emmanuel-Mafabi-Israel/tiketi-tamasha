@@ -1,14 +1,22 @@
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import "../styles/Navbar.css";
 
 import tiketi_tamasha_logo from "../assets/tiketi-tamasha-icon-high-res-white.svg";
 import tiketi_explore_logo from "../assets/tiketi-tamasha-new-page-rounded.svg";
+import tiketi_return_logo from "../assets/tiketi-tamasha-return.svg";
 
-const Navbar = () => {
+import Button from "./Button";
+import "../styles/Button.css";
+
+export default function Navbar() {
 	const { user, logout } = useContext(AuthContext);
 	const navigate = useNavigate();
+	const location = useLocation();
+
+	const isLoginPage = location.pathname === "/login";
+	const isDiscoverPage = location.pathname === "/discover";
 
 	return (
 		<nav className="tiketi-tamasha-navbar">
@@ -26,35 +34,66 @@ const Navbar = () => {
 							Dashboard
 						</Link>
 						<div className="cta">
-							<Link to="/events" className="explore-link">
-								<button className='tiketi-tamasha-btn special'>
-									<div className="text">Explore events</div>
-									<img className='explore' src={tiketi_explore_logo} alt="explore" />
-								</button>
-							</Link>
-							<button className='tiketi-tamasha-btn' onClick={logout}>
-								Logout
-							</button>
+							<Button
+								className="tiketi-tamasha-btn special"
+								buttonText="Explore events"
+								image={tiketi_explore_logo}
+								alt="explore"
+								onClick={() => navigate("/discover")}
+							/>
+							<Button
+								className="tiketi-tamasha-btn"
+								buttonText="Logout"
+								onClick={logout}
+							/>
 						</div>
 					</div>
 				) : (
 					<div className="tiketi-tamasha-navbar-unsigned">
-						<Link to="/events" className="explore-link">
-							<button className='tiketi-tamasha-btn special'>
-								<div className="text">Explore events</div>
-								<img className='explore' src={tiketi_explore_logo} alt="explore" />
-							</button>
-						</Link>
-						<Link to="/Login" className="explore-link">
-							<button className='tiketi-tamasha-btn'>
-								Login
-							</button>
-						</Link>
+						{isLoginPage ? (
+							<div className="tiketi-tamasha-navbar-unsigned-btns">
+								<Button
+									className="tiketi-tamasha-btn special"
+									buttonText="Return"
+									image={tiketi_return_logo}
+									alt="explore"
+									onClick={() => navigate("/")}
+								/>
+							</div>
+						) : isDiscoverPage ? (
+							<div className="tiketi-tamasha-navbar-unsigned-btns">
+								<Button
+									className="tiketi-tamasha-btn special"
+									buttonText="Return"
+									image={tiketi_return_logo}
+									alt="explore"
+									onClick={() => navigate("/")}
+								/>
+								<Button
+									className="tiketi-tamasha-btn"
+									buttonText="Login"
+									onClick={() => navigate("/login")}
+								/>
+							</div>
+						) : (
+							<div className="tiketi-tamasha-navbar-unsigned-btns">
+								<Button
+									className="tiketi-tamasha-btn special"
+									buttonText="Explore events"
+									image={tiketi_explore_logo}
+									alt="explore"
+									onClick={() => navigate("/discover")}
+								/>
+								<Button
+									className="tiketi-tamasha-btn"
+									buttonText="Login"
+									onClick={() => navigate("/login")}
+								/>
+							</div>
+						)}
 					</div>
 				)}
 			</div>
 		</nav>
 	);
 };
-
-export default Navbar;

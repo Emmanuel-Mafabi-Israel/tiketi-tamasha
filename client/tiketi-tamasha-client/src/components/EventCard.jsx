@@ -1,16 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
+
 import "../styles/EventCard.css";
 
-const EventCard = ({ event }) => {
-	return (
-		<div className="event-card">
-			<img src={event.image} alt={event.title} />
-			<h3>{event.title}</h3>
-			<p>{event.date} | {event.location}</p>
-			<Link to={`/events/${event.id}`} className="details-btn">View Details</Link>
-		</div>
-	);
+export default function EventCard({cardImage, cardTitle, cardTime, cardLocation, flag="unsigned"}) {
+	// const navigate = useNavigate()
+    return (
+        <div className="tiketi-tamasha-event-card">
+            <img className="card-image" src={cardImage} alt="TiketiTamashaCard" />
+            <div className="card-info">
+                <div className="title">{cardTitle}</div>
+				<div className="time">{cardTime}</div>
+                <div className="location">{cardLocation}</div>
+            </div>
+        </div>
+    );
 };
-
-export default EventCard;

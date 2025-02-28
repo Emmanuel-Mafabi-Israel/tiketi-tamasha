@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import Discover from "./pages/Discover";
 import Events from "./pages/Events";
 import EventDetails from "./pages/EventDetails";
 import Login from "./pages/Login";
@@ -18,12 +19,12 @@ export default function AppRoutes() {
 	return (
 		<Routes>
 			<Route path="/" element={<Home />} />
+			<Route path="/discover" element={<Discover />} />
 			<Route path="/events" element={<Events />} />
 			<Route path="/events/:id" element={<EventDetails />} />
 			<Route path="/login" element={<Login />} />
 			<Route path="/register" element={<Register />} />
 
-			{/* Protected Routes */}
 			<Route path="/dashboard" element={<ProtectedRoute><CustomerDashboard /></ProtectedRoute>} />
 			<Route path="/organizer-dashboard" element={<ProtectedRoute><OrganizerDashboard /></ProtectedRoute>} />
 			<Route path="/manage-events" element={<ProtectedRoute><ManageEvents /></ProtectedRoute>} />

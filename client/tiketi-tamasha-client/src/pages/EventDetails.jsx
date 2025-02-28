@@ -1,9 +1,17 @@
+/*
+    GLORY BE TO GOD,
+    TIKETI TAMASHA,
+    DISCOVER PAGE,
+
+    BY ISRAEL MAFABI EMMANUEL
+*/
+
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getEventDetails } from "../api/eventService";
 import "../styles/EventDetails.css";
 
-const EventDetails = () => {
+export default function EventDetails() {
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const [event, setEvent] = useState(null);
@@ -25,5 +33,3 @@ const EventDetails = () => {
 		</div>
 	);
 };
-
-export default EventDetails;

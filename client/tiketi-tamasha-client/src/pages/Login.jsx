@@ -1,22 +1,20 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { Link } from "react-router-dom";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+
+
+import Button from "../components/Button";
 import "../styles/Auth.css";
 
-// ✅ Import background icons & logo
-import icon1 from "../assets/icon1.svg/tiketi-tamasha-doodle-calendar.svg";
-import icon2 from "../assets/icon2.svg/tiketi-tamasha-doodle-microphone.svg";
-import icon3 from "../assets/icon3.svg/tiketi-tamasha-doodle-note-double.svg";
-import icon4 from "../assets/icon4.svg/tiketi-tamasha-doodle-note-single.svg";
-import icon5 from "../assets/icon5.svg/tiketi-tamasha-doodle-speaker.svg";
+import doodle_background from '../assets/tamasha_doodle_background.svg';
 import logo from "../assets/logo.svg/tiketi-tamasha-icon-high-res-white.svg";
 
-const Login = () => {
+export default function Login() {
 	const { login } = useContext(AuthContext);
 	const [formData, setFormData] = useState({ email: "", password: "" });
 	const [showPassword, setShowPassword] = useState(false);
 	const [error, setError] = useState("");
+	const navigate = useNavigate();
 
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -38,70 +36,55 @@ const Login = () => {
 	};
 
 	return (
-		<div className="auth-container">
-			{/* Background icons */}
-			<div className="auth-icons">
-				<img src={icon1} alt="Calendar Icon" className="auth-icon icon-1" />
-				<img src={icon2} alt="Microphone Icon" className="auth-icon icon-2" />
-				<img src={icon3} alt="Double Note Icon" className="auth-icon icon-3" />
-				<img src={icon4} alt="Single Note Icon" className="auth-icon icon-4" />
-				<img src={icon5} alt="Speaker Icon" className="auth-icon icon-5" />
-			</div>
+		<div className="tiketi-tamasha-auth-page">
+			<img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
 
-			<div className="auth-card">
-				{/* Logo + "Login" title */}
-				<div className="auth-title">
-					<img src={logo} alt="Tiketi Tamasha Logo" />
-					<span>Login</span>
+			<div className="tiketi-tamasha-auth-page-center">
+				<div className="tiketi-tamasha-auth-heading">
+					<img className="image" src={logo} alt="Tiketi Tamasha Logo" />
+					<span className="text">Login</span>
 				</div>
-
-				{/* Show error message if exists */}
 				{error && <p className="error-message">{error}</p>}
-
-				<form onSubmit={handleSubmit}>
-					{/* Email Input */}
+				<form className="tiketi-tamasha-form" onSubmit={handleSubmit}>
 					<input
 						type="email"
 						name="email"
-						className="auth-input"
+						className="tiketi-tamasha-input"
 						placeholder="Registered Email"
 						onChange={handleChange}
 						required
 					/>
-
-					{/* Password Input with Toggle */}
 					<div className="password-container">
 						<input
 							type={showPassword ? "text" : "password"}
 							name="password"
-							className="auth-input"
+							className="tiketi-tamasha-input"
 							placeholder="Account Password"
 							onChange={handleChange}
 							required
 						/>
-						<span
-							onClick={() => setShowPassword(!showPassword)}
-							className="password-toggle"
-						>
-							{showPassword ? <FaEyeSlash /> : <FaEye />}
-						</span>
+						<div className="tools">
+							<span
+								onClick={() => setShowPassword(!showPassword)}
+								className="password-toggle"
+							>
+								{showPassword ? "Hide Password" : "Show Password"}
+							</span>
+							<Link to="/forgot-password">Forgot Password?</Link>
+						</div>
 					</div>
-
-					{/* Login Button */}
-					<button type="submit" className="auth-button">
-						Login
-					</button>
+					<div className="auth-footer">
+						<Button
+							className="tiketi-tamasha-btn auth"
+							buttonText="Login"
+							type="submit"
+						/>
+						<div className="link-text" onClick={() => navigate("/register")}>
+							Don’t have an account? Signup
+						</div>
+					</div>
 				</form>
-
-				{/* Footer links */}
-				<div className="auth-footer">
-					Don’t have an account? <Link to="/register">Register</Link>
-					<br />
-					<Link to="/forgot-password">Forgot Password?</Link>
-				</div>
 			</div>
 		</div>
 	);
 };
-
-export default Login;

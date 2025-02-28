@@ -1,0 +1,64 @@
+@import url('globals.css');
+
+.tiketi-tamasha-explore-page {
+	background: transparent;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+    flex-direction: column;
+
+	position: relative;
+	overflow: hidden;
+
+	width: 100vw;
+	height: calc(100vh - 120px);
+
+	.tiketi-tamasha-doodle-background {
+		background-size: cover;
+
+		position: absolute;
+
+		z-index: 1;
+
+		width: 80%;
+		height: 80%;
+	}
+
+    .tiketi-tamasha-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        padding: 14px;
+
+        z-index: 2;
+
+        min-width: 500px;
+        height: 50%;
+
+        .section-browse-title {
+            color: var(--tiketi-tamasha-cool-white);
+            font-size: 13px;
+
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+
+            width: 100%;
+            height: 50px;
+        }
+
+        .section-elements {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+
+            gap: 20px;
+
+            width: 100%;
+            height: fit-content;
+        }
+    }
+}

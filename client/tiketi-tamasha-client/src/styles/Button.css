@@ -1,0 +1,80 @@
+/*
+    GLORY BE TO GOD,
+    TIKETI TAMASHA,
+    BUTTON STYLING,
+
+    BY ISRAEL MAFABI EMMANUEL
+*/
+
+.tiketi-tamasha-btn {
+    background: var(--tiketi-tamasha-cool-white);
+    border-radius: 20px;
+
+    color: var(--tiketi-tamasha-cool-black);
+
+    font-size: 13px;
+    font-weight: normal;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0px;
+    padding: 0px;
+
+    gap: 4px;
+
+    width: 122px;
+    height: 35px;
+}
+
+.tiketi-tamasha-btn.auth {
+    background: var(--tiketi-tamasha-cool-white);
+    border-radius: 20px;
+
+    color: var(--tiketi-tamasha-cool-black);
+
+    font-size: 13px;
+    font-weight: normal;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 14px;
+    padding: 0px;
+
+    gap: 4px;
+
+    width: 300px;
+    height: 35px;
+}
+
+.tiketi-tamasha-btn.special {
+    background: transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    padding: 0px;
+
+    width: fit-content;
+    height: fit-content;
+
+    .text {
+        color: var(--tiketi-tamasha-cool-white);
+
+        font-size: 13.333px;
+        font-weight: normal;
+
+        width: fit-content;
+        height: fit-content;
+    }
+
+    .image {
+        width: 20px;
+    }
+}

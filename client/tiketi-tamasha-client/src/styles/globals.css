@@ -4,17 +4,22 @@
     By Israel Mafabi Emmanuel
 */
 
+@import url('Button.css');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
     --tiketi-tamasha-cool-black: rgb(0, 0, 0);
-    --tiketi-tamasha-cool-gray : rgb(134, 134, 139);
-    --tiketi-tamasha-cool-gray-: rgb(180, 180, 186);
+    --tiketi-tamasha-cool-gray : #96b8f939;
+    --tiketi-tamasha-cool-gray-: #96b8f96f;
     --tiketi-tamasha-cool-white: white;
     --tiketi-tamasha-cool-blue : rgb(38, 103, 176);
 
+    --tiketi-tamasha-cool-white-tr       : rgba(255, 255, 255, 0.6);
+    --tiketi-tamasha-cool-blue-br        : rgb(69, 148, 239);
     --tiketi-tamasha-theme-cool-blue     : #0e398d;
     --tiketi-tamasha-theme-cool-dark-blue: #081630;
+    --tiketi-tamasha-theme-cool-dark-b-tr: #0816308c;
+    --tiketi-tamasha-theme-cool-dark-d-tr: #051025ab;
 
     --tiketi-tamasha-default-font: "Poppins", sans-serif;
 }
@@ -59,4 +64,34 @@ body {
     width: 100vw;
     min-width: 280px;
     min-height: 100vh;
+}
+
+.tiketi-tamasha-input::placeholder {
+    color: var(--tiketi-tamasha-cool-gray-);
+    font-size: 14px;
+
+    text-align: left;
+
+    margin: 0px;
+}
+
+.tiketi-tamasha-input {
+    background: transparent;
+    border: 1px solid var(--tiketi-tamasha-cool-gray);
+    border-radius: 14px;
+
+    font-size: 14px;
+    color: var(--tiketi-tamasha-cool-white);
+
+    text-align: left;
+
+    padding-left: 21px;
+    padding-right: 21px;
+
+    width: 300px;
+    height: 45px;
+}
+
+.tiketi-tamasha-input:focus {
+    background: var(--tiketi-tamasha-theme-cool-dark-d-tr);
 }

@@ -6,11 +6,11 @@
     BY ISRAEL MAFABI EMMANUEL
 */
 
-.tiketi-tamasha-event-card {
-    background: transparent;
-    /* 
+.tiketi-tamasha-discover-card {
+    background: var(--tiketi-tamasha-theme-cool-dark-b-tr);
+
     border: 1px solid var(--tiketi-tamasha-cool-gray);
-    border-radius: 14px; */
+    border-radius: 14px;
 
     display: flex;
     align-items: center;
@@ -21,12 +21,10 @@
     gap: 7px;
 
     width: 200px;
-    height: 100px;
+    height: 80px;
 
     .card-image {
-        border-radius: 14px;
         width: 45px;
-        height: 68px;
     }
 
     .card-info {
@@ -43,7 +41,7 @@
             font-size: 15px;
         }
 
-        .time, .location {
+        .count {
             color: var(--tiketi-tamasha-cool-white-tr);
             font-size: 13px;
 

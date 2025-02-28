@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api/tickets";
+const API_URL = "http://localhost:5000/tickets";
 
 const ticketService = {
 	purchaseTicket: async (eventId, quantity, userId) => {
