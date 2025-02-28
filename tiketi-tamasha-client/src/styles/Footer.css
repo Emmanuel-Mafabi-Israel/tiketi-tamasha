@@ -1,15 +1,14 @@
 /* ✅ Footer container */
 footer {
-    background: linear-gradient(135deg, #00123a, #002f77);
-    color: white;
+    background: linear-gradient(69deg, #0d063400, #11084100);
+    color: rgb(97, 89, 89);
     text-align: center;
-    padding: 7px 0;
+    padding: 0px 0;
     font-size: 12px;
     font-weight: 500;
     width: 100%;
     font-family: "Poppins";
-  }
-
+}
 /* ✅ Footer Links */
 .footer a {
     color: #4a90e2; /* ✅ Matches gradient effect */

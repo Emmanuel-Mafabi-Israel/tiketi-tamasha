@@ -27,12 +27,12 @@ input {
 }
 
 button {
-  background: #007bff;
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
+  background: #ffffffe3;
+  color: #080606;
+  padding: 20px;
+  border-radius: 15px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 40px;
 }
 
 button:hover {
@@ -51,5 +51,5 @@ button:hover {
 }
 
 .logout-btn {
-  background: red;
+  background: rgb(49, 48, 48);
 }

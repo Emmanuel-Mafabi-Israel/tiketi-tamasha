@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode"; // ✅ Correct import
 import { loginUser, registerUser, logoutUser } from "../api/authService";
 
 export const AuthContext = createContext();
@@ -6,36 +7,76 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+  // ✅ Function to check token validity
+  const isTokenValid = (token) => {
+    if (!token) return false;
+    try {
+      const decoded = jwtDecode(token);
+      return decoded.exp * 1000 > Date.now(); // Convert expiry to milliseconds
+    } catch (error) {
+      return false; // Invalid token
+    }
+  };
+
+  // ✅ Check localStorage on page load
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) {
-      setUser(storedUser);
+    const token = localStorage.getItem("token");
+
+    if (isTokenValid(token)) {
+      const decoded = jwtDecode(token);
+      setUser({ email: decoded.sub, role: decoded.role, token });
+    } else {
+      logout(); // Clear expired tokens
     }
   }, []);
 
-  const login = async (credentials, navigate) => {
-    const response = await loginUser(credentials);
-    if (response.token) {
-      setUser(response.user);
-      localStorage.setItem("user", JSON.stringify(response.user));
-      navigate(response.user.role === "organizer" ? "/organizer-dashboard" : "/dashboard");
+  // ✅ Login function
+  const login = async (credentials) => {
+    try {
+      const response = await loginUser(credentials);
+
+      if (response && response.access_token) {
+        localStorage.setItem("token", response.access_token);
+        const decoded = jwtDecode(response.access_token);
+
+        setUser({ email: decoded.sub, role: decoded.role, token: response.access_token });
+
+        return decoded.role;
+      } else {
+        throw new Error("Invalid response format from server.");
+      }
+    } catch (error) {
+      console.error("❌ Login failed:", error);
+      throw new Error("Invalid email or password.");
     }
   };
 
-  const register = async (userData, navigate) => {
-    const response = await registerUser(userData);
-    if (response.token) {
-      setUser(response.user);
-      localStorage.setItem("user", JSON.stringify(response.user));
-      navigate(response.user.role === "organizer" ? "/organizer-dashboard" : "/dashboard");
+  // ✅ Register function
+  const register = async (userData) => {
+    try {
+      const response = await registerUser(userData);
+
+      if (response && response.access_token) {
+        localStorage.setItem("token", response.access_token);
+        const decoded = jwtDecode(response.access_token);
+
+        setUser({ email: decoded.sub, role: decoded.role, token: response.access_token });
+
+        return decoded.role;
+      } else {
+        throw new Error("Invalid response format from server.");
+      }
+    } catch (error) {
+      console.error("❌ Registration failed:", error);
+      throw new Error("Registration failed.");
     }
   };
 
-  // ✅ Define logout function properly
+  // ✅ Logout function
   const logout = () => {
-    logoutUser(); // Call the function from `authService.js`
+    logoutUser();
     setUser(null);
-    localStorage.removeItem("user");
+    localStorage.removeItem("token");
   };
 
   return (

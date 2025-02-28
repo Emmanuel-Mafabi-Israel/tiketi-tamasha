@@ -1,35 +1,98 @@
+/* ✅ Dashboard.css */
 .dashboard-container {
-    text-align: center;
-    padding: 50px;
-    background: #f9f9f9;
-  }
-  
-  h1 {
-    font-size: 2.5rem;
-    color: #333;
-  }
-  
-  p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-  }
-  
-  .dashboard-actions {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-  }
-  
-  button {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background: #0056b3;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #000, #062b7b);
+  color: white;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ✅ Background Icons */
+.dashboard-icons {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none; /* Ensures icons don't block interactions */
+}
+
+/* ✅ Individual Icon Styles */
+.dashboard-icon {
+  position: absolute;
+  opacity: 0.1;
+  width: 120px;
+  height: auto;
+}
+
+/* ✅ Positioning Each Icon */
+.icon-1 { top: 20%; left: 15%; transform: rotate(-25deg) scale(0.8); }
+.icon-2 { top: 18%; right: 18%; transform: rotate(30deg) scale(0.7); }
+.icon-3 { bottom: 35%; left: 50%; transform: translate(-50%, -50%) scale(4.8); opacity: 0.1; }
+.icon-4 { bottom: 25%; right: 20%; transform: rotate(10deg) scale(0.9); }
+.icon-5 { top: 65%; left: 22%; transform: rotate(16deg) scale(0.9); }
+
+/* ✅ Larger Card-style Dashboard */
+.dashboard-card {
+  background: rgba(2, 17, 61, 0.76, 0.1);
+  padding: 100px;
+  border-radius: 16px;
+  backdrop-filter: blur(1px);
+  width: 500px;
+  height: 550px;
+  text-align: center;
+  box-shadow: 0px 1px 7px rgb(224, 196, 196);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* ✅ Dashboard Title */
+h1 {
+  font-size: 2.8rem;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 10px;
+}
+
+/* ✅ Dashboard Subtitle */
+p {
+  font-size: 1.3rem;
+  margin-bottom: 5px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ✅ Button Container */
+.dashboard-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ✅ Buttons */
+button {
+  background: white;
+  color: #2D2929;
+  padding: 14px 24px;
+  border-radius: 30px;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  transition: 0.3s ease-in-out;
+  width: 80%;
+}
+
+button:hover {
+  background: #007bff;
+  color: white;
+}

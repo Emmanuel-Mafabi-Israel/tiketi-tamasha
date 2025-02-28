@@ -25,16 +25,38 @@ const CreateEvent = () => {
 
   return (
     <div className="create-event-container">
-      <h1>Create New Event</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="title" placeholder="Event Title" onChange={handleChange} required />
-        <textarea name="description" placeholder="Description" onChange={handleChange} required></textarea>
-        <input type="date" name="date" onChange={handleChange} required />
-        <input type="text" name="location" placeholder="Location" onChange={handleChange} required />
-        <input type="number" name="price" placeholder="Ticket Price" onChange={handleChange} required />
-        <input type="file" onChange={handleImageUpload} />
-        <button type="submit">Create Event</button>
-      </form>
+      <div className="event-card">
+        {/* Left Section - Image Upload */}
+        <div className="event-image-section">
+          {image ? <img src={image} alt="Event" className="event-image" /> : <div className="image-placeholder">Upload Image</div>}
+          <input type="file" onChange={handleImageUpload} className="file-input" />
+        </div>
+
+        {/* Right Section - Form Inputs */}
+        <div className="event-form-section">
+          <h2>Create Event</h2>
+          <form onSubmit={handleSubmit}>
+            <input type="text" name="title" placeholder="Event Name" onChange={handleChange} required />
+            
+            <div className="date-time-section">
+              <input type="date" name="date" onChange={handleChange} required />
+              <input type="time" name="time" onChange={handleChange} required />
+            </div>
+
+            <input type="text" name="location" placeholder="Event Location" onChange={handleChange} required />
+            <textarea name="description" placeholder="Add Description" onChange={handleChange} required></textarea>
+
+            {/* Event Options */}
+            <div className="event-options">
+              <label>Tickets: <input type="number" name="price" placeholder="Free or Price" onChange={handleChange} required /></label>
+              <label>Require Approval: <input type="checkbox" /></label>
+              <label>Capacity: <input type="number" placeholder="Unlimited" /></label>
+            </div>
+
+            <button type="submit">Create Event</button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

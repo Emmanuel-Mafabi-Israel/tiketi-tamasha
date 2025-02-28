@@ -40,9 +40,9 @@
 
 /* ✅ Hero Section Text */
 .hero-title {
-  font-size: 3rem;
-  font-weight: 500;
-  font-family: "Poppins", sans-serif;
+    font-size: 3rem;
+    font-weight: 520;
+    font-family: "Poppins", sans-serif;
 }
 
 .highlight {
@@ -62,9 +62,9 @@
 }
 
 .hero-text {
-  font-size: 1.2rem;
-  max-width: 550px;
-  margin-top: 10px;
+  font-size: 1.4rem;
+  max-width: 630px;
+  margin-top: 25px;
   font-family: "Poppins";
 }
 
@@ -75,11 +75,12 @@
   background: white;
   color: #2D2929;
   border-radius: 110px;
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   cursor: pointer;
   border: none;
   transition: 0.3s;
   font-family: "Poppins";
+  width: auto;
 }
 
 .hero-btn:hover {

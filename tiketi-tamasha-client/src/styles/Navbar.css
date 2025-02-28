@@ -1,11 +1,11 @@
 /* ✅ Navbar container */
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.1px 12px;
-  background: linear-gradient(135deg, #000, #001645);
-  color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 12px;
+    background: linear-gradient(135deg, #000000, #021643);
+    color: white;
 }
 /* ✅ Logo Container */
 .logo {

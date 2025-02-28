@@ -1,16 +1,17 @@
 import axios from "axios";
-import CONFIG from "../config";
 
 export const uploadImage = async (file) => {
   try {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", CONFIG.CLOUDINARY.UPLOAD_PRESET);
+    formData.append("upload_preset", "Tiketi-tamasha"); // Correct preset
 
-    const response = await axios.post(
-      `https://api.cloudinary.com/v1_1/${CONFIG.CLOUDINARY.CLOUD_NAME}/image/upload`,
-      formData
-    );
+    // Cloudinary API URL
+    const cloudinaryUrl = `https://api.cloudinary.com/v1_1/dt14zctwu/image/upload`;
+
+    const response = await axios.post(cloudinaryUrl, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
 
     return response.data;
   } catch (error) {
