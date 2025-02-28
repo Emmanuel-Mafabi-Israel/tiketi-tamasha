@@ -25,7 +25,7 @@
 
     .card-image {
         border-radius: 14px;
-        width: 45px;
+        width: 50px;
         height: 68px;
     }
 
@@ -40,14 +40,20 @@
 
         .title {
             color: var(--tiketi-tamasha-cool-white);
-            font-size: 15px;
+            font-size: 13px;
         }
 
         .time, .location {
             color: var(--tiketi-tamasha-cool-white-tr);
-            font-size: 13px;
+            font-size: 12px;
 
             width: inherit;
         }
+    }
+}
+
+.tiketi-tamasha-event-card:hover {
+    .card-image {
+        box-shadow: 0px 0px 0px 4px var(--tiketi-tamasha-cool-gray);
     }
 }

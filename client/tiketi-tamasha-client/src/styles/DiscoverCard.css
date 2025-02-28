@@ -38,14 +38,19 @@
 
         .title {
             color: var(--tiketi-tamasha-cool-white);
-            font-size: 15px;
+            font-size: 13px;
         }
 
         .count {
             color: var(--tiketi-tamasha-cool-white-tr);
-            font-size: 13px;
+            font-size: 12px;
 
             width: inherit;
         }
     }
+}
+
+.tiketi-tamasha-discover-card:hover {
+    border: 1px solid var(--tiketi-tamasha-cool-gray-);
+    border-radius: 14px;
 }

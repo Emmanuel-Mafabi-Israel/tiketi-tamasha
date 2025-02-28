@@ -10,6 +10,7 @@ import React, {useState} from "react";
 
 import EventCard from "../components/EventCard";
 import DiscoverCard from "../components/DiscoverCard";
+import EventDetails from "./EventDetails";
 
 import "../styles/Discover.css";
 
@@ -27,8 +28,17 @@ import climate from '../assets/high_res/tiketi-climate-change.jpg';
 import ai from '../assets/high_res/tiketi-innovate.jpg';
 
 
+
 export default function Discover() {
     const [selectedEvent, setSelectedEvent] = useState(null);
+
+    const handleEventClick = (event) => {
+        setSelectedEvent(event);
+    };
+
+    // const handleCloseDialog = () => {
+    //     setSelectedEvent(null)
+    // };
 
     return (
         <div className="tiketi-tamasha-explore-page">
@@ -76,6 +86,7 @@ export default function Discover() {
                         cardTitle="AR Gadgets"
                         cardTime="Wed, Jun 1, 1:00 PM"
                         cardLocation="University of Adelaide"
+                        onClick={() => handleEventClick({title: "AR Gadgets", })}
                     />
                     <EventCard
                         cardImage={climate}
@@ -91,7 +102,9 @@ export default function Discover() {
                     />
                 </div>
             </div>
-            {}
+            {selectedEvent && (
+                EventDetails
+            )}
         </div>
     )
 };

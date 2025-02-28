@@ -1,35 +1,58 @@
 /*
-    GLORY BE TO GOD,
-    TIKETI TAMASHA,
-    DISCOVER PAGE,
+	GLORY BE TO GOD,
+	TIKETI TAMASHA,
+	DISCOVER PAGE,
 
-    BY ISRAEL MAFABI EMMANUEL
+	BY ISRAEL MAFABI EMMANUEL
 */
 
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getEventDetails } from "../api/eventService";
 import "../styles/EventDetails.css";
 
-export default function EventDetails() {
-	const { id } = useParams();
+export default function EventDetails({ input }) {
 	const navigate = useNavigate();
 	const [event, setEvent] = useState(null);
 
 	useEffect(() => {
-		getEventDetails(id).then(setEvent);
-	}, [id]);
+		getEventDetails(input.id).then(setEvent);
+	}, [input.id]);
 
 	if (!event) return <p>Loading event details...</p>;
 
 	return (
-		<div className="event-details-container">
-			<h1>{event.title}</h1>
-			<p>{event.description}</p>
-			<p><strong>Date:</strong> {event.date}</p>
-			<p><strong>Location:</strong> {event.location}</p>
-			<p><strong>Price:</strong> ${event.price}</p>
-			<button onClick={() => navigate(`/purchase?eventId=${id}`)}>Buy Ticket</button>
+		<div className="tiketi-tamasha-dialog-container">
+			<div className="tiketi-tamasha-dialog">
+				<div className="dialog-title">
+					<img className="dialog-image" src="" alt="" />
+					<div className="titles">
+						<div className="heading"></div>
+						<div className="subheading"></div>
+					</div>
+				</div>
+				<div className="dialog-body">
+					<div className="time-tickets">
+						<div className="time">
+							<div className="day"></div>
+							<div className="start"></div>
+							<div className="end"></div>
+						</div>
+						<div className="tickets"></div>
+					</div>
+					<div className="registration">
+						<div className="title">Join Event</div>
+						<div className="tiers">
+							
+						</div>
+					</div>
+					<div className="dialog-about">
+
+					</div>
+					<div className="location">
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 };

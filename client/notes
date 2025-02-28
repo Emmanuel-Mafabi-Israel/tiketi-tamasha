@@ -1,0 +1,22 @@
+{
+    "title": "Sample Amazing Event",
+    "description": "A weekend of great music and fun!",
+    "location": "Central Park, Nairobi",
+    "category": "Music",
+    "tags": "music, festival, live",
+    "start_date": "2024-12-31T18:00:00",
+    "end_date": "2024-12-31T22:00:00",
+    "image_url": "https://example.com/musicfestival.jpg",
+    "ticket_tiers": {
+        "Early Bird": {
+            "price": 1.00
+        },
+        "VIP": {
+            "price": 1.00
+        },
+        "Regular": {
+            "price": 1.00
+        }
+    },
+    "total_tickets": 700
+}
