@@ -1,0 +1,372 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+.event-discovery {
+  color: white;
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(137deg, #000612 10%, #072664 60%); /* Dark blue background from the design */
+  display: flex;
+  flex-direction: column;
+}
+
+.event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 20px 40px;
+  box-sizing: border-box;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  width: 50px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.site-name {
+  font-size: 20px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: bold;
+  margin: 0;
+}
+
+.logo-container span {
+  font-size: 12px;
+  color: #ccc;
+}
+
+
+.login-btn {
+  background-color: white;
+  color: #0c1e44;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.event-main {
+  width: 100%;
+  padding: 0 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.browse-category,
+.popular-events {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 48px;
+  text-align: center;
+}
+
+.browse-category h2,
+.popular-events h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.category-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.category-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #0e2756;
+  color: white;
+  border: none;
+  padding: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  height: 120px;
+  text-align: center;
+  position: relative;
+}
+
+/* Fix for category icons - target both SVG and img */
+.category-btn svg,
+.category-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Add emojis as icons for categories */
+.category-btn::before {
+  display: block;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.category-btn.research::before {
+  content: '🔬';
+}
+
+.category-btn.conserve::before {
+  content: '🌍';
+}
+
+.category-btn.fitness::before {
+  content: '🏃‍♂️';
+}
+
+.category-btn.wellness::before {
+  content: '❤️';
+}
+
+.category-btn.finance::before {
+  content: '💰';
+}
+
+.category-btn.music::before {
+  content: '🎵';
+}
+
+.event-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.event-card-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-card {
+  background-color: #0e2756;
+  border-radius: 10px;
+  overflow: hidden;
+  text-decoration: none;
+  color: white;
+  position: relative;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.event-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.event-card h3 {
+  margin: 0;
+  padding: 15px 15px 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.view-details-btn {
+  background-color: #0c1e44;
+  color: white;
+  border: 1px solid #2f4a7f;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin-top: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  align-self: center;
+}
+
+.event-card-content {
+  padding: 0 15px 15px;
+}
+
+/* Event count badges */
+.event-count {
+  display: block;
+  font-size: 12px;
+  color: #ccc;
+  margin-top: 5px;
+}
+
+/* Date and location for event cards */
+.event-date {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.event-location {
+  font-size: 12px;
+  color: #ccc;
+}
+
+.event-footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 20px;
+  font-size: 12px;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+  .category-buttons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .event-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .category-buttons {
+    grid-template-columns: 1fr;
+  }
+  
+  .event-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .event-header {
+    padding: 10px 20px;
+  }
+  
+  .event-main {
+    padding: 0 20px;
+  }
+}
+
+
+/* SIDE PANEL FOR EVENT DETAILS */
+.event-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 40%; /* Adjust width as needed */
+  height: 100%;
+  background: #ffffff;
+  color: #000;
+  box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.2);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+/* Show the panel when it's active */
+.event-panel.active {
+  transform: translateX(0);
+}
+
+/* Close button inside the panel */
+.event-panel .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Inside the event panel, format the event details */
+.event-panel .event-info {
+  padding: 20px;
+  text-align: center;
+}
+
+.event-panel img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.event-panel h2 {
+  margin: 15px 0 10px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.event-panel p {
+  font-size: 14px;
+  color: #444;
+  margin: 5px 0;
+}
+
+/* Join Waitlist Button */
+.event-panel .join-waitlist-btn {
+  background-color: #072664;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 20px;
+  display: block;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Make the panel responsive */
+@media (max-width: 768px) {
+  .event-panel {
+    width: 60%;
+  }
+}
+
+@media (max-width: 480px) {
+  .event-panel {
+    width: 80%;
+  }
+}
+
+/* Style for header SVGs */
+.event-header svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Category name and events count text styling */
+.category-name {
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+.category-events {
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 4px;
+}
+
+/* Ensure background SVGs do not scale disproportionately */
+.background-svg {
+  width: 25%; /* Reduced from 100px to a percentage basis */
+  height: auto;
+  max-width: 300px;
+  position: absolute;
+  z-index: 1;
+  opacity: 0.6;
+}
