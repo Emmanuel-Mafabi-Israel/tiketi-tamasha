@@ -27,8 +27,6 @@ import ar from '../assets/high_res/tiketi-augmented-reality.jpg';
 import climate from '../assets/high_res/tiketi-climate-change.jpg';
 import ai from '../assets/high_res/tiketi-innovate.jpg';
 
-
-
 export default function Discover() {
     const [selectedEvent, setSelectedEvent] = useState(null);
 
@@ -36,9 +34,9 @@ export default function Discover() {
         setSelectedEvent(event);
     };
 
-    // const handleCloseDialog = () => {
-    //     setSelectedEvent(null)
-    // };
+    const handleCloseDialog = () => {
+        setSelectedEvent(null)
+    };
 
     return (
         <div className="tiketi-tamasha-explore-page">
@@ -103,7 +101,9 @@ export default function Discover() {
                 </div>
             </div>
             {selectedEvent && (
-                EventDetails
+                <EventDetails
+                    onClose={handleCloseDialog}
+                />
             )}
         </div>
     )

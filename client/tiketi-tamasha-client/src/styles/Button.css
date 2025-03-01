@@ -28,6 +28,13 @@
     height: 35px;
 }
 
+/* .tiketi-tamasha-btn:hover {
+    background: transparent;
+    border: 1px solid var(--tiketi-tamasha-cool-white);
+
+    color: var(--tiketi-tamasha-cool-white);
+} */
+
 .tiketi-tamasha-btn.auth {
     background: var(--tiketi-tamasha-cool-white);
     border-radius: 20px;
@@ -76,5 +83,14 @@
 
     .image {
         width: 20px;
+    }
+}
+
+.tiketi-tamasha-btn.special:hover {
+    background: transparent;
+    border: none;
+
+    .text {
+        color: var(--tiketi-tamasha-cool-gray-);
     }
 }

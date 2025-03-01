@@ -20,7 +20,7 @@ p {
 }
 
 button {
-	background: #ffcc00;
+	background: white;
 	color: black;
 	padding: 10px;
 	border-radius: 5px;
@@ -28,5 +28,5 @@ button {
 }
 
 button:hover {
-	background: #e6b800;
+	background: white;
 }
