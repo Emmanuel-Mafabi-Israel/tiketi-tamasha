@@ -496,6 +496,43 @@ def mpesa_callback():
             logging.error(f"Transaction status query failed after callback error: {message}")
             return jsonify({'message': f'Error processing MPESA callback and status query failed: {str(e)}'}), 500
 
+# --- Search and filter functions ---
+@event_bp.route('/events/search', methods=['GET'])
+def search_events():
+    """
+    Searches for events based on a search term across title, category, and tags.
+    """
+    search_term = request.args.get('q')  # 'q' is a common convention for search query parameters
+    page        = request.args.get('page', 1, type=int) # Pagination
+    per_page    = request.args.get('per_page', 10, type=int) # Pagination
+
+    if not search_term:
+        return jsonify({'message': 'Search term is required'}), 400
+
+    # Construct the query: search across title, category, and tags
+    query = Event.query.filter(
+        db.or_(
+            Event.title.ilike(f"%{search_term}%"),       # Case-insensitive search in title
+            Event.category.ilike(f"%{search_term}%"),    # Case-insensitive search in category
+            Event.tags.ilike(f"%{search_term}%")         # Case-insensitive search in tags
+        )
+    )
+
+    # Paginate the results
+    pagination = query.paginate(page=page, per_page=per_page)
+    events = pagination.items
+
+    # Serialize the events
+    event_list = [event_schema.dump(event) for event in events]
+
+    return jsonify({
+        'events': event_list,
+        'total_pages': pagination.pages,
+        'current_page': pagination.page,
+        'total_events': pagination.total,
+        'per_page': per_page
+    }), 200
+
 # --- Debug Routes ---
 @auth_bp.route('/', methods=['GET'])
 def index():

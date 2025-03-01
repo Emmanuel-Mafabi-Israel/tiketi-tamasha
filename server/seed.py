@@ -19,7 +19,7 @@ def seed_data():
     with app.app_context():
 
         # Construct the full path to the JSON file
-        json_file_path = "H:\\Software Engineering - Group Projects\\tiketi-tamasha\\server\\events.json"
+        json_file_path = "H:\\Software Engineering - Group Projects\\tiketi-tamasha\\server\\events_seed\\musical_events.json"
 
         try:
             with open(json_file_path, 'r') as f:
