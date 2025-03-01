@@ -11,7 +11,7 @@ import icon4 from "../assets/icon4.svg/tiketi-tamasha-doodle-note-single.svg";
 import icon5 from "../assets/icon5.svg/tiketi-tamasha-doodle-speaker.svg";
 
 const CustomerDashboard = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   return (
@@ -31,7 +31,10 @@ const CustomerDashboard = () => {
 
         <div className="dashboard-actions">
           <button onClick={() => navigate("/events")}>Browse Events</button>
-          <button onClick={() => navigate("/profile")}>My Tickets</button>
+          <button onClick={() => navigate("/tickets")}>My Tickets</button>
+          <button onClick={() => navigate("/calendar")}>Calendar</button>
+          <button onClick={() => navigate("/profile")}>Profile Settings</button>
+          <button onClick={() => { logout(); navigate("/"); }}>Logout</button>
         </div>
       </div>
     </div>

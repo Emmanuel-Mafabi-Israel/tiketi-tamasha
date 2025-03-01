@@ -1,7 +1,8 @@
 .manage-events-container {
-    padding: 50px;
+    padding: 450px;
     text-align: center;
-    background: #0b0a30; /* ✅ Matches dark theme */
+    /* background: #0b0a30; */
+    background: linear-gradient(135deg, #000, #062b7b);
     color: white;
 }
 

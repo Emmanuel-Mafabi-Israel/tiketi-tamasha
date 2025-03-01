@@ -1,10 +1,8 @@
 const CONFIG = {
-  API_BASE_URL: "http://127.0.0.1:5000", // Change this when deploying
+  API_BASE_URL: "http://127.0.0.1:5000",
   CLOUDINARY: {
     CLOUD_NAME: "dt14zctwu",
-    API_KEY: "875974658393365",
-    API_SECRET: "aCETtXLVH1wf77VJBobrjRbNl6o",
-    UPLOAD_PRESET: "Tiketi-tamasha", // Correct Cloudinary preset
+    UPLOAD_PRESET: "Tiketi-tamasha",
   },
 };
 

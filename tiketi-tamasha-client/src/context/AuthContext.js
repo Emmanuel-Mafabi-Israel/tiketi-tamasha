@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { jwtDecode } from "jwt-decode"; // ✅ Correct import
+import { jwtDecode } from "jwt-decode";
 import { loginUser, registerUser, logoutUser } from "../api/authService";
 
 export const AuthContext = createContext();
@@ -18,15 +18,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ✅ Check localStorage on page load
+  // ✅ Load user from localStorage on page load
   useEffect(() => {
     const token = localStorage.getItem("token");
 
     if (isTokenValid(token)) {
       const decoded = jwtDecode(token);
-      setUser({ email: decoded.sub, role: decoded.role, token });
+      setUser({ id: decoded.id, email: decoded.sub, role: decoded.role, token });
     } else {
-      logout(); // Clear expired tokens
+      logout();
     }
   }, []);
 
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("token", response.access_token);
         const decoded = jwtDecode(response.access_token);
 
-        setUser({ email: decoded.sub, role: decoded.role, token: response.access_token });
+        setUser({ id: decoded.id, email: decoded.sub, role: decoded.role, token: response.access_token });
 
         return decoded.role;
       } else {
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("token", response.access_token);
         const decoded = jwtDecode(response.access_token);
 
-        setUser({ email: decoded.sub, role: decoded.role, token: response.access_token });
+        setUser({ id: decoded.id, email: decoded.sub, role: decoded.role, token: response.access_token });
 
         return decoded.role;
       } else {

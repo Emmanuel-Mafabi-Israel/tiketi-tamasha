@@ -10,7 +10,8 @@ import ManageEvents from "./pages/ManageEvents";
 import CreateEvent from "./pages/CreateEvent";
 import Purchase from "./pages/Purchase";
 import Confirmation from "./pages/Confirmation";
-import Profile from "./pages/Profile";
+import CustomerProfile from "./pages/CustomerProfile";
+import OrganizerProfile from "./pages/OrganizerProfile";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -30,7 +31,8 @@ const AppRoutes = () => {
       <Route path="/create-event" element={<ProtectedRoute><CreateEvent /></ProtectedRoute>} />
       <Route path="/purchase" element={<ProtectedRoute><Purchase /></ProtectedRoute>} />
       <Route path="/confirmation" element={<ProtectedRoute><Confirmation /></ProtectedRoute>} />
-      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+      <Route path="/profile" element={<ProtectedRoute><CustomerProfile /></ProtectedRoute>} />
+      <Route path="/profile" element={<ProtectedRoute><OrganizerProfile /></ProtectedRoute>} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
