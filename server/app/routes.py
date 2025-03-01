@@ -334,6 +334,8 @@ def purchase_ticket(user):
     phone_number = data.get('phone_number')  # Get phone number from the request
     amount       = data.get('amount')  # Get the ticket amount from the request.
 
+    print(f"mafabi: [{data}]")
+
     event = Event.query.get(event_id)
     if not event:
         return jsonify({'message': 'Event not found'}), 404
@@ -397,6 +399,26 @@ def purchase_ticket(user):
         # If STK push fails, rollback the ticket creation
         db.session.rollback()
         return jsonify({'message': f'MPESA STK push failed: {message}'}), 500
+
+@ticket_bp.route('/mpesa_transaction_status', methods=['POST'])
+@jwt_required()
+@get_user_from_token
+def query_transaction_status(user):
+    """
+    Queries the status of an MPESA transaction by CheckoutRequestID.
+    """
+    data = request.get_json()
+    checkout_request_id = data.get('checkout_request_id')
+
+    if not checkout_request_id:
+        return jsonify({'message': 'CheckoutRequestID is required'}), 400
+
+    success, message, transaction_status = services.query_mpesa_transaction_status(checkout_request_id)
+
+    if success:
+        return jsonify({'message': message, 'transaction_status': transaction_status}), 200
+    else:
+        return jsonify({'message': message}), 500
 
 @ticket_bp.route('/mpesa_callback', methods=['POST'])
 def mpesa_callback():
@@ -463,7 +485,16 @@ def mpesa_callback():
 
     except Exception as e:
         logging.error(f"Error processing MPESA callback: {e}")
-        return jsonify({'message': f'Error processing MPESA callback: {str(e)}'}), 500
+        # Attempt to query the transaction status as a fallback
+        success, message, transaction_status = services.query_mpesa_transaction_status(checkout_request_id)
+        if success:
+            logging.info(f"Transaction status query successful after callback error: {message}")
+            # You might want to update the payment status based on the query result here
+            # depending on your business logic.
+            return jsonify({'message': f'Callback error, but transaction status query successful: {message}'}), 200
+        else:
+            logging.error(f"Transaction status query failed after callback error: {message}")
+            return jsonify({'message': f'Error processing MPESA callback and status query failed: {str(e)}'}), 500
 
 # --- Debug Routes ---
 @auth_bp.route('/', methods=['GET'])

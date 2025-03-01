@@ -1,5 +1,5 @@
 {
-    "title": "Sample Amazing Event",
+    "title": "Amazing Music Fest",
     "description": "A weekend of great music and fun!",
     "location": "Central Park, Nairobi",
     "category": "Music",
@@ -12,10 +12,10 @@
             "price": 1.00
         },
         "VIP": {
-            "price": 1.00
+            "price": 5.00
         },
         "Regular": {
-            "price": 1.00
+            "price": 1.50
         }
     },
     "total_tickets": 700
