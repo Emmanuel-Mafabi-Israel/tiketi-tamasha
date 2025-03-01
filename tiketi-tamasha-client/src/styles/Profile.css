@@ -1,0 +1,88 @@
+/* Profile Page Layout */
+.profile-container {
+    display: flex;
+    height: 100vh;
+    background: #181818;
+    color: white;
+    padding: 40px;
+    gap: 20px;
+    background: linear-gradient(135deg, #000, #062b7b);
+}
+  
+  /* Sidebar */
+  .profile-sidebar {
+    width: 300px;
+    /* background: #202020; */
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #000, #062b7b);
+}
+  
+  /* Sidebar Buttons */
+  .nav-buttons {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .nav-buttons button {
+    background: #333;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+  }
+  
+  .nav-buttons button:hover {
+    background: #444;
+  }
+  
+  .nav-buttons .active {
+    background: #ffffff;
+    color: #181818;
+  }
+  
+  /* Main Content */
+  
+.profile-content {
+    flex: 1 1;
+    /* background: #202020; */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #000, #062b7b);
+}
+  
+  .profile-content h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+  
+  /* Ticket List */
+  .ticket-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .ticket-item {
+    background: #333;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .ticket-item p {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+  
+  .ticket-item strong {
+    color: #ffcc00;
+  }
+  

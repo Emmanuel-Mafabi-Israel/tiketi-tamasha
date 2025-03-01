@@ -22,14 +22,14 @@
   }
   
   button {
-    background: #ffcc00;
+    background: #ffffff;
     color: black;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 30px;
+    border-radius: 40px;
     cursor: pointer;
-  }
+}
   
   button:hover {
-    background: #e6b800;
+    background: #e6410000;
   }
   

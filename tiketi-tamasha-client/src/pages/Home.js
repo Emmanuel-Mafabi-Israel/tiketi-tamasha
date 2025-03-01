@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Home.css";
 
+
 // ✅ Import Background Icons
 import icon1 from "../assets/icon1.svg/tiketi-tamasha-doodle-calendar.svg"; 
 import icon2 from "../assets/icon2.svg/tiketi-tamasha-doodle-microphone.svg";

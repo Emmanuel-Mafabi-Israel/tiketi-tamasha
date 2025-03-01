@@ -38,7 +38,7 @@
 /* 3️⃣ Auth Card (Form Container) */
 .auth-card {
     background: rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(0px);
     border-radius: 20px;
     box-shadow: 0 0px 2px rgb(224, 196, 196);
     padding: 8rem;
@@ -51,8 +51,8 @@
     align-items: center;
     justify-content: center;
     background-color: rgba(2, 17, 61, 0.76);
+    margin-bottom: 100px;
 }
-
 /* 4️⃣ Logo + Title Row */
 .auth-title {
     display: flex;

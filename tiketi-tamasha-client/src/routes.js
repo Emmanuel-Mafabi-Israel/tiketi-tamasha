@@ -10,8 +10,7 @@ import ManageEvents from "./pages/ManageEvents";
 import CreateEvent from "./pages/CreateEvent";
 import Purchase from "./pages/Purchase";
 import Confirmation from "./pages/Confirmation";
-import CustomerProfile from "./pages/CustomerProfile";
-import OrganizerProfile from "./pages/OrganizerProfile";
+import Profile from "./pages/Profile"; // ✅ Unified Profile
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -24,15 +23,14 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      {/* Protected Routes */}
       <Route path="/dashboard" element={<ProtectedRoute><CustomerDashboard /></ProtectedRoute>} />
       <Route path="/organizer-dashboard" element={<ProtectedRoute><OrganizerDashboard /></ProtectedRoute>} />
       <Route path="/manage-events" element={<ProtectedRoute><ManageEvents /></ProtectedRoute>} />
       <Route path="/create-event" element={<ProtectedRoute><CreateEvent /></ProtectedRoute>} />
       <Route path="/purchase" element={<ProtectedRoute><Purchase /></ProtectedRoute>} />
       <Route path="/confirmation" element={<ProtectedRoute><Confirmation /></ProtectedRoute>} />
-      <Route path="/profile" element={<ProtectedRoute><CustomerProfile /></ProtectedRoute>} />
-      <Route path="/profile" element={<ProtectedRoute><OrganizerProfile /></ProtectedRoute>} />
+
+      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>

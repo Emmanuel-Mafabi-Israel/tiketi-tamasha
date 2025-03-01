@@ -11,7 +11,7 @@ import icon4 from "../assets/icon4.svg/tiketi-tamasha-doodle-note-single.svg";
 import icon5 from "../assets/icon5.svg/tiketi-tamasha-doodle-speaker.svg";
 
 const CustomerDashboard = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   return (
@@ -26,7 +26,7 @@ const CustomerDashboard = () => {
       </div>
 
       <div className="dashboard-card">
-        <h1>Welcome, {user?.fullName || "Guest"}!</h1>
+        <h1>Welcome, {user?.fullName || "Guest"}😜!</h1>
         <p>Discover events, manage your tickets, and explore new experiences.</p>
 
         <div className="dashboard-actions">
@@ -34,7 +34,6 @@ const CustomerDashboard = () => {
           <button onClick={() => navigate("/tickets")}>My Tickets</button>
           <button onClick={() => navigate("/calendar")}>Calendar</button>
           <button onClick={() => navigate("/profile")}>Profile Settings</button>
-          <button onClick={() => { logout(); navigate("/"); }}>Logout</button>
         </div>
       </div>
     </div>
