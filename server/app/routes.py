@@ -104,10 +104,63 @@ def login():
 
 @auth_bp.route('/user', methods=['GET'])
 @jwt_required()
-@get_user_from_token
-def get_user_details(user):
-    return jsonify(user_schema.dump(user)), 200
+def get_user_details():
+    """
+    Retrieves the details of the current user, including profile information.
+    """
+    try:
+        user_email = get_jwt_identity()
+        user = User.query.filter_by(email=user_email).first()
 
+        if not user:
+            return jsonify({'message': 'User not found'}), 404
+
+        # Serialize the user
+        user_data = user_schema.dump(user)
+
+        # Add profile information to the response
+        if user.profile:
+            user_data['name'] = user.profile.name  # Include the user's name
+            user_data['profile'] = user_profile_schema.dump(user.profile)  # Include all profile information
+        else:
+             user_data['name'] = None
+             user_data['profile'] = None # No user Profile
+
+        return jsonify(user_data), 200
+
+    except Exception as e:
+        logging.error(f"Error retrieving user details: {e}")
+        return jsonify({'message': f'Error retrieving user details: {str(e)}'}), 500
+    
+@auth_bp.route('/user/tickets', methods=['GET'])
+@jwt_required()
+def get_user_tickets():
+    """
+    Retrieves all tickets purchased by the current user, including the event title.
+    """
+    try:
+        user_email = get_jwt_identity()
+        user = User.query.filter_by(email=user_email).first()
+
+        if not user:
+            return jsonify({'message': 'User not found'}), 404
+
+        # Get all tickets purchased by the user
+        tickets = Ticket.query.filter_by(customer_id=user.id).all()
+
+        # Serialize the tickets AND add the event title
+        ticket_list = []
+        for ticket in tickets:
+            ticket_data = ticket_schema.dump(ticket)  # Serialize the ticket data
+            ticket_data['event_title'] = ticket.event.title  # Add the event title from the relationship
+            ticket_list.append(ticket_data)
+
+        return jsonify({'tickets': ticket_list}), 200
+
+    except Exception as e:
+        logging.error(f"Error retrieving user tickets: {e}")
+        return jsonify({'message': f'Error retrieving user tickets: {str(e)}'}), 500
+    
 # ---- User Account Edit ----
 # Profile Edit Route
 @auth_bp.route('/user', methods=['PUT'])
@@ -149,6 +202,38 @@ def delete_user(user):
         db.session.rollback()
         logging.error(f"Error deleting user: {e}")
         return jsonify({'message': f'Error deleting user: {str(e)}'}), 500
+
+@auth_bp.route('/user/payments', methods=['GET'])
+@jwt_required()
+def get_user_payments():
+    """
+    Retrieves all payments made by the current user, including the event title.
+    """
+    try:
+        user_email = get_jwt_identity()
+        user = User.query.filter_by(email=user_email).first()
+
+        if not user:
+            return jsonify({'message': 'User not found'}), 404
+
+        # Get all tickets purchased by the user
+        user_tickets = [ticket.id for ticket in user.tickets]
+
+        # Fetch all payments associated with those tickets
+        payments = Payment.query.filter(Payment.ticket_id.in_(user_tickets)).all()
+
+        # Serialize the payments AND add the event title
+        payment_list = []
+        for payment in payments:
+            payment_data = payment_schema.dump(payment)  # Serialize the payment data
+            payment_data['event_title'] = payment.ticket.event.title  # Access event title through relationships
+            payment_list.append(payment_data)
+
+        return jsonify({'payments': payment_list}), 200
+
+    except Exception as e:
+        logging.error(f"Error retrieving user payments: {e}")
+        return jsonify({'message': f'Error retrieving user payments: {str(e)}'}), 500
 
 # --- Event Routes ---
 @event_bp.route('/events', methods=['GET'])
@@ -338,7 +423,6 @@ def get_user_upcoming_events(user):
         'message': 'Upcoming events retrieved successfully',
         'upcoming_events': upcoming_events
     }), 200
-
 
 # --- Ticket Routes ---
 @ticket_bp.route('/tickets', methods=['POST'])

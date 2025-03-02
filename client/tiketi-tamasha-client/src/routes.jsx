@@ -15,7 +15,7 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-export default function AppRoutes() {
+export default function AppRoutes({ activeSection }) {
 	return (
 		<Routes>
 			<Route path="/" element={<Home />} />
@@ -25,8 +25,8 @@ export default function AppRoutes() {
 			<Route path="/login" element={<Login />} />
 			<Route path="/register" element={<Register />} />
 
-			<Route path="/dashboard" element={<ProtectedRoute><CustomerDashboard /></ProtectedRoute>} />
-			<Route path="/organizer-dashboard" element={<ProtectedRoute><OrganizerDashboard /></ProtectedRoute>} />
+			<Route path="/dashboard" element={<ProtectedRoute><CustomerDashboard activeSection={activeSection} /></ProtectedRoute>} />
+			<Route path="/organizer-dashboard" element={<ProtectedRoute><OrganizerDashboard activeSection={activeSection}/></ProtectedRoute>} />
 			<Route path="/manage-events" element={<ProtectedRoute><ManageEvents /></ProtectedRoute>} />
 			<Route path="/create-event" element={<ProtectedRoute><CreateEvent /></ProtectedRoute>} />
 			<Route path="/purchase" element={<ProtectedRoute><Purchase /></ProtectedRoute>} />

@@ -61,12 +61,14 @@ export default function NewEvent({ onClose }) {
             "VIP": { price: formData.vipPrice },
             "Regular": { price: formData.regularPrice },
         };
+        // Send the image to cloudinary...
+        // receive cloudinary image url...
         const finalFormData = { ...formData, ticket_tiers: ticketTiers };
-
         try {
             // Send the finalFormData to the API
             const response = await createEvent(finalFormData);
             console.log('Event created successfully:', response);
+            // confirmation dialog...
             // Reset form
             setFormData({
                 title: "",

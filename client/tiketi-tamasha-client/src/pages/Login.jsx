@@ -1,27 +1,38 @@
 /*
-	GLORY BE TO GOD,
-	TIKETI TAMASHA,
-	LOGIN PAGE,
+    GLORY BE TO GOD,
+    TIKETI TAMASHA,
+    LOGIN PAGE,
 
-	BY ISRAEL MAFABI EMMANUEL
+    BY ISRAEL MAFABI EMMANUEL
 */
 
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 
 import Button from "../components/Button";
+import LoadingPage from "../components/LoadingPage";
 import "../styles/Auth.css";
 
 import doodle_background from '../assets/tamasha_doodle_background.svg';
 import logo from "../assets/logo.svg/tiketi-tamasha-icon-high-res-white.svg";
 
 export default function Login() {
-    const { login } = useContext(AuthContext);
+    const { login, user } = useContext(AuthContext);
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user) {
+            setLoading(true);
+            setTimeout(() => {
+                navigate(user.role === "organizer" ? "/organizer-dashboard" : "/dashboard");
+            }, 2000);
+        }
+    }, [user, navigate]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,11 +47,24 @@ export default function Login() {
         }
 
         try {
+            setLoading(true);
             await login(formData, navigate);
         } catch (err) {
             setError("Invalid email or password. Please try again.");
+            setLoading(false);
         }
     };
+
+    if (loading) {
+        return (
+            <>
+                <LoadingPage />
+                <div className="tiketi-tamasha-auth-page">
+                    <img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
+                </div>
+            </>
+        );
+    }
 
     return (
         <div className="tiketi-tamasha-auth-page">

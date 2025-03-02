@@ -1,0 +1,61 @@
+/*
+    GLORY BE TO GOD,
+    TIKETI TAMASHA,
+    TICKET CARD,
+
+    BY ISRAEL MAFABI EMMANUEL
+*/
+
+.tiketi-tamasha-ticket-card {
+    background: var(--tiketi-tamasha-theme-cool-dark-b-tr);
+
+    border: 1px solid var(--tiketi-tamasha-cool-gray);
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    cursor: pointer;
+
+    gap: 7px;
+
+    padding-left: 14px;
+
+    width: 350px;
+    min-width: 350px;
+    max-width: 350px;
+    height: 100px;
+    min-height: 100px;
+    
+    .card-image {
+        width: 95px;
+    }
+
+    .card-info {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+
+        min-width: fit-content;
+        height: fit-content;
+
+        .title {
+            color: var(--tiketi-tamasha-cool-white);
+            font-size: 15px;
+        }
+
+        .type, .time {
+            color: var(--tiketi-tamasha-cool-white-tr);
+            font-size: 12px;
+
+            width: inherit;
+        }
+    }
+}
+
+.tiketi-tamasha-ticket-card:hover {
+    border: 1px solid var(--tiketi-tamasha-cool-gray-);
+    border-radius: 14px;
+}

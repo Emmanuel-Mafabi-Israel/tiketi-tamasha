@@ -14,6 +14,7 @@
     --tiketi-tamasha-cool-white          : white;
     --tiketi-tamasha-cool-blue           : rgb(38, 103, 176);
     --tiketi-tamasha-cool-red            : rgb(253, 82, 34);
+    --tiketi-tamasha-cool-green          : rgb(118, 253, 34);
 
     --tiketi-tamasha-cool-gray--         : #9dbcf519;
     --tiketi-tamasha-cool-white-tr       : rgba(255, 255, 255, 0.6);
@@ -51,11 +52,12 @@
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--tiketi-tamasha-cool-gray);
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
     background: var(--tiketi-tamasha-cool-white);
+    border-radius: 4px;
 }
 
 body {

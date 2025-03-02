@@ -7,7 +7,7 @@
 	-> STARTING PAGE...
 */
 
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import AppRoutes from "./routes";
 import Navbar from "./components/Navbar";
@@ -15,12 +15,14 @@ import Footer from "./components/Footer";
 import { AuthProvider } from "./context/AuthContext";
 
 export default function App() {
+	const [activeSection, setActiveSection] = useState('home');
+
 	return (
 		<AuthProvider>
 			<Router>
 				<div className="tiketi-tamasha-container">
-					<Navbar />
-					<AppRoutes />
+					<Navbar setActiveSection={setActiveSection} />
+					<AppRoutes activeSection={activeSection}/>
 					<Footer />
 				</div>
 			</Router>
