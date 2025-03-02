@@ -1,0 +1,61 @@
+/* Style for the entire analytics container */
+.analytics-chart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    width: 100%;  /* Take full width */
+    max-width: 1200px; /* Allow it to be wider */
+    margin: 20px auto;
+}
+
+  
+  /* Style for the heading */
+  .analytics-chart-container h2 {
+    color: #f8f9fa; /* Light gray for better contrast */
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  /* Chart container wrapper */
+  .chart-wrapper {
+    width: 100%;
+    height: auto;
+    max-width: 100%; /* Allow it to take full width */
+    min-height: 500px; /* Ensure enough height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-wrapper canvas {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100%;
+}
+
+
+  
+  /* Fix the sidebar button colors */
+  .nav-buttons button {
+    background: rgba(255, 255, 255, 0.2); /* Darker, uniform buttons */
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    transition: all 0.3s ease;
+  }
+  
+  /* Highlight active button */
+  .nav-buttons button.active {
+    background: #4a90e2; /* Bright blue */
+    color: white;
+  }
+  
