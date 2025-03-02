@@ -45,6 +45,11 @@
         max-width: 400px;
         min-height: 400px;
 
+        .error-message {
+            color: var(--tiketi-tamasha-cool-red);
+            font-size: 12px;
+        }
+
         .tiketi-tamasha-auth-heading {
             font-weight: normal;
 
