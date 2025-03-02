@@ -1,20 +1,24 @@
 /*
-	GLORY BE TO GOD,
-	TIKETI TAMASHA,
-	DISCOVER PAGE,
+    GLORY BE TO GOD,
+    TIKETI TAMASHA,
+    DISCOVER PAGE,
 
-	BY ISRAEL MAFABI EMMANUEL
+    BY ISRAEL MAFABI EMMANUEL
 */
 
 import React, { useState, useEffect } from "react";
 import { getEventDetails } from "../api/eventService"; // Importing the function to get event details
+import ticketService from "../api/ticketService"; // Importing the ticket service
 import "../styles/EventDetails.css";
 import "../styles/Button.css";
 import Button from '../components/Button';
 import locationIcon from '../assets/tiketi-tamasha-gps.svg';
+import LoadingPage from "../components/LoadingPage";
 
-export default function EventDetails({ eventId, onClose }) {
+export default function EventDetails({ eventId, onClose, flag, userId }) {
     const [event, setEvent] = useState(null);
+    const [loading, setLoading] = useState(true); // Add loading state
+    const [selectedTier, setSelectedTier] = useState(null);
 
     useEffect(() => {
         const fetchEventDetails = async () => {
@@ -23,13 +27,33 @@ export default function EventDetails({ eventId, onClose }) {
                 setEvent(data);
             } catch (error) {
                 console.error("Failed to fetch event details", error);
+            } finally {
+                setTimeout(() => setLoading(false), 2000); // Delay of 2 seconds
             }
         };
 
         fetchEventDetails();
     }, [eventId]);
 
-    if (!event) return <p>Loading event details...</p>;
+    const handleTierClick = async (tier) => {
+        setSelectedTier(tier);
+        if (flag === "unsigned") {
+            setSelectedTier(tier);
+        } else {
+            // Handle tier selection for signed-in users
+            try {
+                await ticketService.purchaseTicket(eventId, 1, userId);
+                alert("Ticket purchased successfully!");
+            } catch (error) {
+                console.error("Failed to purchase ticket", error);
+                alert("Failed to purchase ticket. Please try again.");
+            }
+        }
+    };
+
+    if (loading) {
+        return <LoadingPage />;
+    }
 
     return (
         <div className="tiketi-tamasha-dialog-container">
@@ -60,8 +84,17 @@ export default function EventDetails({ eventId, onClose }) {
                         <div className="title">Select a tier below to enroll</div>
                         <div className="tiers">
                             {Object.entries(event.ticket_tiers).map(([tier, { price }]) => (
-                                <div key={tier} className="tier">
+                                <div key={tier} className="tier" onClick={() => handleTierClick(tier)}>
                                     <div className="tier-name">{tier}</div>
+                                    {selectedTier === tier && (
+                                        <div className="reminder">
+                                            {flag === "unsigned" ? (
+                                                <>Please <a href="/login">log in</a> first</>
+                                            ) : (
+                                                <>Purchase this ticket? <div onClick={handleTierClick}>click to purchase</div></>
+                                            )}
+                                        </div>
+                                    )}
                                     <div className="tier-price">${price.toFixed(2)}</div>
                                 </div>
                             ))}
@@ -78,4 +111,4 @@ export default function EventDetails({ eventId, onClose }) {
             </div>
         </div>
     );
-}
+};

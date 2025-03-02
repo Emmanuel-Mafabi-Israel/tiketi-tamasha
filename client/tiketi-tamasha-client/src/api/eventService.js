@@ -51,3 +51,25 @@ export const deleteEvent = async (eventId) => {
 		throw error;
 	}
 };
+
+// New service to get the event category count
+export const getEventCategoryCount = async (categoryName) => {
+	try {
+		const response = await axios.get(`${API_URL}/category_count/${categoryName}`);
+		return response.data.count;
+	} catch (error) {
+		console.error("Error fetching event category count:", error.response?.data || error.message);
+		throw error;
+	}
+};
+
+// New service to get popular events
+export const getPopularEvents = async () => {
+	try {
+		const response = await axios.get(`${API_URL}/popular`);
+		return response.data.popular_events;
+	} catch (error) {
+		console.error("Error fetching popular events:", error.response?.data || error.message);
+		throw error;
+	}
+};

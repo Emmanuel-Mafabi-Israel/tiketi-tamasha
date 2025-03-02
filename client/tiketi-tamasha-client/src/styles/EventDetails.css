@@ -97,6 +97,7 @@
                 .heading {
                     color: var(--tiketi-tamasha-cool-white);
                     font-size: 14px;
+                    min-height: 21px;
                 }
 
                 .subheading {
@@ -108,6 +109,7 @@
     
                     width: inherit;
                     height: 30px;
+                    min-height: 30px;
     
                     .location-indicator {
                         width: 17px;
@@ -247,6 +249,16 @@
                         .tier-name {
                             color: var(--tiketi-tamasha-cool-white-tr);
                             font-size: 13px;
+                        }
+
+                        .reminder {
+                            color: var(--tiketi-tamasha-cool-white);
+                            font-size: 13px;
+
+                            a {
+                                color: var(--tiketi-tamasha-cool-blue);
+                                text-decoration: none;
+                            }
                         }
 
                         .tier-price {

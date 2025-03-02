@@ -28,6 +28,7 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %
 
 # Define blueprints
 auth_bp   = Blueprint('auth', __name__)   # Authentication endpoints
+import random
 event_bp  = Blueprint('event', __name__)  # Event management endpoints
 ticket_bp = Blueprint('ticket', __name__) # Ticket purchase endpoints
 
@@ -222,6 +223,23 @@ def create_event(user):
         db.session.rollback()
         logging.error(f"Error creating event: {e}")
         return jsonify({'message': f'Error creating event: {str(e)}'}), 500
+
+@event_bp.route('/events/<int:event_id>', methods=['GET'])
+def get_event(event_id):
+    """
+    Retrieves the details of a specific event by its ID.
+    """
+    try:
+        event = Event.query.get(event_id)
+
+        if event:
+            return jsonify(event_schema.dump(event)), 200
+        else:
+            return jsonify({'message': 'Event not found'}), 404
+
+    except Exception as e:
+        logging.error(f"Error retrieving event: {e}")
+        return jsonify({'message': f'Error retrieving event: {str(e)}'}), 500
 
 # ---- edit event ----
 @event_bp.route('/events/<int:event_id>', methods=['PUT'])
@@ -532,6 +550,55 @@ def search_events():
         'total_events': pagination.total,
         'per_page': per_page
     }), 200
+
+##  --- Category count ---
+@event_bp.route('/events/category_count/<string:category_name>', methods=['GET'])
+def get_event_category_count(category_name):
+    """
+    Returns the total number of events in a specified category.
+    """
+    try:
+        # Count the number of events in the specified category
+        event_count = Event.query.filter_by(category=category_name).count()
+        return jsonify({'count': event_count}), 200
+
+    except Exception as e:
+        logging.error(f"Error retrieving event category count: {e}")
+        return jsonify({'message': f'Error retrieving event category count: {str(e)}'}), 500
+    
+# --- Popular events ---
+@event_bp.route('/events/popular', methods=['GET'])
+def get_popular_events():
+    """
+    Returns three random events from the database as "popular" events.
+    """
+    try:
+        # Get all event IDs
+        all_event_ids = [event.id for event in Event.query.all()]
+
+        if not all_event_ids:
+            return jsonify({'message': 'No events available'}), 404
+
+        # Select three random event IDs
+        popular_event_ids = random.sample(all_event_ids, min(3, len(all_event_ids)))  # Ensure we don't try to sample more than exist
+
+        # Retrieve the actual events from the database
+        popular_events = Event.query.filter(Event.id.in_(popular_event_ids)).all()
+
+        # Serialize the popular events
+        event_list = [event_schema.dump(event) for event in popular_events]
+
+        return jsonify({'popular_events': event_list}), 200
+
+    except ValueError as ve:  # Catch the error if len(all_event_ids) < 3
+        logging.warning(f"Not enough events to select 3 random events: {ve}")
+        # Return all available events or an empty list, depending on your requirements
+        all_events = Event.query.all()
+        event_list = [event_schema.dump(event) for event in all_events]
+        return jsonify({'popular_events': event_list}), 200 #Return all the events.
+    except Exception as e:
+        logging.error(f"Error retrieving popular events: {e}")
+        return jsonify({'message': f'Error retrieving popular events: {str(e)}'}), 500
 
 # --- Debug Routes ---
 @auth_bp.route('/', methods=['GET'])

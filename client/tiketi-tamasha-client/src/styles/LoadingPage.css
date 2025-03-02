@@ -1,0 +1,47 @@
+/*
+    GLORY BE TO GOD,
+    TIKETI-TAMASHA - LOADING PAGE,
+    BY ISRAEL MAFABI EMMANUEL
+*/
+
+.tiketi-tamasha-loading-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 10px;
+
+    animation: rotate 1s infinite linear;
+
+    width: 300px;
+    height: 300px;
+
+    .row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 10px;
+
+        width: fit-content;
+        height: fit-content;
+
+        .circle {
+            background: var(--tiketi-tamasha-cool-white);
+            border-radius: 50%;
+
+            width: 10px;
+            height: 10px;
+        }
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

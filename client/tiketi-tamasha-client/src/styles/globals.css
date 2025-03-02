@@ -9,18 +9,20 @@
 
 :root {
     --tiketi-tamasha-cool-black: rgb(0, 0, 0);
-    --tiketi-tamasha-cool-gray : #96b8f939;
+    --tiketi-tamasha-cool-gray: #96b8f939;
     --tiketi-tamasha-cool-gray-: #96b8f97b;
     --tiketi-tamasha-cool-white: white;
-    --tiketi-tamasha-cool-blue : rgb(38, 103, 176);
+    --tiketi-tamasha-cool-blue: rgb(38, 103, 176);
 
-    --tiketi-tamasha-cool-gray--         : #9dbcf519;
-    --tiketi-tamasha-cool-white-tr       : rgba(255, 255, 255, 0.6);
-    --tiketi-tamasha-cool-blue-br        : rgb(69, 148, 239);
-    --tiketi-tamasha-theme-cool-blue     : #0e398d;
+    --tiketi-tamasha-cool-gray--: #9dbcf519;
+    --tiketi-tamasha-cool-white-tr: rgba(255, 255, 255, 0.6);
+    --tiketi-tamasha-cool-blue-br: rgb(69, 148, 239);
+    --tiketi-tamasha-theme-cool-blue: #0e398d;
     --tiketi-tamasha-theme-cool-dark-blue: #081630;
     --tiketi-tamasha-theme-cool-dark-b-tr: #0816308c;
     --tiketi-tamasha-theme-cool-dark-d-tr: #051025ab;
+
+    --tiketi-tamasha-theme-cool-dark---: #030c1c7d;
 
     --tiketi-tamasha-default-font: "Poppins", sans-serif;
 }
@@ -69,7 +71,7 @@ body {
 
 .tiketi-tamasha-input::placeholder {
     color: var(--tiketi-tamasha-cool-gray-);
-    font-size: 14px;
+    font-size: 13px;
 
     text-align: left;
 
@@ -81,7 +83,7 @@ body {
     border: 1px solid var(--tiketi-tamasha-cool-gray);
     border-radius: 14px;
 
-    font-size: 14px;
+    font-size: 13px;
     color: var(--tiketi-tamasha-cool-white);
 
     text-align: left;
@@ -89,10 +91,50 @@ body {
     padding-left: 21px;
     padding-right: 21px;
 
+    margin-left: 0;
+    margin-right: 0;
+
     width: 300px;
     height: 45px;
 }
 
 .tiketi-tamasha-input:focus {
     background: var(--tiketi-tamasha-theme-cool-dark-d-tr);
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+input[type="datetime-local"] {
+    position: relative;
+    padding-right: 30px;
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}
+
+input[type="datetime-local"]::after {
+    background-image: url('../assets/tiketi-tamasha-doodle-calendar.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    content: "";
+
+    padding-right: 7px;
+    transform: translateY(-50%);
+    position: absolute;
+    top: 50%;
+    right: 5px;
+
+    width: 20px;
+    height: 20px;
 }
