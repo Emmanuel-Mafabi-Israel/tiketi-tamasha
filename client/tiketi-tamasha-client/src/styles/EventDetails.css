@@ -42,6 +42,8 @@
 
         padding: 14px;
 
+        box-shadow: inset 0px 0px 14px var(--tiketi-tamasha-theme-cool-dark-blue);
+
         overflow-y: auto;
         /* Enable vertical scrolling */
         /* Hide scrollbar for Webkit browsers */
