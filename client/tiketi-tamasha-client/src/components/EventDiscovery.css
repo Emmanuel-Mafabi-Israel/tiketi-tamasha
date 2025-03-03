@@ -59,6 +59,44 @@ body, html {
   font-weight: bold;
 }
 
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.search-bar input {
+  width: 60%;
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+.search-icon {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.filter-options {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.filter-options select,
+.filter-options input {
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+
 .event-main {
   width: 100%;
   padding: 0 40px;
@@ -121,29 +159,7 @@ body, html {
   margin-bottom: 10px;
 }
 
-.category-btn.research::before {
-  content: '🔬';
-}
 
-.category-btn.conserve::before {
-  content: '🌍';
-}
-
-.category-btn.fitness::before {
-  content: '🏃‍♂️';
-}
-
-.category-btn.wellness::before {
-  content: '❤️';
-}
-
-.category-btn.finance::before {
-  content: '💰';
-}
-
-.category-btn.music::before {
-  content: '🎵';
-}
 
 .event-cards {
   display: grid;
@@ -255,82 +271,109 @@ body, html {
   }
 }
 
-
-/* SIDE PANEL FOR EVENT DETAILS */
+/* Modern Side Panel for Event Details */
 .event-panel {
   position: fixed;
   top: 0;
   right: 0;
-  width: 40%; /* Adjust width as needed */
+  width: 35%; /* Adjust for better balance */
   height: 100%;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.9); /* Glass effect */
+  backdrop-filter: blur(10px);
   color: #000;
-  box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: -6px 0px 16px rgba(0, 0, 0, 0.25);
   transform: translateX(100%);
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1000;
   overflow-y: auto;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px 0 0 15px;
 }
 
-/* Show the panel when it's active */
+/* Show the panel when active */
 .event-panel.active {
   transform: translateX(0);
 }
 
-/* Close button inside the panel */
+/* Close button with hover effect */
 .event-panel .close-btn {
   position: absolute;
-  top: 10px;
-  right: 15px;
+  top: 12px;
+  right: 18px;
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 26px;
   cursor: pointer;
-  color: #333;
+  color: #555;
+  transition: color 0.3s ease;
 }
 
-/* Inside the event panel, format the event details */
+.event-panel .close-btn:hover {
+  color: #000;
+}
+
+/* Event details container */
 .event-panel .event-info {
-  padding: 20px;
+  padding: 24px;
   text-align: center;
 }
 
+/* Event image with better styling */
 .event-panel img {
   width: 100%;
-  height: 200px;
+  height: 220px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
+/* Event title */
 .event-panel h2 {
-  margin: 15px 0 10px;
-  font-size: 22px;
-  font-weight: bold;
+  margin: 18px 0 12px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #222;
 }
 
+/* Event description */
 .event-panel p {
-  font-size: 14px;
-  color: #444;
-  margin: 5px 0;
+  font-size: 15px;
+  color: #555;
+  margin: 8px 0;
+  line-height: 1.6;
 }
 
 /* Join Waitlist Button */
 .event-panel .join-waitlist-btn {
-  background-color: #072664;
+  background: linear-gradient(135deg, #072664, #0a4cb3);
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 20px;
+  padding: 12px 24px;
+  border-radius: 25px;
   cursor: pointer;
-  font-size: 14px;
-  margin-top: 20px;
+  font-size: 15px;
+  margin-top: 22px;
   display: block;
-  width: 80%;
+  width: 85%;
   margin-left: auto;
   margin-right: auto;
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.3s ease;
 }
 
-/* Make the panel responsive */
+/* Button hover effect */
+.event-panel .join-waitlist-btn:hover {
+  background: linear-gradient(135deg, #0a4cb3, #072664);
+  transform: scale(1.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .event-panel {
+    width: 45%;
+  }
+}
+
 @media (max-width: 768px) {
   .event-panel {
     width: 60%;
@@ -342,6 +385,8 @@ body, html {
     width: 80%;
   }
 }
+
+
 
 /* Style for header SVGs */
 .event-header svg {

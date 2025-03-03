@@ -9,7 +9,7 @@ function App() {
     <Router> 
         <Routes>
           <Route path="/" element={<EventDiscovery />} />
-          <Route path="/event/:id" element={<EventDiscovery showPanel={true} />} /> 
+          <Route path="/events/:eventId" element={<EventDetails />} />
         </Routes> 
     </Router>
   );
