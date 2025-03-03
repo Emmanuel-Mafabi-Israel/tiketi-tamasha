@@ -162,6 +162,10 @@
                     width: fit-content;
                 }
 
+                .link.selected {
+                    border-bottom: 1px solid var(--tiketi-tamasha-cool-white);
+                }
+
                 .link:hover {
                     border-bottom: 1px solid var(--tiketi-tamasha-cool-white);
                 }
@@ -304,6 +308,10 @@
 
                     text-decoration: none;
                     width: fit-content;
+                }
+                
+                .link.selected {
+                    border-bottom: 1px solid var(--tiketi-tamasha-cool-white);
                 }
 
                 .link:hover {

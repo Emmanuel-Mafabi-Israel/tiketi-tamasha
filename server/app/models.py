@@ -22,7 +22,7 @@ class User(db.Model):
 
     # Relationships
     events        = db.relationship('Event', backref='organizer', lazy=True) # Organizers create events
-    tickets       = db.relationship('Ticket', backref='customer', lazy=True) # Customers buy tickets
+    tickets       = db.relationship('Ticket', backref='customer', lazy=True, cascade='all, delete-orphan') # Customers buy tickets
     profile       = db.relationship('UserProfile', back_populates='user', uselist=False, cascade='all, delete-orphan') # User Profile
 
     def __repr__(self):

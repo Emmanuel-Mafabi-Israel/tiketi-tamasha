@@ -21,7 +21,7 @@ export default function App() {
 		<AuthProvider>
 			<Router>
 				<div className="tiketi-tamasha-container">
-					<Navbar setActiveSection={setActiveSection} />
+					<Navbar activeSection={activeSection} setActiveSection={ setActiveSection} />
 					<AppRoutes activeSection={activeSection}/>
 					<Footer />
 				</div>

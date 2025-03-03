@@ -61,13 +61,13 @@ def register():
     name         = data.get('name') # Getting the name from the payload.
 
     if not email or not password or not phone_number:
-        return jsonify({'message': 'Email, password and phone number are required'}), 400
+        return jsonify({'message': 'Email, password and phone number are required', 'success': False}), 400
 
     if role not in ('customer', 'organizer'):
-        return jsonify({'message': 'Invalid role specified'}), 400
+        return jsonify({'message': 'Invalid role specified', 'success': False}), 400
 
     if User.query.filter_by(email=email).first():
-        return jsonify({'message': 'User already exists'}), 400
+        return jsonify({'message': 'User already exists', 'success': False}), 400
 
     hashed_password = generate_password_hash(password)
     new_user        = User(email=email, password_hash=hashed_password, role=role, phone_number=phone_number)
@@ -80,12 +80,20 @@ def register():
         db.session.add(new_user_profile)
         db.session.commit()
 
-        return jsonify(user_schema.dump(new_user)), 201
+        # After successful registration:
+        access_token = create_access_token(identity=email, additional_claims={'role': role}) # Generate Token
+        # user_data = user_schema.dump(new_user)
+
+        # Modified Response, to include success and acces_token:
+        return jsonify({'message': 'User registered successfully',
+                        'success': True,
+                        'access_token': access_token
+                        }), 201  # Respond with 201 Created
+
     except Exception as e:
         db.session.rollback()
         logging.error(f"Error creating user: {e}")
-        return jsonify({'message': f'Error creating user: {str(e)}'}), 500
-
+        return jsonify({'message': f'Error creating user: {str(e)}', 'success': False}), 500
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
@@ -190,12 +198,26 @@ def update_user_profile(user):
         return jsonify({'message': f'Error updating user profile: {str(e)}'}), 500
 
 #  ---- User Deletion ----
+#  ---- User Deletion ----
 @auth_bp.route('/user', methods=['DELETE'])
 @jwt_required()
 @get_user_from_token
 def delete_user(user):
     try:
+        # Delete the user's tickets first
+        for ticket in user.tickets:
+            # Delete associated payments first
+            for payment in ticket.payments:
+                db.session.delete(payment)
+            db.session.delete(ticket)
+
+        # Delete the user profile
+        if user.profile:
+            db.session.delete(user.profile)
+
+        # Finally, delete the user
         db.session.delete(user)
+
         db.session.commit()
         return jsonify({'message': 'User account deleted successfully'}), 200
     except Exception as e:

@@ -18,7 +18,7 @@ import tiketi_return_logo from "../assets/tiketi-tamasha-return.svg";
 import Button from "./Button";
 import "../styles/Button.css";
 
-export default function Navbar({ setActiveSection }) {
+export default function Navbar({ activeSection, setActiveSection }) {
 	const { user, logout } = useContext(AuthContext);
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -29,7 +29,7 @@ export default function Navbar({ setActiveSection }) {
 
 	return (
 		<nav className="tiketi-tamasha-navbar">
-			<div className={`tiketi-tamasha-logo ${user ? "signed" : ""}`} onClick={() => navigate("/")}>
+			<div className={`tiketi-tamasha-logo ${user ? "signed" : ""}`} onClick={ user ? () => navigate("/dashboard") : () => navigate("/")}>
 				<img className="tiketi-tamasha-logo-image" src={tiketi_tamasha_logo} alt="tiketi-tamasha"></img>
 				<div className="tiketi-tamasha-logo-title">
 					<div className="head">Tiketi</div>
@@ -60,19 +60,20 @@ export default function Navbar({ setActiveSection }) {
 						) : (
 							<>
 								<div className="access-links">
-									<div className="link" onClick={() => setActiveSection('home')}>
+								{/* className="link" */}
+									<div className={`link ${activeSection === "home" ? "selected" : ""}`} onClick={() => setActiveSection('home')}>
 										Home
 									</div>
-									<div className="link" onClick={() => setActiveSection('tickets')}>
+									<div className={`link ${activeSection === "tickets" ? "selected" : ""}`} onClick={() => setActiveSection('tickets')}>
 										Tickets
 									</div>
-									<div className="link" onClick={() => setActiveSection('upcoming')}>
+									<div className={`link ${activeSection === "upcoming" ? "selected" : ""}`} onClick={() => setActiveSection('upcoming')}>
 										Upcoming
 									</div>
-									<div className="link" onClick={() => setActiveSection('payments')}>
+									<div className={`link ${activeSection === "payments" ? "selected" : ""}`} onClick={() => setActiveSection('payments')}>
 										Payments
 									</div>
-									<div className="link" onClick={() => setActiveSection('settings')}>
+									<div className={`link ${activeSection === "settings" ? "selected" : ""}`} onClick={() => setActiveSection('settings')}>
 										Settings
 									</div>
 								</div>
