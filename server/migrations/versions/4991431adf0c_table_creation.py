@@ -1,8 +1,8 @@
-"""mafabi: initial migration
+"""table creation.
 
-Revision ID: b82484d6135f
+Revision ID: 4991431adf0c
 Revises: 
-Create Date: 2025-02-18 07:03:20.259957
+Create Date: 2025-03-03 10:55:37.461359
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b82484d6135f'
+revision = '4991431adf0c'
 down_revision = None
 branch_labels = None
 depends_on = None

@@ -3,34 +3,39 @@
 # BY ISRAEL MAFABI EMMANUEL
 # TAMASHA DEVELOPERS
 
+from flask import Blueprint, request, jsonify
+import cloudinary
+import cloudinary.uploader
 import os
-import logging  # Import logging
+import logging
 from functools import wraps
-from datetime import datetime
-
-from flask import Blueprint, request, jsonify, render_template
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-from werkzeug.security import generate_password_hash, check_password_hash
-
-from extensions import db  # Import db instance
-from .models import User, Event, Ticket, Payment, Role  # Import models
-from .schemas import UserSchema, EventSchema, TicketSchema, PaymentSchema  # Import schemas
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from extensions import db
+from .models import User, Event, Ticket
+from .schemas import UserSchema, EventSchema, TicketSchema
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
+# Cloudinary Config (Set in .env)
+cloudinary.config(
+    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.getenv('CLOUDINARY_API_KEY'),
+    api_secret=os.getenv('CLOUDINARY_API_SECRET')
+)
+
 # Define blueprints
-auth_bp   = Blueprint('auth', __name__)     # Authentication endpoints
-event_bp  = Blueprint('event', __name__)    # Event management endpoints
-ticket_bp = Blueprint('ticket', __name__)   # Ticket purchase endpoints
+auth_bp   = Blueprint('auth', __name__)    
+event_bp  = Blueprint('event', __name__)   
+ticket_bp = Blueprint('ticket', __name__)  
+upload_bp = Blueprint('upload', __name__)  # ✅ New blueprint for uploads
 
 # Initialize schemas
-user_schema    = UserSchema()
-event_schema   = EventSchema()
-ticket_schema  = TicketSchema()
-payment_schema = PaymentSchema()
+user_schema   = UserSchema()
+event_schema  = EventSchema()
+ticket_schema = TicketSchema()
 
-# User Retrieval:  Gets the user object from the JWT identity (email)
+# User Retrieval Decorator
 def get_user_from_token(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -40,6 +45,23 @@ def get_user_from_token(func):
             return jsonify({'message': 'User not found'}), 404
         return func(user, *args, **kwargs)
     return wrapper
+
+# --- Upload Image Route ---
+@upload_bp.route("/", methods=["POST"])
+def upload_image():
+    if "file" not in request.files:
+        return jsonify({"error": "No file part"}), 400
+    
+    file = request.files["file"]
+
+    if file.filename == "":
+        return jsonify({"error": "No selected file"}), 400
+
+    # Upload to Cloudinary
+    upload_result = cloudinary.uploader.upload(file)
+
+    # Return the Cloudinary URL
+    return jsonify({"image_url": upload_result["secure_url"]})
 
 # --- Authentication Routes ---
 @auth_bp.route('/register', methods=['POST'])
@@ -54,8 +76,7 @@ def register():
     if User.query.filter_by(email=email).first():
         return jsonify({'message': 'User already exists'}), 400
 
-    hashed_password = generate_password_hash(password)
-    new_user = User(email=email, password_hash=hashed_password)
+    new_user = User(email=email, password_hash=password)
 
     try:
         db.session.add(new_user)
@@ -63,7 +84,7 @@ def register():
         return user_schema.dump(new_user), 201
     except Exception as e:
         db.session.rollback()
-        logging.error(f"Error creating user: {e}")  # Log the error
+        logging.error(f"Error creating user: {e}")
         return jsonify({'message': f'Error creating user: {str(e)}'}), 500
 
 @auth_bp.route('/login', methods=['POST'])
@@ -73,47 +94,16 @@ def login():
     password = data.get('password')
 
     user = User.query.filter_by(email=email).first()
-
-    if user and check_password_hash(user.password_hash, password):
-        access_token = create_access_token(identity=email)
-        return jsonify(access_token=access_token), 200
+    if user:
+        return jsonify({"message": "Login successful"}), 200
     else:
         return jsonify({'message': 'Invalid credentials'}), 401
 
-@auth_bp.route('/user', methods=['GET'])
-@jwt_required()
-@get_user_from_token
-def get_user_details(user):
-    return user_schema.dump(user), 200
-
-#  ---- User Deletion -----
-@auth_bp.route('/user', methods=['DELETE'])
-@jwt_required()
-@get_user_from_token
-def delete_user(user):
-    # Add checks to ensure the user is allowed to delete (e.g., only delete own account)
-    try:
-        db.session.delete(user)
-        db.session.commit()
-        return jsonify({'message': 'User account deleted successfully'}), 200
-    except Exception as e:
-        db.session.rollback()
-        logging.error(f"Error deleting user: {e}")
-        return jsonify({'message': f'Error deleting user: {str(e)}'}), 500
-
 # --- Event Routes ---
-@event_bp.route('/events', methods=['GET'])
-def get_events():
-    # TODO: Implement searching based on location, tags, or categories
-    # TODO: Implement pagination
-    events = Event.query.all()
-    return jsonify([event_schema.dump(event) for event in events]), 200
-
 @event_bp.route('/events', methods=['POST'])
 @jwt_required()
-@get_user_from_token  #Use decorator to ensure the user is fetched.
+@get_user_from_token
 def create_event(user):
-    # Only organizers can create events
     if user.role != 'organizer':
         return jsonify({'message': 'Unauthorized: Only organizers can create events'}), 403
 
@@ -138,74 +128,26 @@ def create_event(user):
     except Exception as e:
         db.session.rollback()
         logging.error(f"Error creating event: {e}")
-
         return jsonify({'message': f'Error creating event: {str(e)}'}), 500
 
-# --- Ticket Routes ---
-@ticket_bp.route('/tickets', methods=['POST'])
-@jwt_required()
-@get_user_from_token
-def purchase_ticket(user):
-    data = request.get_json()
-    event_id = data.get('event_id')
-    ticket_type = data.get('ticket_type')
+@event_bp.route('/events', methods=['GET'])
+def get_all_events():
+    events = Event.query.all()
+    return jsonify([event_schema.dump(event) for event in events]), 200
 
-    event = db.session.get(Event, event_id) 
-    if not event:
-        return jsonify({'message': 'Event not found'}), 404
+@event_bp.route('/events/<int:event_id>', methods=['GET'])
+def get_event_details(event_id):
+    event = Event.query.get(event_id)
+    if event:
+        event_details = {
+            'title': event.title,
+            'description': event.description,
+            'start_date': event.start_date,
+            'end_date': event.end_date,
+            'location': event.location,
+            'category': event.category,
+            'image_url': event.image_url
+        }
+        return jsonify(event_details), 200
+    return jsonify({'message': 'Event not found'}), 404
 
-    # Determine price based on ticket_type (Implement Pricing Logic)
-    if ticket_type == 'Early Bird':
-        price = 50.00
-    elif ticket_type == 'VIP':
-        price = 100.00
-    else:
-        price = 25.00
-
-    try:
-        new_ticket = Ticket(
-            event_id=event_id,
-            customer_id=user.id,
-            ticket_type=ticket_type,
-            price=price
-        )
-
-        db.session.add(new_ticket)
-        db.session.commit()
-
-        return ticket_schema.dump(new_ticket), 201
-    except Exception as e:
-        db.session.rollback()
-        logging.error(f"Error purchasing ticket: {e}")
-        return jsonify({'message': f'Error purchasing ticket: {str(e)}'}), 500
-
-# --- Debug Routes ---
-@auth_bp.route('/', methods=['GET'])
-def index():
-    return render_template('home.html')
-
-@auth_bp.route('/debug/', methods=['GET'])
-def debug():
-    return render_template('debug.html')
-
-@auth_bp.route('/debug/models/', methods=['GET'])
-def debug_models():
-    # This retrieves the metadata of the database tables for debugging
-    metadata = db.metadata.tables # Get all tables' metadata
-    return render_template('models.html', metadata=metadata)
-
-@auth_bp.route('/debug/users/', methods=['GET'])
-def debug_users():
-    # Retrieve and display all user emails for debugging
-    users = User.query.all()
-    emails = [(index + 1, user.email) for index, user in enumerate(users)]
-    return render_template('emails.html', emails=emails)
-
-# --- Error Handlers ---
-@auth_bp.errorhandler(404)
-def page_not_found(error):
-    return render_template('404.html'), 404
-
-@auth_bp.errorhandler(500)
-def server_error(error):
-    return render_template('500.html'), 500
