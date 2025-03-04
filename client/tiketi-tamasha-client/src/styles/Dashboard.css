@@ -294,6 +294,8 @@
 					justify-content: center;
 					flex-direction: column;
 
+					gap: 14px;
+
 					padding: 14px;
 
 					width: inherit;
@@ -323,13 +325,14 @@
 
 						width: 100%;
 						height: fit-content;
-						min-height: 100px;
 
 						input {
+							margin: 0;
 							width: inherit;
 						}
 
 						button {
+							margin: 0;
 							width: inherit;
 						}
 

@@ -9,8 +9,9 @@
 import React, { useState } from "react";
 import "../styles/NewEvent.css";
 import uploadIcon from '../assets/tiketi-tamasha-upload.svg';
-import Button from '../components/Button';
+import Button from './Button';
 import { createEvent } from "../api/eventService";
+import CONFIG from "../config"; // Import Cloudinary config
 
 export default function NewEvent({ onClose }) {
     const [formData, setFormData] = useState({
@@ -21,13 +22,13 @@ export default function NewEvent({ onClose }) {
         tags: "",
         start_date: "",
         end_date: "",
-        image_url: "",
+        image_url: "",  // This will store the Cloudinary URL
         earlyBirdPrice: "",
         vipPrice: "",
         regularPrice: "",
         total_tickets: "",
     });
-    
+
     const [selectedImage, setSelectedImage] = useState(null);
 
     const handleChange = (e) => {
@@ -44,32 +45,98 @@ export default function NewEvent({ onClose }) {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setSelectedImage(reader.result);
-                setFormData(prev => ({
-                    ...prev,
-                    image_url: reader.result,
-                }));
+                // No longer directly setting image_url here
+                // setFormData(prev => ({
+                //     ...prev,
+                //     image_url: reader.result,
+                // }));
             };
             reader.readAsDataURL(file);
         }
     };
 
+    // Async function to upload the image to Cloudinary
+    const uploadImageToCloudinary = async (imageFile) => {
+        const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${CONFIG.CLOUDINARY.CLOUD_NAME}/image/upload`;
+        const formDataForCloudinary = new FormData();
+    
+        // Debugging: Log the imageFile to make sure it's a File object
+        console.log("Image file:", imageFile);
+    
+        formDataForCloudinary.append('file', imageFile);
+        formDataForCloudinary.append('upload_preset', CONFIG.CLOUDINARY.UPLOAD_PRESET);
+    
+        // Debugging: Log the FormData to see what's being sent
+        for (const pair of formDataForCloudinary.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
+        }
+    
+        try {
+            const response = await fetch(cloudinaryUrl, {
+                method: 'POST',
+                body: formDataForCloudinary,
+            });
+    
+            // Debugging: Log the raw response to see the status and headers
+            console.log("Raw Cloudinary response:", response);
+    
+            if (!response.ok) {
+                // Debugging: Try to read the response body for more error info
+                const errorText = await response.text();
+                console.error("Cloudinary error response:", errorText); // Log response
+                throw new Error(`Network response was not ok: ${response.statusText}`);
+            }
+    
+            const data = await response.json();
+    
+            // Debugging: Log the JSON data to see the Cloudinary response
+            console.log("Cloudinary response data:", data);
+    
+            return data.secure_url; // Or data.url if you prefer http
+        } catch (error) {
+            console.error("Cloudinary upload error:", error);
+            throw error; // Re-throw to be caught by handleSubmit
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         // Construct the ticket_tiers object from the individual price fields
         const ticketTiers = {
             "Early Bird": { price: formData.earlyBirdPrice },
             "VIP": { price: formData.vipPrice },
             "Regular": { price: formData.regularPrice },
         };
-        // Send the image to cloudinary...
-        // receive cloudinary image url...
-        const finalFormData = { ...formData, ticket_tiers: ticketTiers };
+
         try {
-            // Send the finalFormData to the API
+            // 1. Upload Image to Cloudinary and Get URL
+            setLoading(true); // Setting the loading
+            let cloudinaryImageUrl = "";
+            if (selectedImage) {
+                const imageFile = e.target.querySelector('input[type="file"]').files[0];
+                cloudinaryImageUrl = await uploadImageToCloudinary(imageFile);
+
+                // if (cloudinaryImageUrl) {
+                //     setFormData(prev => ({ ...prev, image_url: cloudinaryImageUrl }));
+                // }
+            }
+
+            // 2. Construct the finalFormData with the Cloudinary URL
+            const finalFormData = {
+                ...formData,
+                ticket_tiers: ticketTiers,
+                image_url: cloudinaryImageUrl // Set the Cloudinary URL
+            };
+
+            // 3. Send the finalFormData to the API
             const response = await createEvent(finalFormData);
             console.log('Event created successfully:', response);
-            // confirmation dialog...
-            // Reset form
+
+            // 4. confirmation dialog...
+            alert("Event created successfully!");
+
+            // 5. Reset form
             setFormData({
                 title: "",
                 description: "",
@@ -89,10 +156,16 @@ export default function NewEvent({ onClose }) {
         } catch (error) {
             console.error("Error creating event:", error.message);
             alert("An error occurred while creating the event. Please try again.");
+        } finally {
+            setLoading(false);
         }
     };
 
+    const [loading, setLoading] = useState(false)
+
     return (
+        <>
+        {loading && <p>Loading....</p>}
         <div className="tiketi-tamasha-dialog-container">
             <form className="tiketi-tamasha-dialog new-event" onSubmit={handleSubmit}>
                 <div className="image-section">
@@ -186,7 +259,7 @@ export default function NewEvent({ onClose }) {
                                 placeholder="End date and time..."
                                 value={formData.end_date}
                                 onChange={handleChange}
-                                required
+                            required
                             />
                         </div>
                     </div>
@@ -246,5 +319,6 @@ export default function NewEvent({ onClose }) {
                 </div>
             </form>
         </div>
+        </>
     );
-}
+};

@@ -39,5 +39,9 @@ export const registerUser = async (userData) => {
 };
 
 export const logoutUser = () => {
-	localStorage.removeItem("user");
+    localStorage.removeItem("user");
+    localStorage.removeItem("payments");
+    localStorage.removeItem("tickets");
+    localStorage.removeItem("myEvents");
+    localStorage.removeItem("access_token");
 };

@@ -105,7 +105,7 @@ export default function CustomerDashboard({ activeSection }) {
 		return (
 			<>
 				<LoadingPage />
-				<div className="tiketi-tamasha-auth-page">
+				<div className="tiketi-tamasha-dashboard">
 					<img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
 				</div>
 			</>

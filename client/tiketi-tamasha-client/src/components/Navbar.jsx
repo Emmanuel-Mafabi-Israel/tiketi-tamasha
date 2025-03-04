@@ -29,7 +29,7 @@ export default function Navbar({ activeSection, setActiveSection }) {
 
 	return (
 		<nav className="tiketi-tamasha-navbar">
-			<div className={`tiketi-tamasha-logo ${user ? "signed" : ""}`} onClick={ user ? () => navigate("/dashboard") : () => navigate("/")}>
+			<div className={`tiketi-tamasha-logo ${user ? "signed" : ""}`} onClick={user ? () => navigate("/dashboard") : () => navigate("/")}>
 				<img className="tiketi-tamasha-logo-image" src={tiketi_tamasha_logo} alt="tiketi-tamasha"></img>
 				<div className="tiketi-tamasha-logo-title">
 					<div className="head">Tiketi</div>
@@ -59,38 +59,64 @@ export default function Navbar({ activeSection, setActiveSection }) {
 							</>
 						) : (
 							<>
-								<div className="access-links">
-								{/* className="link" */}
-									<div className={`link ${activeSection === "home" ? "selected" : ""}`} onClick={() => setActiveSection('home')}>
-										Home
-									</div>
-									<div className={`link ${activeSection === "tickets" ? "selected" : ""}`} onClick={() => setActiveSection('tickets')}>
-										Tickets
-									</div>
-									<div className={`link ${activeSection === "upcoming" ? "selected" : ""}`} onClick={() => setActiveSection('upcoming')}>
-										Upcoming
-									</div>
-									<div className={`link ${activeSection === "payments" ? "selected" : ""}`} onClick={() => setActiveSection('payments')}>
-										Payments
-									</div>
-									<div className={`link ${activeSection === "settings" ? "selected" : ""}`} onClick={() => setActiveSection('settings')}>
-										Settings
-									</div>
-								</div>
-								<div className="tiketi-tamasha-navbar-signed-btns">
-									<Button
-										className="tiketi-tamasha-btn special"
-										buttonText="Explore events"
-										image={tiketi_explore_logo}
-										alt="explore"
-										onClick={() => navigate("/discover")}
-									/>
-									<Button
-										className="tiketi-tamasha-btn"
-										buttonText="Logout"
-										onClick={logout}
-									/>
-								</div>
+								{user.role === "organizer" ? (
+									<>
+										<div className="access-links">
+											{/* className="link" */}
+											<div className={`link ${activeSection === "home" ? "selected" : ""}`} onClick={() => setActiveSection('home')}>
+												Dashboard
+											</div>
+											<div className={`link ${activeSection === "events" ? "selected" : ""}`} onClick={() => setActiveSection('events')}>
+												Events
+											</div>
+											<div className={`link ${activeSection === "settings" ? "selected" : ""}`} onClick={() => setActiveSection('settings')}>
+												Settings
+											</div>
+										</div>
+										<div className="tiketi-tamasha-navbar-signed-btns">
+											<Button
+												className="tiketi-tamasha-btn"
+												buttonText="Logout"
+												onClick={logout}
+											/>
+										</div>
+									</>
+								) : (
+									<>
+										<div className="access-links">
+											{/* className="link" */}
+											<div className={`link ${activeSection === "home" ? "selected" : ""}`} onClick={() => setActiveSection('home')}>
+												Home
+											</div>
+											<div className={`link ${activeSection === "tickets" ? "selected" : ""}`} onClick={() => setActiveSection('tickets')}>
+												Tickets
+											</div>
+											<div className={`link ${activeSection === "upcoming" ? "selected" : ""}`} onClick={() => setActiveSection('upcoming')}>
+												Upcoming
+											</div>
+											<div className={`link ${activeSection === "payments" ? "selected" : ""}`} onClick={() => setActiveSection('payments')}>
+												Payments
+											</div>
+											<div className={`link ${activeSection === "settings" ? "selected" : ""}`} onClick={() => setActiveSection('settings')}>
+												Settings
+											</div>
+										</div>
+										<div className="tiketi-tamasha-navbar-signed-btns">
+											<Button
+												className="tiketi-tamasha-btn special"
+												buttonText="Explore events"
+												image={tiketi_explore_logo}
+												alt="explore"
+												onClick={() => navigate("/discover")}
+											/>
+											<Button
+												className="tiketi-tamasha-btn"
+												buttonText="Logout"
+												onClick={logout}
+											/>
+										</div>
+									</>
+								)}
 							</>
 						)}
 					</div>

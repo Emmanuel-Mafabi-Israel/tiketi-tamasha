@@ -121,7 +121,7 @@ input[type="datetime-local"] {
     padding-right: 30px;
 }
 
-input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+/* input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     opacity: 0;
 }
 
@@ -140,4 +140,4 @@ input[type="datetime-local"]::after {
 
     width: 20px;
     height: 20px;
-}
+} */

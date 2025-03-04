@@ -24,13 +24,19 @@ export const getEventDetails = async (eventId) => {
 };
 
 export const createEvent = async (eventData) => {
-	try {
-		const response = await axios.post(API_URL, eventData);
-		return response.data;
-	} catch (error) {
-		console.error("Error creating event:", error.response?.data || error.message);
-		throw error;
-	}
+    try {
+        const token = localStorage.getItem('access_token'); // Retrieve the token from local storage
+
+        const response = await axios.post(API_URL, eventData, {
+            headers: {
+                Authorization: `Bearer ${token}` // Add the Authorization header
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error creating event:", error.response?.data || error.message);
+        throw error;
+    }
 };
 
 export const fetchOrganizerEvents = async (organizerId) => {

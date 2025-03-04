@@ -83,21 +83,24 @@ export default function EventDetails({ eventId, onClose, flag, userId }) {
                     <div className="registration">
                         <div className="title">Select a tier below to enroll</div>
                         <div className="tiers">
-                            {Object.entries(event.ticket_tiers).map(([tier, { price }]) => (
-                                <div key={tier} className="tier" onClick={() => handleTierClick(tier)}>
-                                    <div className="tier-name">{tier}</div>
-                                    {selectedTier === tier && (
-                                        <div className="reminder">
-                                            {flag === "unsigned" ? (
-                                                <>Please <a href="/login">log in</a> first</>
-                                            ) : (
-                                                <>Purchase this ticket? <div onClick={handleTierClick}>click to purchase</div></>
-                                            )}
-                                        </div>
-                                    )}
-                                    <div className="tier-price">${price.toFixed(2)}</div>
-                                </div>
-                            ))}
+                            {Object.entries(event.ticket_tiers).map(([tier, { price }]) => {
+                                const numericPrice = parseFloat(price); // Convert price to a number
+                                return (
+                                    <div key={tier} className="tier" onClick={() => handleTierClick(tier)}>
+                                        <div className="tier-name">{tier}</div>
+                                        {selectedTier === tier && (
+                                            <div className="reminder">
+                                                {flag === "unsigned" ? (
+                                                    <>Please <a href="/login">log in</a> first</>
+                                                ) : (
+                                                    <>Purchase this ticket? <div onClick={handleTierClick}>click to purchase</div></>
+                                                )}
+                                            </div>
+                                        )}
+                                        <div className="tier-price">${numericPrice.toFixed(2)}</div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                     <div className="dialog-about">
