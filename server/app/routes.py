@@ -379,6 +379,12 @@ def update_event(user, event_id):
         event.start_date = parser.parse(data['start_date'])
     if 'end_date' in data:
         event.end_date = parser.parse(data['end_date'])
+    if 'image_url' in data:
+        event.image_url = data['image_url']
+    if 'total_tickets' in data:
+        event.total_tickets = data['total_tickets']
+    if 'ticket_tiers' in data:
+        event.ticket_tiers = data['ticket_tiers'] # Update the ticket tiers
 
     try:
         db.session.commit()
@@ -387,7 +393,7 @@ def update_event(user, event_id):
         db.session.rollback()
         logging.error(f"Error updating event: {e}")
         return jsonify({'message': f'Error updating event: {str(e)}'}), 500
-
+    
 @event_bp.route('/events/<int:event_id>', methods=['DELETE'])
 @jwt_required()
 @get_user_from_token
@@ -445,6 +451,35 @@ def get_user_upcoming_events(user):
         'message': 'Upcoming events retrieved successfully',
         'upcoming_events': upcoming_events
     }), 200
+
+@event_bp.route('/organizer/events', methods=['GET'])
+@jwt_required()
+def get_organizer_events():
+    """
+    Retrieves the details of all events created by the currently logged-in organizer.
+    """
+    try:
+        user_email = get_jwt_identity()
+        user = User.query.filter_by(email=user_email).first()
+
+        if not user:
+            return jsonify({'message': 'User not found'}), 404
+
+        # Check if the user is an organizer
+        if user.role != 'organizer':
+            return jsonify({'message': 'Unauthorized: Only organizers can access this route'}), 403
+
+        # Get all events created by the organizer
+        events = Event.query.filter_by(organizer_id=user.id).all()
+
+        # Serialize the events
+        event_list = [event_schema.dump(event) for event in events]
+
+        return jsonify({'events': event_list}), 200
+
+    except Exception as e:
+        logging.error(f"Error retrieving organizer events: {e}")
+        return jsonify({'message': f'Error retrieving organizer events: {str(e)}'}), 500
 
 # --- Ticket Routes ---
 @ticket_bp.route('/tickets', methods=['POST'])

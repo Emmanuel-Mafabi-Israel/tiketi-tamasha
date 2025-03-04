@@ -141,3 +141,12 @@ input[type="datetime-local"]::after {
     width: 20px;
     height: 20px;
 } */
+
+.error-message {
+    color: var(--tiketi-tamasha-cool-red);
+    font-size: 12px;
+
+    width: fit-content;
+    height: 20px;
+    min-height: 20px;
+}
