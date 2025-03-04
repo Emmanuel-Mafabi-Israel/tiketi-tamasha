@@ -1,0 +1,32 @@
+.confirmation-container {
+	text-align: center;
+	padding: 50px;
+	background: #f0fff0;
+}
+
+h1 {
+	font-size: 2rem;
+	color: #f3f3f3;
+}
+
+p {
+	font-size: 0.8rem;
+}
+
+.confirmation-actions {
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+}
+
+button {
+	background: white;
+	color: black;
+	padding: 10px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+button:hover {
+	background: white;
+}

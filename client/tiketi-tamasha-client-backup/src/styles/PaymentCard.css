@@ -1,0 +1,73 @@
+/*
+    GLORY BE TO GOD,
+    TIKETI TAMASHA,
+    PAYMENT CARD,
+
+    BY ISRAEL MAFABI EMMANUEL
+*/
+
+.tiketi-tamasha-payment-card {
+    background: var(--tiketi-tamasha-theme-cool-dark-b-tr);
+
+    border: 1px solid var(--tiketi-tamasha-cool-gray);
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    cursor: pointer;
+
+    gap: 7px;
+
+    padding-left: 14px;
+
+    width: 430px;
+    min-width: 430px;
+    max-width: 430px;
+    height: 150px;
+    min-height: 150px;
+    
+    .card-image {
+        width: 120px;
+    }
+
+    .card-info {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+
+        min-width: fit-content;
+        height: fit-content;
+
+        .title {
+            color: var(--tiketi-tamasha-cool-white);
+            font-size: 15px;
+        }
+
+        .status, .method, .transaction, .time, .amount {
+            color: var(--tiketi-tamasha-cool-white-tr);
+            font-size: 12px;
+
+            width: inherit;
+        }
+
+        .status.paid {
+            .indicator {
+                color: var(--tiketi-tamasha-cool-green);
+            }
+        }
+
+        .status.unpaid {
+            .indicator {
+                color: var(--tiketi-tamasha-cool-red);
+            }
+        }
+    }
+}
+
+.tiketi-tamasha-payment-card:hover {
+    border: 1px solid var(--tiketi-tamasha-cool-gray-);
+    border-radius: 14px;
+}

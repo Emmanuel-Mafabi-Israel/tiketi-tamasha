@@ -1,0 +1,88 @@
+@import url('globals.css');
+
+.tiketi-tamasha-landing-page {
+	background: transparent;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	position: relative;
+	overflow: hidden;
+
+	width: 100vw;
+	height: calc(100vh - 120px);
+
+	.tiketi-tamasha-doodle-background {
+		background-size: cover;
+
+		position: absolute;
+
+		z-index: 1;
+
+		width: 80%;
+		height: 80%;
+	}
+
+	.tiketi-tamasha-landing-page-center {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+
+		gap: 2px;
+
+		z-index: 2;
+
+		min-width: 400px;
+		min-height: 400px;
+
+		.tiketi-tamasha-landing-heading {
+			font-size: 32px;
+			font-weight: normal;
+
+			width: fit-content;
+			height: fit-content;
+
+			b {
+				font-weight: 300;
+				text-decoration: underline;
+			}
+
+			.fade-text {
+				font-weight: 400;
+				background: linear-gradient(to right, #0058ff, #c9e0ff);
+				background-clip: border-box;
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				font-family: "Poppins";
+			}
+		}
+
+		.tiketi-tamasha-landing-explainer {
+			color: var(--tiketi-tamasha-cool-white);
+			font-size: 16px;
+
+			text-align: center;
+
+			width: fit-content;
+			height: fit-content;
+		}
+
+		.tiketi-tamasha-btn {
+            background: var(--tiketi-tamasha-cool-white);
+            border-radius: 20px;
+            color: var(--tiketi-tamasha-cool-black);
+            font-size: 13px;
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px;
+            padding: 0px;
+            gap: 4px;
+            width: 150px;
+            height: 35px;
+        }
+    }
+}

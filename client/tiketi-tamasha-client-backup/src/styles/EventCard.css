@@ -1,0 +1,108 @@
+/*
+    GLORY BE TO GOD,
+    TIKETI TAMASHA,
+    DISCOVER CARD,
+
+    BY ISRAEL MAFABI EMMANUEL
+*/
+
+.tiketi-tamasha-event-card {
+    background: transparent;
+    /* 
+    border: 1px solid var(--tiketi-tamasha-cool-gray);
+    border-radius: 14px; */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    gap: 7px;
+
+    width: 200px;
+    height: 100px;
+
+    .card-image {
+        border-radius: 14px;
+        width: 50px;
+        height: 68px;
+    }
+
+    .card-info {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+
+        min-width: fit-content;
+        height: fit-content;
+
+        .title {
+            color: var(--tiketi-tamasha-cool-white);
+            font-size: 13px;
+        }
+
+        .time, .location {
+            color: var(--tiketi-tamasha-cool-white-tr);
+            font-size: 12px;
+
+            width: inherit;
+        }
+    }
+}
+
+.tiketi-tamasha-event-card.extra {
+    background: var(--tiketi-tamasha-theme-cool-dark-b-tr);
+
+    border: 1px solid var(--tiketi-tamasha-cool-gray);
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    cursor: pointer;
+
+    gap: 14px;
+
+    padding: 14px;
+
+    width: fit-content;
+    height: 100px;
+
+    .card-image {
+        border-radius: 14px;
+        width: 70px;
+    }
+
+    .card-info {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+
+        gap: 3px;
+
+        min-width: fit-content;
+        height: fit-content;
+
+        .title {
+            color: var(--tiketi-tamasha-cool-white);
+            font-size: 13px;
+        }
+
+        .time, .location {
+            color: var(--tiketi-tamasha-cool-white-tr);
+            font-size: 12px;
+
+            width: inherit;
+        }
+    }
+}
+
+.tiketi-tamasha-event-card:hover {
+    .card-image {
+        box-shadow: 0px 0px 0px 4px var(--tiketi-tamasha-cool-gray);
+    }
+}

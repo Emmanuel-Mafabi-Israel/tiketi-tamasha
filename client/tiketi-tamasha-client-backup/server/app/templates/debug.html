@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TiketiTamasha - Debug Mode</title>
+        <link rel="icon" href="{{ url_for('static', filename='assets/tiketi-tamasha-icon-high-res-white.svg') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
+    </head>
+    <body>
+        <div class="tiketi-tamasha-header">
+            <div class="tiketi-tamasha-logo">
+                <img class="tiketi-tamasha-logo-image" src="{{ url_for('static', filename='assets/tiketi-tamasha-icon-high-res-white.svg') }}" alt="tiketi-tamasha">
+                <div class="tiketi-tamasha-logo-title">
+                    <div class="head">Tiketi</div>
+                    <div class="enbold"><b>Tamasha</b></div>
+                </div>
+            </div>
+            <div class="tiketi-tamasha-subheading">Debug Mode</div>
+        </div>
+        <div class="tiketi-tamasha-body">
+            <ul class="tiketi-tamasha-list">
+                <li class="tiketi-tamasha-code-links">debug-channel:&nbsp;<a href="{{ url_for('auth.debug_models') }}">Database Models</a></li>
+                <li class="tiketi-tamasha-code-links">debug-channel:&nbsp;<a href="{{ url_for('auth.debug_users') }}">User Emails</a></li>
+            </ul>
+        </div>
+        <div class="tiketi-tamasha-footer">
+            <div class="tiketi-tamasha-logo">
+                <img class="tiketi-tamasha-logo-image" src="{{ url_for('static', filename='assets/tiketi-tamasha-icon-high-res-white.svg') }}" alt="tiketi-tamasha">
+                <div class="tiketi-tamasha-logo-title">
+                    <div class="head">Tiketi</div>
+                    <div class="enbold"><b>Tamasha</b></div>
+                </div>
+            </div>
+            <div class="tiketi-tamasha-developers">Tiketi Tamasha by Tamasha Developers</div>
+        </div>
+    </body>
+</html>
