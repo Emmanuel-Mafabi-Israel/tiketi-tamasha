@@ -659,7 +659,7 @@ def mpesa_callback():
 @event_bp.route('/events/search', methods=['GET'])
 def search_events():
     """
-    Searches for events based on a search term across title, category, and tags.
+    Searches for events based on a search term across title, category, location, and tags.
     """
     search_term = request.args.get('q')  # 'q' is a common convention for search query parameters
     page        = request.args.get('page', 1, type=int) # Pagination
@@ -671,9 +671,10 @@ def search_events():
     # Construct the query: search across title, category, and tags
     query = Event.query.filter(
         db.or_(
-            Event.title.ilike(f"%{search_term}%"),       # Case-insensitive search in title
-            Event.category.ilike(f"%{search_term}%"),    # Case-insensitive search in category
-            Event.tags.ilike(f"%{search_term}%")         # Case-insensitive search in tags
+            Event.title.ilike(f"%{search_term}%"),
+            Event.category.ilike(f"%{search_term}%"),
+            Event.tags.ilike(f"%{search_term}%"),
+            Event.location.ilike(f"%{search_term}")
         )
     )
 

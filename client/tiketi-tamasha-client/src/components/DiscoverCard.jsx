@@ -8,9 +8,9 @@
 
 import "../styles/DiscoverCard.css";
 
-export default function DiscoverCard({cardImage, cardTitle, cardCount}) {
+export default function DiscoverCard({cardImage, cardTitle, cardCount, onClick}) {
     return (
-        <div className="tiketi-tamasha-discover-card">
+        <div className="tiketi-tamasha-discover-card" onClick={onClick}>
             <img className="card-image" src={cardImage} alt="TiketiTamashaCard" />
             <div className="card-info">
                 <div className="title">{cardTitle}</div>

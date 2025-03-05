@@ -81,7 +81,7 @@ export const getEventCategoryCount = async (categoryName) => {
 	}
 };
 
-// New service to get popular events
+// New service to get popular events => but this time it's not popular events - since we have no metrics on the current events -> basically randomized.
 export const getPopularEvents = async () => {
 	try {
 		const response = await axios.get(`${API_URL}/popular`);
@@ -105,6 +105,23 @@ export const updateEvent = async (eventId, eventData) => {
         return response.data;
     } catch (error) {
         console.error("Error updating event:", error.response?.data || error.message);
+        throw error;
+    }
+};
+
+// search function...
+export const searchEvents = async (searchTerm, page = 1, perPage = 10) => {
+    try {
+        const response = await axios.get(`${API_URL}/search`, {
+            params: {
+                q: searchTerm,
+                page: page,
+                per_page: perPage,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error searching events:", error.response?.data || error.message);
         throw error;
     }
 };

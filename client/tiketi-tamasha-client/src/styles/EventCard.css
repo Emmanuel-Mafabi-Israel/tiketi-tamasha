@@ -52,6 +52,60 @@
     }
 }
 
+.tiketi-tamasha-event-card.explore {
+    background: transparent;
+    /* 
+    border: 1px solid var(--tiketi-tamasha-cool-gray);
+    border-radius: 14px; */
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding-left: 14px;
+
+    cursor: inherit;
+
+    gap: 14px;
+
+    width: 200px;
+    height: 100px;
+
+    .card-image {
+        border-radius: 7px;
+        width: 50px;
+        height: 68px;
+    }
+
+    .card-info {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+
+        min-width: fit-content;
+        height: fit-content;
+
+        .title {
+            color: var(--tiketi-tamasha-cool-white);
+            font-size: 13px;
+        }
+
+        .time, .location {
+            color: var(--tiketi-tamasha-cool-white-tr);
+            font-size: 12px;
+
+            width: inherit;
+        }
+    }
+}
+
+.tiketi-tamasha-event-card.explore:hover {
+    .card-image {
+        box-shadow: 0px 0px 0px 4px transparent;
+    }
+}
+
 .tiketi-tamasha-event-card.extra {
     background: var(--tiketi-tamasha-theme-cool-dark-b-tr);
 
@@ -202,7 +256,6 @@
         box-shadow: 0px 0px 0px 4px transparent;
     }
 }
-
 
 .tiketi-tamasha-event-card:hover {
     .card-image {

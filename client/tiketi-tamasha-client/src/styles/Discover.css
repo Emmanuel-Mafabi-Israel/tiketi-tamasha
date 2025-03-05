@@ -1,30 +1,30 @@
 @import url('globals.css');
 
 .tiketi-tamasha-explore-page {
-	background: transparent;
+    background: transparent;
 
-	display: flex;
-	align-items: center;
-	justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
 
-	position: relative;
-	overflow: hidden;
+    position: relative;
+    overflow: hidden;
 
-	width: 100vw;
+    width: 100vw;
     height: calc(100vh - 120px);
-	min-height: calc(100vh - 120px);
+    min-height: calc(100vh - 120px);
 
-	.tiketi-tamasha-doodle-background {
-		background-size: cover;
+    .tiketi-tamasha-doodle-background {
+        background-size: cover;
 
-		position: absolute;
+        position: absolute;
 
-		z-index: 1;
+        z-index: 1;
 
-		width: 80%;
-		height: 80%;
-	}
+        width: 80%;
+        height: 80%;
+    }
 
     .tiketi-tamasha-section {
         display: flex;
@@ -60,6 +60,307 @@
 
             width: 100%;
             height: fit-content;
+        }
+    }
+
+    .tiketi-tamasha-section.explore {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+
+        padding: 0;
+
+        z-index: 2;
+
+        min-width: 800px;
+        height: calc(100vh - 120px);
+        min-height: inherit;
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            position: relative;
+
+            width: 500px;
+            height: fit-content;
+            min-height: 45px;
+
+            input {
+                width: inherit;
+            }
+
+            img {
+                position: absolute;
+                right: 14px;
+
+                width: 16px;
+            }
+        }
+
+        .sections {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+
+            min-width: 800px;
+            height: calc(100vh - 165px);
+
+            .tiketi-tamasha-explore-page-section-a {
+                display: flex;
+                align-items: flex-start;
+                justify-content: center;
+                flex-direction: column;
+
+                gap: 14px;
+
+                padding: 14px;
+
+                width: 200px;
+                min-width: 120px;
+                height: fit-content;
+
+                .section-title {
+                    color: var(--tiketi-tamasha-cool-white);
+                    font-size: 13px;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+
+                    padding-left: 14px;
+                    padding-right: 14px;
+                }
+
+                .cta {
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: center;
+                    flex-direction: column;
+
+                    padding-left: 14px;
+                    padding-right: 14px;
+
+                    width: inherit;
+                    height: fit-content;
+
+                    .tiketi-tamasha-filters {
+                        background: transparent;
+                        border: none;
+                        border-bottom: 1px solid transparent;
+                        border-radius: 0;
+                        color: var(--tiketi-tamasha-cool-white-tr);
+
+                        cursor: pointer;
+
+                        margin-top: 7px;
+
+                        width: fit-content;
+                        height: fit-content;
+                    }
+
+
+                    .tiketi-tamasha-filters.underline {
+                        border-bottom: 1px solid var(--tiketi-tamasha-cool-white);
+                        color: var(--tiketi-tamasha-cool-white);
+                        /* font-size: 16px; */
+                    }
+
+                    .tiketi-tamasha-filters:hover {
+                        border-bottom: 1px solid var(--tiketi-tamasha-cool-white);
+                    }
+                }
+            }
+
+            .tiketi-tamasha-explore-page-section-b {
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
+                flex-direction: column;
+
+                padding: 14px;
+
+                width: 600px;
+                min-width: 600px;
+                height: inherit;
+
+                .section-title {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    padding-left: 14px;
+                    padding-right: 14px;
+
+                    width: inherit;
+                    min-width: inherit;
+                    height: fit-content;
+
+                    .title {
+                        color: var(--tiketi-tamasha-cool-white);
+                        font-size: 13px;
+
+                        width: fit-content;
+                        height: inherit;
+                    }
+
+                    .cta {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        gap: 14px;
+
+                        width: fit-content;
+                        height: inherit;
+
+                        .action {
+                            color: var(--tiketi-tamasha-cool-white-tr);
+                            font-size: 13px;
+
+                            cursor: pointer;
+                        }
+
+                        .action-white {
+                            color: var(--tiketi-tamasha-cool-white);
+                            font-size: 13px;
+                        }
+                    }
+                }
+
+                .result-body {
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: flex-start;
+                    flex-direction: column;
+
+                    gap: 14px;
+
+                    padding: 14px;
+
+                    width: 100%;
+                    height: calc(100% - 20px);
+                    min-height: calc(100% - 20px);
+
+                    .result {
+                        background: var(--tiketi-tamasha-theme-cool-dark-b-tr);
+                        border: 1px solid var(--tiketi-tamasha-cool-gray);
+                        border-radius: 14px;
+
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+
+                        cursor: pointer;
+
+                        width: 500px;
+                        min-width: 500px;
+                        height: fit-content;
+                        min-height: 102px;
+
+                        .event-description {
+                            color: var(--tiketi-tamasha-cool-white-tr);
+                            font-size: 12px;
+
+                            border-left: 1px solid var(--tiketi-tamasha-cool-gray);
+
+                            display: flex;
+                            align-items: center;
+
+                            padding-left: 14px;
+                            padding-right: 14px;
+
+                            width: 300px;
+                            height: inherit;
+                            min-height: 45px;
+                            max-height: 45px;
+                        }
+                    }
+
+                    .result:hover {
+                        border: 1px solid var(--tiketi-tamasha-cool-gray-);
+                        border-radius: 14px;
+                    }
+
+                    .no-result {
+                        color: var(--tiketi-tamasha-cool-white);
+                        font-size: 13px;
+
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    .loading {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+
+                        width: inherit;
+                        height: inherit;
+
+                        .tiketi-tamasha-loading-screen {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            flex-direction: column;
+
+                            gap: 10px;
+
+                            animation: rotate 1s infinite linear;
+
+                            width: 200px;
+                            height: 200px;
+
+                            .row {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+
+                                gap: 10px;
+
+                                width: fit-content;
+                                height: fit-content;
+
+                                .circle {
+                                    background: var(--tiketi-tamasha-cool-white);
+                                    border-radius: 50%;
+
+                                    width: 10px;
+                                    height: 10px;
+                                }
+                            }
+                        }
+
+                        @keyframes rotate {
+                            from {
+                                transform: rotate(0deg);
+                            }
+
+                            to {
+                                transform: rotate(360deg);
+                            }
+                        }
+                    }
+
+                    .error-message {
+                        font-size: 13px;
+
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
         }
     }
 }

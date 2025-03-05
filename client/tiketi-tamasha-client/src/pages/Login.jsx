@@ -20,6 +20,7 @@ import logo from "../assets/logo.svg/tiketi-tamasha-icon-high-res-white.svg";
 
 export default function Login() {
     const { login, user } = useContext(AuthContext);
+    //const { setLoading: setGlobalLoading, loading: globalLoading } = useLoading(); // Remove the loading context!
     const [loading, setLoading] = useState(false); //Local Loading State
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [showPassword, setShowPassword] = useState(false);
@@ -62,9 +63,9 @@ export default function Login() {
         return (
             <>
                 <LoadingPage />
-                <div className="tiketi-tamasha-auth-page">
+                {/* <div className="tiketi-tamasha-auth-page">
                     <img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
-                </div>
+                </div> */}
             </>
         );
     }

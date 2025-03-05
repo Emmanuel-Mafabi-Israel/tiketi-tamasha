@@ -8,7 +8,7 @@
 
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-//import { useLoading } from "../context/LoadingContext"; // Remove useLoading import
+import { useNavigate } from "react-router-dom";
 import { getEventCategoryCount, getPopularEvents } from "../api/eventService";
 
 import EventCard from "../components/EventCard";
@@ -38,6 +38,7 @@ export default function Discover() {
         Music: 0,
     });
     const [popularEvents, setPopularEvents] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCategoryCounts = async () => {
@@ -128,31 +129,37 @@ export default function Discover() {
                         cardImage={research}
                         cardTitle="Research"
                         cardCount={`${categoryCounts.Research} Events`}
+                        onClick={() => navigate("/explore?q=Research")}
                     />
                     <DiscoverCard
                         cardImage={conserve}
                         cardTitle="Conserve"
                         cardCount={`${categoryCounts.Conserve} Events`}
+                        onClick={() => navigate("/explore?q=Conserve")}
                     />
                     <DiscoverCard
                         cardImage={fitness}
                         cardTitle="Fitness"
                         cardCount={`${categoryCounts.Fitness} Events`}
+                        onClick={() => navigate("/explore?q=Fitness")}
                     />
                     <DiscoverCard
                         cardImage={wellness}
                         cardTitle="Wellness"
                         cardCount={`${categoryCounts.Wellness} Events`}
+                        onClick={() => navigate("/explore?q=Wellness")}
                     />
                     <DiscoverCard
                         cardImage={finance}
                         cardTitle="Finance"
                         cardCount={`${categoryCounts.Finance} Events`}
+                        onClick={() => navigate("/explore?q=Finance")}
                     />
                     <DiscoverCard
                         cardImage={music}
                         cardTitle="Music"
                         cardCount={`${categoryCounts.Music} Events`}
+                        onClick={() => navigate("/explore?q=Music")}
                     />
                 </div>
             </div>
