@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import "../styles/Confirmation.css";
 
 const Confirmation = () => {
@@ -7,6 +8,15 @@ const Confirmation = () => {
 	const eventId = searchParams.get("eventId");
 	const quantity = searchParams.get("quantity");
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		Swal.fire({
+			title: "🎉 Purchase Confirmed! 🎟",
+			text: `Your tickets have been booked successfully.\n\nEvent ID: ${eventId}\nTickets Purchased: ${quantity}`,
+			icon: "success",
+			confirmButtonText: "OK",
+		});
+	}, [eventId, quantity]);
 
 	return (
 		<div className="confirmation-container">

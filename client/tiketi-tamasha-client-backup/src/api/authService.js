@@ -3,7 +3,6 @@ import CONFIG from "../config";
 
 const API_URL = `${CONFIG.API_BASE_URL}`;
 
-
 export const loginUser = async (credentials) => {
 	try {
 		const response = await axios.post(`${API_URL}/login`, credentials);
@@ -16,7 +15,7 @@ export const loginUser = async (credentials) => {
 
 export const fetchUserDetails = async (token) => {
 	try {
-		const response = await axios.get(`${API_URL}/user`, {
+		const response = await axios.get(`${API_URL}user`, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
@@ -40,26 +39,9 @@ export const registerUser = async (userData) => {
 };
 
 export const logoutUser = () => {
-	localStorage.removeItem("user");
+    localStorage.removeItem("user");
+    localStorage.removeItem("payments");
+    localStorage.removeItem("tickets");
+    localStorage.removeItem("myEvents");
+    localStorage.removeItem("access_token");
 };
-
-export const forgotPassword = async (email) => {
-    try {
-        const response = await axios.post(`${API_URL}/forgot-password`, { email });
-        return response.data;
-    } catch (error) {
-        console.error("Forgot password request failed:", error.response?.data || error.message);
-        throw error;
-    }
-};
-
-export const resetPassword = async (token, newPassword) => {
-    try {
-        const response = await axios.post(`${API_URL}/reset-password`, { token, newPassword });
-        return response.data;
-    } catch (error) {
-        console.error("Reset password failed:", error.response?.data || error.message);
-        throw error;
-    }
-};
-

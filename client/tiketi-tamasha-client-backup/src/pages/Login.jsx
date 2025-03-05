@@ -9,12 +9,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import Swal from "sweetalert2";  // Import SweetAlert2
 
 import Button from "../components/Button";
 import LoadingPage from "../components/LoadingPage";
 import "../styles/Auth.css";
-
 
 import doodle_background from '../assets/tamasha_doodle_background.svg';
 import logo from "../assets/logo.svg/tiketi-tamasha-icon-high-res-white.svg";
@@ -44,14 +43,9 @@ export default function Login() {
 
         if (!formData.email || !formData.password) {
             Swal.fire({
-                icon: "warning",
-                title: "Missing Fields",
+                icon: "error",
+                title: "Oops...",
                 text: "All fields are required!",
-                customClass: {
-                    popup: "custom-popup",
-                    title: "custom-title",
-                    confirmButton: "custom-confirm-button"
-                }
             });
             return;
         }
@@ -59,29 +53,19 @@ export default function Login() {
         try {
             setLoading(true);
             await login(formData, navigate);
-
             Swal.fire({
                 icon: "success",
-                title: "Login Successful",
-                text: "Welcome back!",
-                customClass: {
-                    popup: "custom-popup",
-                    title: "custom-title",
-                    confirmButton: "custom-confirm-button"
-                }
+                title: "Login Successful!",
+                text: "Redirecting to your dashboard...",
+                timer: 2000,
+                showConfirmButton: false,
             });
-
         } catch (err) {
             setLoading(false);
             Swal.fire({
                 icon: "error",
                 title: "Login Failed",
                 text: "Invalid email or password. Please try again.",
-                customClass: {
-                    popup: "custom-popup",
-                    title: "custom-title",
-                    confirmButton: "custom-confirm-button"
-                }
             });
         }
     };
@@ -147,4 +131,4 @@ export default function Login() {
             </div>
         </div>
     );
-}
+};

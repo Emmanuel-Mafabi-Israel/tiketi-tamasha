@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createEvent } from "../api/eventService";
 import { uploadImage } from "../api/cloudinaryService";
+import Swal from "sweetalert2";  // Import SweetAlert2
 import "../styles/CreateEvent.css";
 
 const CreateEvent = () => {
@@ -13,14 +14,64 @@ const CreateEvent = () => {
 
 	const handleImageUpload = async (e) => {
 		const file = e.target.files[0];
-		const uploadedImage = await uploadImage(file);
-		setImage(uploadedImage.url);
+
+		if (!file) {
+			Swal.fire({
+				icon: "error",
+				title: "Image Upload Failed",
+				text: "Please select an image to upload!",
+			});
+			return;
+		}
+
+		try {
+			const uploadedImage = await uploadImage(file);
+			setImage(uploadedImage.url);
+			Swal.fire({
+				icon: "success",
+				title: "Image Uploaded!",
+				text: "Your event image has been successfully uploaded.",
+				timer: 2000,
+				showConfirmButton: false,
+			});
+		} catch (error) {
+			Swal.fire({
+				icon: "error",
+				title: "Upload Error",
+				text: "There was a problem uploading your image. Please try again.",
+			});
+		}
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		await createEvent({ ...formData, image });
-		navigate("/organizer-dashboard");
+
+		if (!formData.title || !formData.description || !formData.date || !formData.location || !formData.price) {
+			Swal.fire({
+				icon: "error",
+				title: "Missing Fields",
+				text: "All fields are required!",
+			});
+			return;
+		}
+
+		try {
+			await createEvent({ ...formData, image });
+			Swal.fire({
+				icon: "success",
+				title: "Event Created!",
+				text: "Your event has been successfully created.",
+				timer: 2000,
+				showConfirmButton: false,
+			});
+			navigate("/organizer-dashboard");
+		} catch (error) {
+			Swal.fire({
+				icon: "error",
+				title: "Event Creation Failed",
+				text: "There was an issue creating your event. Please try again.",
+			});
+		}
 	};
 
 	return (

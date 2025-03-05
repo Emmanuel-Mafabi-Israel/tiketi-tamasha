@@ -121,7 +121,7 @@ input[type="datetime-local"] {
     padding-right: 30px;
 }
 
-input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+/* input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     opacity: 0;
 }
 
@@ -140,5 +140,30 @@ input[type="datetime-local"]::after {
 
     width: 20px;
     height: 20px;
-}
+} */
 
+.error-message {
+    color: var(--tiketi-tamasha-cool-red);
+    font-size: 12px;
+
+    width: fit-content;
+    height: 20px;
+    min-height: 20px;
+}
+.swal2-popup {
+    font-size: 1.2rem !important;
+    border-radius: 10px;
+  }
+  
+  .swal2-title {
+    color: #333;
+  }
+  
+  .swal2-confirm {
+    background-color: #007bff !important;
+  }
+  
+  .swal2-cancel {
+    background-color: #dc3545 !important;
+  }
+  

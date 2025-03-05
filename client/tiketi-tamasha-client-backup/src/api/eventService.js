@@ -1,3 +1,4 @@
+// eventService.js
 import axios from "axios";
 import CONFIG from "../config";
 
@@ -25,7 +26,13 @@ export const getEventDetails = async (eventId) => {
 
 export const createEvent = async (eventData) => {
 	try {
-		const response = await axios.post(API_URL, eventData);
+		const token = localStorage.getItem('access_token'); // Retrieve the token from local storage
+
+		const response = await axios.post(API_URL, eventData, {
+			headers: {
+				Authorization: `Bearer ${token}` // Add the Authorization header
+			}
+		});
 		return response.data;
 	} catch (error) {
 		console.error("Error creating event:", error.response?.data || error.message);
@@ -33,9 +40,14 @@ export const createEvent = async (eventData) => {
 	}
 };
 
-export const fetchOrganizerEvents = async (organizerId) => {
+export const fetchOrganizerEvents = async () => {
 	try {
-		const response = await axios.get(`${API_URL}/organizer/${organizerId}`);
+		const token = localStorage.getItem('access_token'); // Retrieve the token from local storage
+		const response = await axios.get(`${CONFIG.API_BASE_URL}/organizer/events`, {
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		});
 		return response.data;
 	} catch (error) {
 		console.error("Error fetching organizer events:", error.response?.data || error.message);
@@ -45,7 +57,12 @@ export const fetchOrganizerEvents = async (organizerId) => {
 
 export const deleteEvent = async (eventId) => {
 	try {
-		await axios.delete(`${API_URL}/${eventId}`);
+        const token = localStorage.getItem('access_token');
+		await axios.delete(`${API_URL}/${eventId}`, {
+            headers: {
+				Authorization: `Bearer ${token}` // Add the Authorization header
+			}
+        });
 	} catch (error) {
 		console.error("Error deleting event:", error.response?.data || error.message);
 		throw error;
@@ -72,4 +89,20 @@ export const getPopularEvents = async () => {
 		console.error("Error fetching popular events:", error.response?.data || error.message);
 		throw error;
 	}
+};
+
+export const updateEvent = async (eventId, eventData) => {
+    try {
+        const token = localStorage.getItem('access_token');
+        const response = await axios.put(`${API_URL}/${eventId}`, eventData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+				"Content-Type": "application/json"
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error updating event:", error.response?.data || error.message);
+        throw error;
+    }
 };

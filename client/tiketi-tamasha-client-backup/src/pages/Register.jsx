@@ -6,9 +6,10 @@
     BY ISRAEL MAFABI EMMANUEL
 */
 
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2"; // Import SweetAlert2
 import "../styles/Auth.css";
 
 import Button from "../components/Button";
@@ -19,7 +20,7 @@ import doodle_background from '../assets/tamasha_doodle_background.svg';
 import logo from "../assets/logo.svg/tiketi-tamasha-icon-high-res-white.svg";
 
 export default function Register() {
-    const { register, user } = useContext(AuthContext);
+    const { register } = useContext(AuthContext);
     const [formData, setFormData] = useState({
         fullName: "",
         email: "",
@@ -28,18 +29,9 @@ export default function Register() {
         confirmPassword: "",
     });
     const [currentPage, setCurrentPage] = useState(1);
-    const [error, setError] = useState("");
+    //const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (user) {
-            setLoading(true);
-            setTimeout(() => {
-                navigate(user.role === "organizer" ? "/organizer-dashboard" : "/dashboard");
-            }, 2000);
-        }
-    }, [user, navigate]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -59,7 +51,11 @@ export default function Register() {
         e.preventDefault();
 
         if (formData.password !== formData.confirmPassword) {
-            setError("Passwords do not match!");
+            Swal.fire({
+                icon: "error",
+                title: "Password Mismatch",
+                text: "Passwords do not match!",
+            });
             return;
         }
 
@@ -74,8 +70,19 @@ export default function Register() {
         try {
             setLoading(true);
             await register(data, navigate);
+            Swal.fire({
+                icon: "success",
+                title: "Registration Successful",
+                text: "You are being redirected...",
+                timer: 3000,
+                showConfirmButton: false,
+            });
         } catch (err) {
-            setError("Registration failed. Please try again.");
+            Swal.fire({
+                icon: "error",
+                title: "Registration Failed",
+                text: "Please try again.",
+            });
             setLoading(false);
         }
     };
@@ -99,7 +106,6 @@ export default function Register() {
                     <img className="image" src={logo} alt="Tiketi Tamasha Logo" />
                     <span className="text">Register</span>
                 </div>
-                {error && <p className="error-message">{error}</p>}
                 <form className="tiketi-tamasha-form">
                     {currentPage === 1 && (
                         <>

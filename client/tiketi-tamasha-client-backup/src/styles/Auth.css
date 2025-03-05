@@ -199,23 +199,3 @@
         }
     }
 }
-
-.custom-popup {
-    background-color: #222 !important;  /* Dark theme */
-    color: white !important;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.986);
-}
-
-.custom-title {
-    color: #51ff00 !important;  /* Yellow title */
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.custom-confirm-button {
-    background-color: #28a745 !important;  /* Green button */
-    color: white !important;
-    border-radius: 5px;
-    padding: 8px 12px;
-}
