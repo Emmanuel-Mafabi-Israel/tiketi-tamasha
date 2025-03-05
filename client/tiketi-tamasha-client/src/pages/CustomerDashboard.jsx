@@ -9,7 +9,7 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useLoading } from "../context/LoadingContext";
+//import { useLoading } from "../context/LoadingContext"; // REMOVE LoadingContext import
 
 import TicketCard from "../components/TicketCard";
 import PaymentCard from "../components/PaymentCard";
@@ -23,7 +23,7 @@ import { updateUserProfile, getUserProfile, deleteUserAccount } from "../api/use
 
 export default function CustomerDashboard({ activeSection }) {
     const { user, payments, tickets, myEvents, logout } = useContext(AuthContext);
-    const { loading, setLoading } = useLoading(); // Use LoadingContext
+    const [loading, setLoading] = useState(false); // Local loading state
     const [name, setName] = useState(user?.name || "");
     const [phone, setPhone] = useState(user?.phone_number || "");
     const navigate = useNavigate();
@@ -97,7 +97,14 @@ export default function CustomerDashboard({ activeSection }) {
     };
 
     if (loading) {
-        return <LoadingPage />; // Render the loading spinner
+        return (
+            <>
+                <LoadingPage />
+                <div className="tiketi-tamasha-dashboard">
+                    <img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
+                </div>
+            </>
+        );
     }
 
     return (

@@ -16,6 +16,7 @@ import "../styles/Navbar.css";
 import tiketi_tamasha_logo from "../assets/tiketi-tamasha-icon-high-res-white.svg";
 import tiketi_explore_logo from "../assets/tiketi-tamasha-new-page-rounded.svg";
 import tiketi_return_logo from "../assets/tiketi-tamasha-return.svg";
+// import doodle_background from '../assets/tamasha_doodle_background.svg';
 
 import Button from "./Button";
 import LoadingPage from "./LoadingPage"; // Import the loading spinner
@@ -39,20 +40,23 @@ export default function Navbar({ activeSection, setActiveSection }) {
         }, 2000); // Optional delay for effect
     };
 
-    // Handle logout with spinner
     const handleLogout = () => {
-        setLoading(true); // Start loading spinner
+        setLoading(true);
         setTimeout(() => {
-            logout(); // Call logout function
+            logout(); // Call the logout function
             navigate("/login"); // Redirect to login page
             setLoading(false); // Stop spinner after navigation
-        }, 2000); // Optional delay
+        }, 2000);
     };
 
     if (loading) {
-        // Render loading spinner if loading is true
-        return <LoadingPage />;
+        return (
+            <>
+                <LoadingPage />
+            </>
+        );
     }
+
 
     return (
         <nav className="tiketi-tamasha-navbar">

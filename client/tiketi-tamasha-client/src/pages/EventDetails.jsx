@@ -17,7 +17,7 @@ import LoadingPage from "../components/LoadingPage";
 
 export default function EventDetails({ eventId, onClose, flag, user }) {
     const [event, setEvent] = useState(null);
-    const [loading, setLoading] = useState(true); // Add loading state
+    const [loading, setLoading] = useState(true); // Add loading state and set it to true initially
     const [selectedTier, setSelectedTier] = useState(null);
     const [message, setMessage] = useState(null)
 
@@ -29,7 +29,7 @@ export default function EventDetails({ eventId, onClose, flag, user }) {
             } catch (error) {
                 console.error("Failed to fetch event details", error);
             } finally {
-                setTimeout(() => setLoading(false), 2000); // Delay of 2 seconds
+                setTimeout(() => setLoading(false), 1000); // Delay of 1 second
             }
         };
 
@@ -74,11 +74,11 @@ export default function EventDetails({ eventId, onClose, flag, user }) {
         <div className="tiketi-tamasha-dialog-container">
             <div className="tiketi-tamasha-dialog">
                 <div className="dialog-title">
-                    <img className="dialog-image" src={event.image_url} alt={event.title} />
+                    <img className="dialog-image" src={event?.image_url} alt={event?.title} />
                     <div className="titles">
-                        <div className="heading">{event.title}</div>
+                        <div className="heading">{event?.title}</div>
                         <div className="subheading">
-                            <div className="description">{event.location}</div>
+                            <div className="description">{event?.location}</div>
                             <img className='location-indicator' src={locationIcon} alt="location" />
                         </div>
                     </div>
@@ -86,19 +86,19 @@ export default function EventDetails({ eventId, onClose, flag, user }) {
                 <div className="dialog-body">
                     <div className="time-tickets">
                         <div className="time">
-                            <div className="day">{new Date(event.start_date).toLocaleDateString()}</div>
-                            <div className="start">starting at, {new Date(event.start_date).toLocaleTimeString()}</div>
-                            <div className="end">ending at, {new Date(event.end_date).toLocaleTimeString()}</div>
+                            <div className="day">{new Date(event?.start_date).toLocaleDateString()}</div>
+                            <div className="start">starting at, {new Date(event?.start_date).toLocaleTimeString()}</div>
+                            <div className="end">ending at, {new Date(event?.end_date).toLocaleTimeString()}</div>
                         </div>
                         <div className="tickets">
-                            <div className="amount">{event.total_tickets}</div>
+                            <div className="amount">{event?.total_tickets}</div>
                             <div className="disclaimer">Tickets available</div>
                         </div>
                     </div>
                     <div className="registration">
                         <div className="title">Select a tier below to enroll</div>
                         <div className="tiers">
-                            {Object.entries(event.ticket_tiers).map(([tier, { price }]) => {
+                            {event && Object.entries(event.ticket_tiers).map(([tier, { price }]) => {
                                 const numericPrice = parseFloat(price); // Convert price to a number
                                 return (
                                     <div key={tier} className="tier" onClick={flag === "signed" ? () => handleTierClick(tier, numericPrice) : () => handleUnsignedUser(tier)}>
@@ -120,7 +120,7 @@ export default function EventDetails({ eventId, onClose, flag, user }) {
                 </div>
                 <div className="dialog-about">
                     <div className="title">About Event</div>
-                    <div className="about">{event.description}</div>
+                    <div className="about">{event?.description}</div>
                 </div>
             </div>
             <div className="dialog-btns">

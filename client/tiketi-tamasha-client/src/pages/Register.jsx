@@ -93,7 +93,7 @@ export default function Register() {
                     <span className="text">Register</span>
                 </div>
                 {error && <p className="error-message">{error}</p>}
-                  {showAlert && (
+                {showAlert && (
                     <div className="success-message">
                         Registration successful! You are being redirected...
                     </div>

@@ -11,7 +11,7 @@
     overflow: hidden;
 
     width: 100vw;
-    height: calc(100vh - 120px);
+    min-height: calc(100vh - 120px);
 
     .tiketi-tamasha-doodle-background {
         background-size: cover;
@@ -91,7 +91,7 @@
                 justify-content: center;
                 flex-direction: column;
 
-                gap: 4px;
+                gap: 14px;
 
                 width: inherit;
                 height: fit-content;

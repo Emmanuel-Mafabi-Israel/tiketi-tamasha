@@ -8,7 +8,7 @@
 
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useLoading } from "../context/LoadingContext"; // Import useLoading
+//import { useLoading } from "../context/LoadingContext"; // Remove useLoading import
 import { getEventCategoryCount, getPopularEvents } from "../api/eventService";
 
 import EventCard from "../components/EventCard";
@@ -26,7 +26,8 @@ import LoadingPage from "../components/LoadingPage";
 
 export default function Discover() {
     const { user } = useContext(AuthContext);
-    const { loading, setLoading } = useLoading(); // Use the loading context
+    //const { loading, setLoading } = useLoading(); // Remove useLoading
+    const [loading, setLoading] = useState(true); // Local loading state
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [categoryCounts, setCategoryCounts] = useState({
         Research: 0,
@@ -74,10 +75,10 @@ export default function Discover() {
             setLoading(true); // Start loading
             try {
                 await Promise.all([fetchCategoryCounts(), fetchPopularEvents()]);
-                 // Introduce the delay *before* setting loading to false
-                 setTimeout(() => {
+                // Introduce the delay *before* setting loading to false
+                setTimeout(() => {
                     setLoading(false); // Stop loading
-                 }, 2000);
+                }, 1000);
             } catch (error) {
                 console.error("Error fetching data:", error);
                 // Handle the error appropriately (e.g., show an error message)
@@ -87,7 +88,7 @@ export default function Discover() {
         };
 
         fetchData();
-    }, [setLoading]); // Add setLoading to the dependency array
+    }, []); // Remove setLoading from dependency array
 
     useEffect(() => {
         const savedEvent = localStorage.getItem('selectedEvent');
