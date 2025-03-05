@@ -8,6 +8,7 @@
 
 .tiketi-tamasha-btn {
     background: var(--tiketi-tamasha-cool-white);
+    border: 1px solid var(--tiketi-tamasha-cool-white);
     border-radius: 20px;
 
     color: var(--tiketi-tamasha-cool-black);
@@ -18,6 +19,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    cursor: pointer;
 
     margin: 0px;
     padding: 0px;
@@ -59,6 +62,7 @@
 
 .tiketi-tamasha-btn.special {
     background: transparent;
+    border: none;
 
     display: flex;
     align-items: center;

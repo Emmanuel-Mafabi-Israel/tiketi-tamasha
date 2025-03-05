@@ -161,6 +161,7 @@ export default function NewEvent({ onClose, event }) { // event prop!
             });
             setSelectedImage(null);
             onClose(); // Close the dialog after successful creation
+            window.location.reload(); // Refresh the page
         } catch (error) {
             console.error("Error creating/updating event:", error.message);
             alert("An error occurred while creating/updating the event. Please try again.");

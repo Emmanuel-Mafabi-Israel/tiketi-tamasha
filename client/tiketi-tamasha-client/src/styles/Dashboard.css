@@ -58,6 +58,8 @@
 			height: fit-content;
 
 			.tiketi-tamasha-section-heading {
+				color: var(--tiketi-tamasha-cool-white);
+				
 				font-size: 32px;
 				font-weight: normal;
 

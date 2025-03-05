@@ -6,7 +6,11 @@
     BY ISRAEL MAFABI EMMANUEL
 */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { useLoading } from "../context/LoadingContext"; // Import useLoading
+import { getEventCategoryCount, getPopularEvents } from "../api/eventService";
+
 import EventCard from "../components/EventCard";
 import DiscoverCard from "../components/DiscoverCard";
 import EventDetails from "./EventDetails";
@@ -18,10 +22,11 @@ import fitness from '../assets/tiketi-tamasha-run.svg';
 import wellness from '../assets/tiketi-tamasha-wellness.svg';
 import finance from '../assets/tiketi-tamasha-finance.svg';
 import music from '../assets/tiketi-tamasha-doodle-microphone.svg';
-import { getEventCategoryCount, getPopularEvents } from "../api/eventService";
 import LoadingPage from "../components/LoadingPage";
 
 export default function Discover() {
+    const { user } = useContext(AuthContext);
+    const { loading, setLoading } = useLoading(); // Use the loading context
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [categoryCounts, setCategoryCounts] = useState({
         Research: 0,
@@ -32,7 +37,6 @@ export default function Discover() {
         Music: 0,
     });
     const [popularEvents, setPopularEvents] = useState([]);
-    const [loading, setLoading] = useState(true); // Add loading state
 
     useEffect(() => {
         const fetchCategoryCounts = async () => {
@@ -67,14 +71,23 @@ export default function Discover() {
         };
 
         const fetchData = async () => {
-            setLoading(true);
-            await fetchCategoryCounts();
-            await fetchPopularEvents();
-            setTimeout(() => setLoading(false), 2000); 
+            setLoading(true); // Start loading
+            try {
+                await Promise.all([fetchCategoryCounts(), fetchPopularEvents()]);
+                 // Introduce the delay *before* setting loading to false
+                 setTimeout(() => {
+                    setLoading(false); // Stop loading
+                 }, 2000);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                // Handle the error appropriately (e.g., show an error message)
+                setLoading(false); // Ensure loading is stopped even on error
+
+            }
         };
 
         fetchData();
-    }, []);
+    }, [setLoading]); // Add setLoading to the dependency array
 
     useEffect(() => {
         const savedEvent = localStorage.getItem('selectedEvent');
@@ -161,7 +174,8 @@ export default function Discover() {
                 <EventDetails
                     eventId={selectedEvent.id}
                     onClose={handleCloseDialog}
-                    flag="unsigned"
+                    flag={user ? "signed" : "unsigned"}
+                    user={user ? user : null}
                 />
             )}
         </div>

@@ -9,6 +9,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useLoading } from "../context/LoadingContext"; // Import the hook
 
 import LoadingPage from "../components/LoadingPage";
 import Button from "../components/Button";
@@ -23,7 +24,7 @@ import { fetchOrganizerEvents, deleteEvent } from "../api/eventService";
 
 export default function OrganizerDashboard({ activeSection }) {
 	const { user, logout } = useContext(AuthContext);
-	const [loading, setLoading] = useState(false);
+	const { loading, setLoading } = useLoading(); // Loading Context!
 	const [isNewEventDialogOpen, setIsNewEventDialogOpen] = useState(false); // State to manage the new event dialog
 	const [selectedEvent, setSelectedEvent] = useState(null); // State to hold the event being edited
 	const [name, setName] = useState(user?.name || "");
@@ -45,10 +46,10 @@ export default function OrganizerDashboard({ activeSection }) {
 	};
 
 	const handleLogout = () => {
-		setLoading(true);
+		setLoading(true); // Using context
 		setTimeout(() => {
 			logout();
-			setLoading(false);
+			setLoading(false); // Using context
 			navigate("/login");
 		}, 2000);
 	};
@@ -65,7 +66,7 @@ export default function OrganizerDashboard({ activeSection }) {
 		const shouldUpdate = window.confirm(`Are you sure you want to update your ${field} to ${value}?`);
 
 		if (shouldUpdate) {
-			setLoading(true);
+			setLoading(true); // Using context
 			try {
 				const updatedData = {};
 				if (field === "name") {
@@ -73,27 +74,20 @@ export default function OrganizerDashboard({ activeSection }) {
 				} else if (field === "phone") {
 					updatedData.phone_number = value;
 				}
-				// console.log(updatedData);
-				const token = localStorage.getItem('access_token'); // Retrieve the stored token
-				await updateUserProfile(updatedData, token); // Pass the token
 
-				// After successful update, fetch the updated user profile
+				const token = localStorage.getItem('access_token');
+				await updateUserProfile(updatedData, token);
+
 				const updatedUser = await getUserProfile(user.id);
-
-				// Update the user context with the new user data
 				localStorage.setItem("user", JSON.stringify(updatedUser));
 				alert(`${field} updated successfully!`);
 
-				// Log the updated user data
-
-				// Update the user context
-				// await login({email: updatedUser.email, password: })
-				window.location.reload(); //refresh the page in order to see the updated details
+				window.location.reload(); //refresh the page in order to see the updated details - REFRESHING IS BAD PRACTICE
 			} catch (error) {
 				console.error("Failed to update profile:", error);
 				alert(`Failed to update ${field}. Please try again.`);
 			} finally {
-				setLoading(false);
+				setLoading(false); // Using context
 			}
 		}
 	};
@@ -102,7 +96,7 @@ export default function OrganizerDashboard({ activeSection }) {
 		const shouldDelete = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
 
 		if (shouldDelete) {
-			setLoading(true);
+			setLoading(true); // Using context
 			try {
 				const token = localStorage.getItem('access_token');
 				await deleteUserAccount(token);
@@ -113,7 +107,7 @@ export default function OrganizerDashboard({ activeSection }) {
 				console.error("Failed to delete account:", error);
 				alert("Failed to delete account. Please try again.");
 			} finally {
-				setLoading(false);
+				setLoading(false); // Using context
 			}
 		}
 	};
@@ -121,7 +115,7 @@ export default function OrganizerDashboard({ activeSection }) {
 	// Fetch Organizer Events
 	useEffect(() => {
 		if (activeSection === 'events') {
-			setLoading(true);
+			setLoading(true); // Using context
 			fetchOrganizerEvents()
 				.then(data => {
 					setOrganizerEvents(data.events);
@@ -132,39 +126,31 @@ export default function OrganizerDashboard({ activeSection }) {
 					setEventsError("Failed to load events. Please try again later.");
 				})
 				.finally(() => {
-					setLoading(false);
+					setLoading(false); // Using context
 				});
 		}
-	}, [activeSection]);
+	}, [activeSection, setLoading]); // Add setLoading to the dependency array
 
 	const handleDeleteEvent = async (eventId) => {
 		const confirmed = window.confirm("Are you sure you want to delete this event?");
 
 		if (confirmed) {
-			setLoading(true);
+			setLoading(true); // Using context
 			try {
 				await deleteEvent(eventId);
-				// Update the event list after successful deletion
 				setOrganizerEvents(organizerEvents.filter(event => event.id !== eventId));
 				alert("Event deleted successfully.");
 			} catch (error) {
 				console.error("Failed to delete event:", error);
 				alert("Failed to delete event. Please try again.");
 			} finally {
-				setLoading(false);
+				setLoading(false); // Using context
 			}
 		}
 	};
 
 	if (loading) {
-		return (
-			<>
-				<LoadingPage />
-				<div className="tiketi-tamasha-auth-page">
-					<img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
-				</div>
-			</>
-		);
+		return <LoadingPage />; // Using context
 	}
 
 	return (
@@ -175,7 +161,6 @@ export default function OrganizerDashboard({ activeSection }) {
 					<div className="home">
 						<h1 className='tiketi-tamasha-section-heading'>Welcome, {user?.name || "Organizer"}!</h1>
 						<p className='tiketi-tamasha-landing-explainer'>Create events, see the events you've created, and explore new experiences.</p>
-						{/* Button to open the new event dialog */}
 						<Button
 							className='tiketi-tamasha-btn'
 							onClick={() => openNewEventDialog(null)}
@@ -192,9 +177,9 @@ export default function OrganizerDashboard({ activeSection }) {
 							{organizerEvents.map(event => (
 								<EventCardAdmin
 									key={event.id}
-									event={event} // Pass the entire event object
-									onEdit={() => openNewEventDialog(event)} // Handler for edit
-									onDelete={handleDeleteEvent} // Pass the delete function
+									event={event}
+									onEdit={() => openNewEventDialog(event)}
+									onDelete={handleDeleteEvent}
 								/>
 							))}
 						</div>
@@ -219,7 +204,7 @@ export default function OrganizerDashboard({ activeSection }) {
 										onChange={handleNameChange}
 										onKeyDown={(e) => {
 											if (e.key === 'Enter') {
-												e.preventDefault(); // Prevent form submission
+												e.preventDefault();
 												handleUpdateProfile('name', name);
 											}
 										}}
@@ -234,7 +219,7 @@ export default function OrganizerDashboard({ activeSection }) {
 										onChange={handlePhoneChange}
 										onKeyDown={(e) => {
 											if (e.key === 'Enter') {
-												e.preventDefault(); // Prevent form submission
+												e.preventDefault();
 												handleUpdateProfile('phone', phone);
 											}
 										}}
@@ -249,7 +234,7 @@ export default function OrganizerDashboard({ activeSection }) {
 										className="tiketi-tamasha-btn red"
 										buttonText="Delete Account"
 										alt="DeleteAccount"
-										onClick={handleDeleteAccount} // Attach the handler
+										onClick={handleDeleteAccount}
 									/>
 									<Button
 										buttonText="Logout"

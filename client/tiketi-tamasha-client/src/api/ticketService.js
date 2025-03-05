@@ -5,14 +5,24 @@ const API_URL = "http://localhost:5000/tickets";
 const API_USER_URL = `${CONFIG.API_BASE_URL}/user/tickets`;
 
 const ticketService = {
-	purchaseTicket: async (eventId, quantity, userId) => {
-		const response = await fetch(`${API_URL}`, {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ eventId, quantity, userId }),
-		});
+    purchaseTicket: async (data) => {
+        const token = localStorage.getItem('access_token');
+        console.log(token);
 
-		return response.json();
+        try {
+            const response = await axios.post(`${API_URL}`, data, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+            });
+
+            console.log(response.data)
+            return response.data
+        } catch(error) {
+            console.error("Error purchasing ticket:", error.response?.data || error.message);
+            throw error;
+        }
 	},
 };
 

@@ -38,6 +38,8 @@
 		min-height: 400px;
 
 		.tiketi-tamasha-landing-heading {
+			color: var(--tiketi-tamasha-cool-white);
+
 			font-size: 32px;
 			font-weight: normal;
 
@@ -51,7 +53,7 @@
 
 			.fade-text {
 				font-weight: 400;
-				background: linear-gradient(to right, #0058ff, #c9e0ff);
+				background: linear-gradient(to right, var(--tiketi-tamasha-cool-blue), #c9e0ff);
 				background-clip: border-box;
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
@@ -61,7 +63,7 @@
 
 		.tiketi-tamasha-landing-explainer {
 			color: var(--tiketi-tamasha-cool-white);
-			font-size: 16px;
+			font-size: 14px;
 
 			text-align: center;
 
@@ -71,6 +73,7 @@
 
 		.tiketi-tamasha-btn {
             background: var(--tiketi-tamasha-cool-white);
+			border: 1px solid var(--tiketi-tamasha-cool-white);
             border-radius: 20px;
 
             color: var(--tiketi-tamasha-cool-black);
@@ -82,7 +85,8 @@
             align-items: center;
             justify-content: center;
 
-            margin: 0px;
+            margin: 14px;
+
             padding: 0px;
 
             gap: 4px;

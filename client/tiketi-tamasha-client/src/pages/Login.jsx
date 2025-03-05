@@ -9,6 +9,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import { useLoading } from "../context/LoadingContext";  // Import the hook!
 
 import Button from "../components/Button";
 import LoadingPage from "../components/LoadingPage";
@@ -19,20 +20,21 @@ import logo from "../assets/logo.svg/tiketi-tamasha-icon-high-res-white.svg";
 
 export default function Login() {
     const { login, user } = useContext(AuthContext);
+    const { setLoading, loading } = useLoading(); // Use the loading context!
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         if (user) {
-            setLoading(true);
+            setLoading(true); // Use the context!
             setTimeout(() => {
                 navigate(user.role === "organizer" ? "/organizer-dashboard" : "/dashboard");
+                setLoading(false); // Stop loading after navigation
             }, 2000);
         }
-    }, [user, navigate]);
+    }, [user, navigate, setLoading]); // Add setLoading to the dependency array
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -47,23 +49,17 @@ export default function Login() {
         }
 
         try {
-            setLoading(true);
+            setLoading(true); // Start loading using the context!
             await login(formData, navigate);
         } catch (err) {
             setError("Invalid email or password. Please try again.");
-            setLoading(false);
+        } finally {
+            setLoading(false); // Stop loading regardless of success/failure
         }
     };
 
     if (loading) {
-        return (
-            <>
-                <LoadingPage />
-                <div className="tiketi-tamasha-auth-page">
-                    <img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
-                </div>
-            </>
-        );
+        return <LoadingPage />;  // Show loading page when context's loading is true
     }
 
     return (

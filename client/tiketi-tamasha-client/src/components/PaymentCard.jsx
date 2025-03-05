@@ -14,7 +14,7 @@ import ticketSale from "../assets/tiketi-tamasha-transactions.svg";
 export default function PaymentCard({paymentTitle, paymentStatus, paymentMethod, transactionID, paymentTime, amount, onClick}) {
     return (
         <div className="tiketi-tamasha-payment-card" onClick={onClick} 
-        title={paymentStatus === "completed" ? "" : "Click to initiate Confirmation..."}>
+        title={paymentStatus === "completed" || paymentStatus === "cancelled" || paymentStatus === "failed" ? "" : "Click to initiate Confirmation..."}>
             <img className="card-image" src={ticketSale} alt="TiketiTamashaCard" />
             <div className="card-info">
                 <div className="title">{paymentTitle}</div>

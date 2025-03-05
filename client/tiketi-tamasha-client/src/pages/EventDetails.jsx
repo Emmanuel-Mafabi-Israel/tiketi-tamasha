@@ -1,9 +1,9 @@
 /*
-    GLORY BE TO GOD,
-    TIKETI TAMASHA,
-    DISCOVER PAGE,
+GLORY BE TO GOD,
+TIKETI TAMASHA,
+DISCOVER PAGE,
 
-    BY ISRAEL MAFABI EMMANUEL
+BY ISRAEL MAFABI EMMANUEL
 */
 
 import React, { useState, useEffect } from "react";
@@ -15,10 +15,11 @@ import Button from '../components/Button';
 import locationIcon from '../assets/tiketi-tamasha-gps.svg';
 import LoadingPage from "../components/LoadingPage";
 
-export default function EventDetails({ eventId, onClose, flag, userId }) {
+export default function EventDetails({ eventId, onClose, flag, user }) {
     const [event, setEvent] = useState(null);
     const [loading, setLoading] = useState(true); // Add loading state
     const [selectedTier, setSelectedTier] = useState(null);
+    const [message, setMessage] = useState(null)
 
     useEffect(() => {
         const fetchEventDetails = async () => {
@@ -35,21 +36,35 @@ export default function EventDetails({ eventId, onClose, flag, userId }) {
         fetchEventDetails();
     }, [eventId]);
 
-    const handleTierClick = async (tier) => {
+    const handleTierClick = async (tier, amount) => {
         setSelectedTier(tier);
         if (flag === "unsigned") {
             setSelectedTier(tier);
         } else {
             // Handle tier selection for signed-in users
             try {
-                await ticketService.purchaseTicket(eventId, 1, userId);
-                alert("Ticket purchased successfully!");
+                // let's construct the data required...
+                const data = {
+                    event_id: eventId,
+                    ticket_type: tier,
+                    phone_number: user.phone_number,
+                    amount: amount
+                }
+
+                console.log(data);
+                await ticketService.purchaseTicket(data);
+                alert("STK Push Sent, Please check your Phone!");
             } catch (error) {
-                console.error("Failed to purchase ticket", error);
-                alert("Failed to purchase ticket. Please try again.");
+                console.error("Failed to send STK Push", error);
+                alert("Failed to send STK Push. Please try again.");
             }
         }
     };
+
+    const handleUnsignedUser = (tier) => {
+        setSelectedTier(tier);
+        setMessage("Please login First!");
+    }
 
     if (loading) {
         return <LoadingPage />;
@@ -86,32 +101,31 @@ export default function EventDetails({ eventId, onClose, flag, userId }) {
                             {Object.entries(event.ticket_tiers).map(([tier, { price }]) => {
                                 const numericPrice = parseFloat(price); // Convert price to a number
                                 return (
-                                    <div key={tier} className="tier" onClick={() => handleTierClick(tier)}>
+                                    <div key={tier} className="tier" onClick={flag === "signed" ? () => handleTierClick(tier, numericPrice) : () => handleUnsignedUser(tier)}>
                                         <div className="tier-name">{tier}</div>
                                         {selectedTier === tier && (
                                             <div className="reminder">
                                                 {flag === "unsigned" ? (
-                                                    <>Please <a href="/login">log in</a> first</>
+                                                    <div>{message}</div>
                                                 ) : (
-                                                    <>Purchase this ticket? <div onClick={handleTierClick}>click to purchase</div></>
+                                                    <><div>click to purchase</div></>
                                                 )}
-                                            </div>
-                                        )}
-                                        <div className="tier-price">${numericPrice.toFixed(2)}</div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                    <div className="dialog-about">
-                        <div className="title">About Event</div>
-                        <div className="about">{event.description}</div>
+                                        </div>
+                                    )}
+                                    <div className="tier-price">Ksh{numericPrice.toFixed(2)}</div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
-                <div className="dialog-btns">
-                    <Button className="tiketi-tamasha-btn" buttonText="Close" onClick={onClose} />
+                <div className="dialog-about">
+                    <div className="title">About Event</div>
+                    <div className="about">{event.description}</div>
                 </div>
             </div>
+            <div className="dialog-btns">
+                <Button className="tiketi-tamasha-btn" buttonText="Close" onClick={onClose} />
+            </div>
         </div>
-    );
-};
+    </div>
+)};

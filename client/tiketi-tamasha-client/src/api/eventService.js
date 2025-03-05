@@ -17,6 +17,7 @@ export const fetchEvents = async () => {
 export const getEventDetails = async (eventId) => {
 	try {
 		const response = await axios.get(`${API_URL}/${eventId}`);
+		// console.log(response.data); -> debugging
 		return response.data;
 	} catch (error) {
 		console.error("Error fetching event details:", error.response?.data || error.message);
@@ -84,6 +85,7 @@ export const getEventCategoryCount = async (categoryName) => {
 export const getPopularEvents = async () => {
 	try {
 		const response = await axios.get(`${API_URL}/popular`);
+		console.log(response.data.popular_events)
 		return response.data.popular_events;
 	} catch (error) {
 		console.error("Error fetching popular events:", error.response?.data || error.message);
