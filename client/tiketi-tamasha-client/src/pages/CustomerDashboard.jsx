@@ -25,13 +25,23 @@ import { queryPaymentStatus } from "../api/paymentService";
 import Swal from "sweetalert2";
 
 export default function CustomerDashboard({ activeSection }) {
-    const { user, payments, tickets, myEvents, logout } = useContext(AuthContext);
+    const { user, payments, tickets, myEvents, logout, updateUserContext } = useContext(AuthContext); // ADD updateUserContext
     const [loading, setLoading] = useState(false); // Local loading state
     const [name, setName] = useState(user?.name || "");
     const [phone, setPhone] = useState(user?.phone_number || "");
     const navigate = useNavigate();
 
     const { refreshUserData } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (user) { // Check if user data is loaded from AuthContext
+            setLoading(false);
+            setName(user.name || "");
+            setPhone(user.phone_number || "");
+        } else {
+            setLoading(true); // Show loading if user is not yet loaded
+        }
+    }, [user]);
 
     useEffect(() => {
         refreshUserData();
@@ -73,26 +83,23 @@ export default function CustomerDashboard({ activeSection }) {
                 }
                 const token = localStorage.getItem('access_token'); // Retrieve token
                 await updateUserProfile(updatedData, token); // Update user profile
-                // After successful update, fetch and store updated user profile
-                const updatedUser = await getUserProfile(user.id);
-                localStorage.setItem("user", JSON.stringify(updatedUser));
-                const ok_pressed = await Swal.fire({
+
+                 // Fetch updated user data and update context
+                 const fetchedUser = await getUserProfile();
+                 updateUserContext(fetchedUser); // Update AuthContext
+                 setName(fetchedUser.name || "");
+                 setPhone(fetchedUser.phone_number || "");
+
+                await Swal.fire({
                     title: 'Profile Updated',
                     text: `${field.charAt(0).toUpperCase() + field.slice(1)} updated successfully!`
                 });
-                if (ok_pressed.isConfirmed) {
-                    window.location.reload();
-                }
-                window.location.reload();
+               
             } catch (error) {
-                const ok_pressed = await Swal.fire({
+                await Swal.fire({
                     title: 'Update Failed!',
                     text: `Failed to update ${field}, please try again.`
                 });
-                if (ok_pressed.isConfirmed) {
-                    window.location.reload();
-                }
-                window.location.reload();
                 console.error("Failed to update profile:", error);
             } finally {
                 setLoading(false); // Stop spinner

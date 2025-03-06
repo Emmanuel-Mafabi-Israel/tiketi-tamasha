@@ -22,7 +22,7 @@ import LoadingPage from "./LoadingPage"; // Import the loading spinner
 import "../styles/Button.css";
 
 export default function Navbar({ activeSection, setActiveSection }) {
-    const { user, logout, refreshUserData } = useContext(AuthContext); // Auth context for user and logout
+    const { user, logout } = useContext(AuthContext); // Auth context for user and logout
     const { loading, setLoading } = useLoading(); // Loading context -> local context
     const navigate = useNavigate();
     const location = useLocation();
@@ -33,7 +33,7 @@ export default function Navbar({ activeSection, setActiveSection }) {
 
     const handleNavigateToDashboard = async () => { // Make function async
         try {
-            await refreshUserData(); // Refresh data
+            // await refreshUserData(); // Refresh data
             navigate("/dashboard");
         } catch (error) {
             console.error("Error refreshing data:", error);

@@ -100,6 +100,10 @@
                     color: var(--tiketi-tamasha-cool-white);
                     font-size: 14px;
                     min-height: 21px;
+
+                    span {
+                        color: var(--tiketi-tamasha-cool-red);
+                    }
                 }
 
                 .subheading {
@@ -195,6 +199,10 @@
                         color: var(--tiketi-tamasha-cool-gray-);
                         font-size: 13px;
                     }
+
+                    .disclaimer.sold_out {
+                        color: var(--tiketi-tamasha-cool-red);
+                    }
                 }
             }
 
@@ -254,7 +262,44 @@
                         }
 
                         .reminder {
-                            color: var(--tiketi-tamasha-cool-white);
+                            color: transparent;
+                            font-size: 13px;
+
+                            a {
+                                color: var(--tiketi-tamasha-cool-blue);
+                                text-decoration: none;
+                            }
+                        }
+
+                        .tier-price {
+                            color: var(--tiketi-tamasha-cool-gray-);
+                            font-size: 13px;
+                        }
+                    }
+
+                    .tier.red {
+                        border: 1px solid var(--tiketi-tamasha-cool-gray);
+                        border-radius: 7px;
+
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+
+                        padding-left: 14px;
+                        padding-right: 14px;
+
+                        cursor: pointer;
+
+                        width: 100%;
+                        height: 40px;
+
+                        .tier-name {
+                            color: var(--tiketi-tamasha-cool-white-tr);
+                            font-size: 13px;
+                        }
+
+                        .reminder {
+                            color: var(--tiketi-tamasha-cool-red);
                             font-size: 13px;
 
                             a {
@@ -272,6 +317,16 @@
                     .tier:hover {
                         background: var(--tiketi-tamasha-cool-gray--);
                         border: 1px solid var(--tiketi-tamasha-cool-gray-);
+
+                        .reminder {
+                            color: var(--tiketi-tamasha-cool-white);
+                            font-size: 13px;
+
+                            a {
+                                color: var(--tiketi-tamasha-cool-blue);
+                                text-decoration: none;
+                            }
+                        }
                     }
                 }
             }

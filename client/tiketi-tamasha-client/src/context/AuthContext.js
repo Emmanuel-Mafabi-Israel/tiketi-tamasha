@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
     const [payments, setPayments] = useState([]);
     const [tickets, setTickets] = useState([]);
     const [myEvents, setMyEvents] = useState([]);
+    const [authIsReady, setAuthIsReady] = useState(false); // ADD THIS
 
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -21,6 +22,7 @@ export const AuthProvider = ({ children }) => {
             setTickets(JSON.parse(localStorage.getItem("tickets")) || []);
             setMyEvents(JSON.parse(localStorage.getItem("myEvents")) || []);
         }
+        setAuthIsReady(true); // ADD THIS:  Mark auth as ready *after* attempting to load from localStorage
     }, []);
 
     const login = async (credentials, navigate) => {
@@ -29,15 +31,7 @@ export const AuthProvider = ({ children }) => {
             if (response.access_token) {
                 const userDetails = await fetchUserDetails(response.access_token);
                 setUser(userDetails);
-                // if(userDetails.role === 'organizer') {
-                //     // organizer login...
-                //     // an organizer has no ability in purchasing tickets
-                //     // their sole purpose is for event creation and ticket selling...
-                //     // so for the organizer, what we are interested in is...
-                //     // the events, they've created and so, consumer's interested in the events they are hosting and so on...
-                //     console.log("Welcome Organizer!");
-                //     const organizerEvents = await fetchUserDetails()
-                // }
+
                 const userPayments = await fetchPayments(response.access_token);
                 const userTickets = await fetchTickets(response.access_token);
                 const userEvents = await fetchMyEvents(response.access_token);
@@ -132,8 +126,14 @@ export const AuthProvider = ({ children }) => {
             console.log("Access token not found in localStorage.");
         }
     }, []);
+
+    const updateUserContext = (updatedUser) => {
+        setUser(updatedUser);
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+    }
+
     return (
-        <AuthContext.Provider value={{ user, payments, tickets, myEvents, login, register, logout, refreshUserData }}>
+        <AuthContext.Provider value={{ user, payments, tickets, myEvents, login, register, logout, refreshUserData, updateUserContext, authIsReady }}>
             {children}
         </AuthContext.Provider>
     );

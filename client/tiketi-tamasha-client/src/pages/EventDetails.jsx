@@ -16,11 +16,13 @@ import locationIcon from '../assets/tiketi-tamasha-gps.svg';
 import LoadingPage from "../components/LoadingPage";
 import Swal from "sweetalert2";
 
+import { format, isPast, parseISO } from 'date-fns';
+
 export default function EventDetails({ eventId, onClose, flag, user, onPurchaseSuccess }) { // Receive onPurchaseSuccess
     const [event, setEvent] = useState(null);
     const [loading, setLoading] = useState(true);
     const [selectedTier, setSelectedTier] = useState(null);
-    const [message, setMessage] = useState(null);
+    // const [message, setMessage] = useState(null);
 
     useEffect(() => {
         const fetchEventDetails = async () => {
@@ -37,31 +39,55 @@ export default function EventDetails({ eventId, onClose, flag, user, onPurchaseS
         fetchEventDetails();
     }, [eventId]);
 
+    let formatted_time = ""
+    try {
+        const date = parseISO(event?.end_date);
+        const formattedDate = format(date, 'EEE, MMM, d, yyyy h:m a');
+        formatted_time = formattedDate
+    } catch (error) {
+        console.log("error formatting time data.")
+    }
+    const isExpired = isPast(formatted_time);
+
+    const handleUnsignedUser = (tier) => {
+        setSelectedTier(tier);
+    };
+
     const handleTierClick = async (tier, amount) => {
         setSelectedTier(tier);
         if (flag === "unsigned") {
             setSelectedTier(tier);
         } else {
             try {
-                const data = {
-                    event_id: eventId,
-                    ticket_type: tier,
-                    phone_number: user.phone_number,
-                    amount: amount,
-                };
-                // console.log(data); -> for debugging purposes...
-                await ticketService.purchaseTicket(data);
-                const ok_pressed = await Swal.fire({
-                    title: 'STK Push Sent',
-                    text: 'Please do check your Phone!'
-                });
-                if (ok_pressed.isConfirmed) {
+                if (isExpired) {
+                    const ok_pressed = await Swal.fire({
+                        title: 'Expired Event',
+                        text: 'The Current Event selected has expired!'
+                    });
+                    if (ok_pressed.isConfirmed) {
+                        onClose()
+                    }
+                } else {
+                    const data = {
+                        event_id: eventId,
+                        ticket_type: tier,
+                        phone_number: user.phone_number,
+                        amount: amount,
+                    };
+                    // console.log(data); -> for debugging purposes...
+                    await ticketService.purchaseTicket(data);
+                    const ok_pressed = await Swal.fire({
+                        title: 'STK Push Sent',
+                        text: 'Please do check your Phone!'
+                    });
+                    if (ok_pressed.isConfirmed) {
+                        if (onPurchaseSuccess) { // Call the callback on successful purchase
+                            onPurchaseSuccess();
+                        }
+                    }
                     if (onPurchaseSuccess) { // Call the callback on successful purchase
                         onPurchaseSuccess();
                     }
-                }
-                if (onPurchaseSuccess) { // Call the callback on successful purchase
-                    onPurchaseSuccess();
                 }
             } catch (error) {
                 Swal.fire({
@@ -73,11 +99,6 @@ export default function EventDetails({ eventId, onClose, flag, user, onPurchaseS
         }
     };
 
-    const handleUnsignedUser = (tier) => {
-        setSelectedTier(tier);
-        setMessage("Please login First!");
-    };
-
     return (
         <div className="tiketi-tamasha-dialog-container">
             {loading && <LoadingPage />}
@@ -85,7 +106,7 @@ export default function EventDetails({ eventId, onClose, flag, user, onPurchaseS
                 <div className="dialog-title">
                     <img className="dialog-image" src={event?.image_url} alt={event?.title} />
                     <div className="titles">
-                        <div className="heading">{event?.title}</div>
+                        <div className="heading">{event?.title}&nbsp; <span>{isExpired ? "EXPIRED" : ""}</span></div>
                         <div className="subheading">
                             <div className="description">{event?.location}</div>
                             <img className='location-indicator' src={locationIcon} alt="location" />
@@ -101,7 +122,7 @@ export default function EventDetails({ eventId, onClose, flag, user, onPurchaseS
                         </div>
                         <div className="tickets">
                             <div className="amount">{event?.total_tickets}</div>
-                            <div className="disclaimer">Tickets available</div>
+                            <div className={`disclaimer ${event?.total_tickets === event?.tickets_sold ? "sold_out" : ""}`}>{event?.total_tickets === event?.tickets_sold ? "Sold out!" : "Tickets available"}</div>
                         </div>
                     </div>
                     <div className="registration">
@@ -110,14 +131,14 @@ export default function EventDetails({ eventId, onClose, flag, user, onPurchaseS
                             {event && Object.entries(event.ticket_tiers).map(([tier, { price }]) => {
                                 const numericPrice = parseFloat(price);
                                 return (
-                                    <div key={tier} className="tier" onClick={flag === "signed" ? () => handleTierClick(tier, numericPrice) : () => handleUnsignedUser(tier)}>
+                                    <div key={tier} className={`tier ${isExpired ? 'red' : ''}`} onClick={flag === "signed" ? () => handleTierClick(tier, numericPrice) : () => handleUnsignedUser(tier)} disabled={isExpired}>
                                         <div className="tier-name">{tier}</div>
                                         {selectedTier === tier && (
                                             <div className="reminder">
                                                 {flag === "unsigned" ? (
-                                                    <div>{message}</div>
+                                                    isExpired ? (<div>EXPIRED</div>) : (<div>Please login First!</div>)
                                                 ) : (
-                                                    <><div>click to purchase</div></>
+                                                    isExpired ? (<div>EXPIRED</div>) : (<div>click to purchase</div>)
                                                 )}
                                             </div>
                                         )}

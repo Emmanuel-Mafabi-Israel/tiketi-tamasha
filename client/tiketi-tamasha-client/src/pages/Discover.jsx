@@ -166,7 +166,7 @@ export default function Discover() {
                                 key={event.id}
                                 cardImage={event.image_url}
                                 cardTitle={event.title}
-                                cardTime={new Date(event.start_date).toLocaleString()}
+                                cardTime={event.start_date}
                                 cardLocation={event.location}
                                 onClick={() => handleEventClick(event)}
                             />

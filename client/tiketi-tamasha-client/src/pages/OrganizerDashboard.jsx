@@ -21,15 +21,43 @@ import { fetchOrganizerEvents, deleteEvent } from "../api/eventService";
 import Swal from 'sweetalert2';
 
 export default function OrganizerDashboard({ activeSection }) {
-	const { user, logout } = useContext(AuthContext);
-	const [loading, setLoading] = useState(false); // Local loading state
-	const [isNewEventDialogOpen, setIsNewEventDialogOpen] = useState(false);
-	const [selectedEvent, setSelectedEvent] = useState(null);
-	const [name, setName] = useState(user?.name || "");
-	const [phone, setPhone] = useState(user?.phone_number || "");
-	const navigate = useNavigate();
-	const [organizerEvents, setOrganizerEvents] = useState([]);
-	const [eventsError, setEventsError] = useState(null);
+    const { user, logout, updateUserContext } = useContext(AuthContext);
+    const [loading, setLoading] = useState(true);
+    const [isNewEventDialogOpen, setIsNewEventDialogOpen] = useState(false);
+    const [selectedEvent, setSelectedEvent] = useState(null);
+    const [name, setName] = useState(user?.name || ""); // Initialize with AuthContext user
+    const [phone, setPhone] = useState(user?.phone_number || ""); // Initialize with AuthContext user
+    const navigate = useNavigate();
+    const [organizerEvents, setOrganizerEvents] = useState([]);
+    const [eventsError, setEventsError] = useState(null);
+
+    useEffect(() => {
+        if (user) { // Check if user data is loaded from AuthContext
+            setLoading(false);
+            setName(user.name || "");
+            setPhone(user.phone_number || "");
+        } else {
+            setLoading(true); // Show loading if user is not yet loaded
+        }
+    }, [user]);
+
+    useEffect(() => {
+        if (activeSection === 'events' && user) {
+            setLoading(true);
+            fetchOrganizerEvents()
+                .then(data => {
+                    setOrganizerEvents(data.events);
+                    setEventsError(null);
+                })
+                .catch(error => {
+                    console.error("Failed to fetch organizer events:", error);
+                    setEventsError("Failed to load events. Please try again later.");
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
+        }
+    }, [activeSection, user]);
 
 	const openNewEventDialog = (event = null) => {
 		setSelectedEvent(event);
@@ -77,28 +105,21 @@ export default function OrganizerDashboard({ activeSection }) {
 				}
 				const token = localStorage.getItem('access_token');
 				await updateUserProfile(updatedData, token);
-				const updatedUser = await getUserProfile(user.id);
-				localStorage.setItem("user", JSON.stringify(updatedUser));
 
-				const ok_pressed = await Swal.fire({
+				// Fetch updated user data and update context
+				const fetchedUser = await getUserProfile();
+				updateUserContext(fetchedUser); // Update AuthContext
+				setName(fetchedUser.name || "");
+				setPhone(fetchedUser.phone_number || "");
+				await Swal.fire({
 					title: 'Profile Updated',
 					text: `${field.charAt(0).toUpperCase() + field.slice(1)} updated successfully!`
 				});
-
-				if (ok_pressed.isConfirmed) {
-					window.location.reload();
-				}
-
-				window.location.reload();
 			} catch (error) {
-				const ok_pressed = await Swal.fire({
+				await Swal.fire({
 					title: 'Update Failed!',
 					text: `Failed to update ${field}, please try again.`
 				});
-				if (ok_pressed.isConfirmed) {
-					window.location.reload();
-				}
-				window.location.reload();
 				console.error("Failed to update profile:", error);
 			} finally {
 				setLoading(false);
@@ -119,25 +140,17 @@ export default function OrganizerDashboard({ activeSection }) {
 			try {
 				const token = localStorage.getItem('access_token');
 				await deleteUserAccount(token);
-				const ok_pressed = await Swal.fire({
+				await Swal.fire({
 					title: 'Delete Account',
 					text: 'Account deleted successfully.'
 				});
-				if (ok_pressed.isConfirmed) {
-					logout();
-					navigate("/login");
-				}
 				logout();
 				navigate("/login");
 			} catch (error) {
-				const ok_pressed = await Swal.fire({
+				await Swal.fire({
 					title: 'Delete Account',
 					text: 'Failed to delete account, Please try again.'
 				});
-				if (ok_pressed.isConfirmed) {
-					window.location.reload();
-				}
-				window.location.reload();
 				console.error("Failed to delete account:", error);
 			} finally {
 				setLoading(false);
@@ -150,6 +163,7 @@ export default function OrganizerDashboard({ activeSection }) {
 			setLoading(true);
 			fetchOrganizerEvents()
 				.then(data => {
+					console.log(data)
 					setOrganizerEvents(data.events);
 					setEventsError(null);
 				})
@@ -175,31 +189,28 @@ export default function OrganizerDashboard({ activeSection }) {
 			setLoading(true);
 			try {
 				await deleteEvent(eventId);
+				// Update the state
 				setOrganizerEvents(organizerEvents.filter(event => event.id !== eventId));
-				const ok_pressed = await Swal.fire({
+
+				await Swal.fire({
 					title: 'Event deletion',
 					text: 'Event deleted successfully'
 				});
-
-				if (ok_pressed.isConfirmed) {
-					window.location.reload();
-				}
 			} catch (error) {
-				const ok_pressed = await Swal.fire({
+				await Swal.fire({
 					title: 'Event deletion',
 					text: 'Failed to delete event, Please try again.'
 				});
-
-				if (ok_pressed.isConfirmed) {
-					window.location.reload();
-				}
-
 				console.error("Failed to delete event:", error);
 			} finally {
 				setLoading(false);
 			}
 		}
 	};
+
+	if (!user) { // Prevent rendering until user data is loaded
+		return null;
+	}
 
 	return (
 		<>

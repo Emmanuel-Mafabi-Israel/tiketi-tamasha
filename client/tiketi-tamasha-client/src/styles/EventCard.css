@@ -58,7 +58,15 @@
             color: var(--tiketi-tamasha-cool-white-tr);
             font-size: 12px;
 
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
             width: inherit;
+            max-width: 100px;
+        }
+
+        .time.expired {
+            color: var(--tiketi-tamasha-cool-red);
         }
     }
 }
@@ -189,6 +197,9 @@
 
     .card-image {
         border-radius: 14px;
+
+        object-fit: contain;
+
         width: 50px;
         height: 68px;
     }
@@ -200,7 +211,8 @@
         flex-direction: column;
 
         width: fit-content;
-        min-width: 260px;
+        min-width: 150px;
+        max-width: 150px;
         height: fit-content;
 
         .title {
@@ -212,7 +224,47 @@
             color: var(--tiketi-tamasha-cool-white-tr);
             font-size: 12px;
 
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
             width: inherit;
+            max-width: 150px;
+        }
+
+        .time.expired {
+            color: var(--tiketi-tamasha-cool-red);
+        }
+    }
+
+    .card-event-interest {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        width: 100px;
+        min-width: 100px;
+        height: fit-content;
+
+        .title {
+            color: var(--tiketi-tamasha-cool-white);
+            font-size: 21px;
+
+            width: fit-content;
+            height: fit-content;
+
+            span {
+                font-size: 12px;
+            }
+        }
+
+        .title.sold_out {
+            color: var(--tiketi-tamasha-cool-green);
+        }
+
+        .subtitle {
+            color: var(--tiketi-tamasha-cool-white-tr);
+            font-size: 12px;
         }
     }
 
