@@ -47,7 +47,6 @@ body, html {
   color: #ccc;
 }
 
-
 .login-btn {
   background-color: white;
   color: #0c1e44;
@@ -60,42 +59,30 @@ body, html {
 }
 
 
-.search-bar {
+.back-btn {
+  background-color: white;
+  color: #0c1e44;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.header-buttons {
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin: 1rem 0;
-  width: 100%;
 }
 
-.search-bar input {
-  width: 60%;
-  padding: 0.5rem;
-  border: 1px solid #ced4da;
-  border-radius: 5px;
-}
-
-.search-icon {
+.header-buttons .search-icon {
   background: none;
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+  margin-right: 10px;
 }
-
-.filter-options {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.filter-options select,
-.filter-options input {
-  padding: 0.5rem;
-  border: 1px solid #ced4da;
-  border-radius: 5px;
-}
-
 
 .event-main {
   width: 100%;

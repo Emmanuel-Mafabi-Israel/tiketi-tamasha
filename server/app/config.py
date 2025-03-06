@@ -17,7 +17,7 @@ app = Flask(__name__)
 cloudinary.config(
     cloud_name="dtjg7iymg",
     api_key="745126562613492",
-    api_secret="kP55ZlQgWa9wGVT5pR3mr5Pm_rU"
+    api_secret="kP55ZlQgWa9wGVT5pR3mr5Pm_rU"   #update the cloudinary config with .env
 )
 
 
