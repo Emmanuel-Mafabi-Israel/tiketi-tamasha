@@ -84,7 +84,7 @@ def generate_access_token():
         if "access_token" in response:
             return response["access_token"]
         else:
-            raise Exception(f"error: failed to get access token: {response["error_description"]}")
+            raise Exception(f"error: failed to get access token: {response['error_description']}")
     except Exception as e:
         raise Exception(f"error: failed to get access token: {e}")
 
