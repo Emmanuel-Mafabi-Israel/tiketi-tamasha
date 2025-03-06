@@ -13,8 +13,12 @@ load_dotenv()
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 from app import create_app
+# from seed import seed_data
 
 app = create_app()
 
 if __name__ == "__main__":
+    # Seed the database (call the function)
+    # with app.app_context():
+    #     seed_data()
     app.run(debug=True)  # Consider debug=False in production!

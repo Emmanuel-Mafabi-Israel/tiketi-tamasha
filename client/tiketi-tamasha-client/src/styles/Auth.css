@@ -1,0 +1,201 @@
+@import url("globals.css");
+
+.tiketi-tamasha-auth-page {
+    background: transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    overflow: hidden;
+
+    width: 100vw;
+    min-height: calc(100vh - 120px);
+
+    .tiketi-tamasha-doodle-background {
+        background-size: cover;
+
+        position: absolute;
+
+        z-index: 1;
+
+        width: 80%;
+        height: 80%;
+    }
+
+    .tiketi-tamasha-auth-page-center {
+        background: var(--tiketi-tamasha-theme-cool-dark-b-tr);
+        backdrop-filter: blur(0px);
+
+        border: 1px solid var(--tiketi-tamasha-cool-gray);
+        border-radius: 20px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        gap: 2px;
+
+        z-index: 2;
+
+        width: 90%;
+        /* min-width: 400px; */
+        max-width: 400px;
+        min-height: 400px;
+
+        .error-message {
+            color: var(--tiketi-tamasha-cool-red);
+            font-size: 12px;
+        }
+
+        .tiketi-tamasha-auth-heading {
+            font-weight: normal;
+
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+
+            gap: 4px;
+
+            width: inherit;
+            height: 70px;
+
+            .image {
+                width: 35px;
+            }
+
+            .text {
+                color: var(--tiketi-tamasha-cool-white);
+                font-size: 28px;
+            }
+        }
+
+        .tiketi-tamasha-form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            gap: 21px;
+
+            width: 300px;
+            height: fit-content;
+            min-height: 300px;
+            max-height: 500px;
+
+            .password-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+                gap: 14px;
+
+                width: inherit;
+                height: fit-content;
+
+                .tools {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    width: inherit;
+                    height: fit-content;
+
+                    .password-toggle {
+                        color: var(--tiketi-tamasha-cool-white);
+                        font-size: 13px;
+
+                        cursor: pointer;
+
+                        width: fit-content;
+                        height: fit-content;
+                    }
+
+                    a {
+                        color: var(--tiketi-tamasha-cool-blue-br);
+                        font-size: 13px;
+
+                        text-decoration: none;
+                    }
+                }
+            }
+
+            .auth-footer {
+                color: var(--tiketi-tamasha-cool-white);
+                font-size: 13px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+                gap: 14px;
+
+                margin-bottom: 14px;
+
+                width: inherit;
+                height: fit-content;
+
+                .link-text {
+                    color: var(--tiketi-tamasha-cool-white);
+                    font-size: 13px;
+
+                    cursor: pointer;
+                }
+            }
+
+            .auth-footer.register {
+                color: var(--tiketi-tamasha-cool-white);
+                font-size: 13px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+                gap: 14px;
+
+                margin-bottom: 28px;
+
+                width: inherit;
+                height: fit-content;
+                min-height: 70px;
+
+                .link-text {
+                    color: var(--tiketi-tamasha-cool-white);
+                    font-size: 13px;
+
+                    cursor: pointer;
+                }
+            }
+
+            .auth-footer.register.extra {
+                color: var(--tiketi-tamasha-cool-white);
+                font-size: 13px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+                gap: 14px;
+
+                margin-bottom: 42px;
+
+                width: inherit;
+                height: fit-content;
+                min-height: 70px;
+
+                .link-text {
+                    color: var(--tiketi-tamasha-cool-white);
+                    font-size: 13px;
+
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

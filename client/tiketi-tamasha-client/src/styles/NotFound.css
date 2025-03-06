@@ -1,0 +1,29 @@
+.tiketi-tamasha-not-found {
+    background: transparent;
+
+    color: var(--tiketi-tamasha-cool-white);
+    font-size: 13px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    position: relative;
+    overflow: hidden;
+
+    width: 100vw;
+    height: calc(100vh - 120px);
+    min-height: calc(100vh - 120px);
+
+    .tiketi-tamasha-doodle-background {
+        background-size: cover;
+
+        position: absolute;
+
+        z-index: 1;
+
+        width: 80%;
+        height: 80%;
+    }
+}

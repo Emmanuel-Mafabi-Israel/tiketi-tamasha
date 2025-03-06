@@ -28,6 +28,7 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %
 
 # Define blueprints
 auth_bp   = Blueprint('auth', __name__)   # Authentication endpoints
+import random
 event_bp  = Blueprint('event', __name__)  # Event management endpoints
 ticket_bp = Blueprint('ticket', __name__) # Ticket purchase endpoints
 
@@ -60,13 +61,13 @@ def register():
     name         = data.get('name') # Getting the name from the payload.
 
     if not email or not password or not phone_number:
-        return jsonify({'message': 'Email, password and phone number are required'}), 400
+        return jsonify({'message': 'Email, password and phone number are required', 'success': False}), 400
 
     if role not in ('customer', 'organizer'):
-        return jsonify({'message': 'Invalid role specified'}), 400
+        return jsonify({'message': 'Invalid role specified', 'success': False}), 400
 
     if User.query.filter_by(email=email).first():
-        return jsonify({'message': 'User already exists'}), 400
+        return jsonify({'message': 'User already exists', 'success': False}), 400
 
     hashed_password = generate_password_hash(password)
     new_user        = User(email=email, password_hash=hashed_password, role=role, phone_number=phone_number)
@@ -79,12 +80,20 @@ def register():
         db.session.add(new_user_profile)
         db.session.commit()
 
-        return jsonify(user_schema.dump(new_user)), 201
+        # After successful registration:
+        access_token = create_access_token(identity=email, additional_claims={'role': role}) # Generate Token
+        # user_data = user_schema.dump(new_user)
+
+        # Modified Response, to include success and acces_token:
+        return jsonify({'message': 'User registered successfully',
+                        'success': True,
+                        'access_token': access_token
+                        }), 201  # Respond with 201 Created
+
     except Exception as e:
         db.session.rollback()
         logging.error(f"Error creating user: {e}")
-        return jsonify({'message': f'Error creating user: {str(e)}'}), 500
-
+        return jsonify({'message': f'Error creating user: {str(e)}', 'success': False}), 500
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
@@ -103,10 +112,63 @@ def login():
 
 @auth_bp.route('/user', methods=['GET'])
 @jwt_required()
-@get_user_from_token
-def get_user_details(user):
-    return jsonify(user_schema.dump(user)), 200
+def get_user_details():
+    """
+    Retrieves the details of the current user, including profile information.
+    """
+    try:
+        user_email = get_jwt_identity()
+        user = User.query.filter_by(email=user_email).first()
 
+        if not user:
+            return jsonify({'message': 'User not found'}), 404
+
+        # Serialize the user
+        user_data = user_schema.dump(user)
+
+        # Add profile information to the response
+        if user.profile:
+            user_data['name'] = user.profile.name  # Include the user's name
+            user_data['profile'] = user_profile_schema.dump(user.profile)  # Include all profile information
+        else:
+             user_data['name'] = None
+             user_data['profile'] = None # No user Profile
+
+        return jsonify(user_data), 200
+
+    except Exception as e:
+        logging.error(f"Error retrieving user details: {e}")
+        return jsonify({'message': f'Error retrieving user details: {str(e)}'}), 500
+    
+@auth_bp.route('/user/tickets', methods=['GET'])
+@jwt_required()
+def get_user_tickets():
+    """
+    Retrieves all tickets purchased by the current user, including the event title.
+    """
+    try:
+        user_email = get_jwt_identity()
+        user = User.query.filter_by(email=user_email).first()
+
+        if not user:
+            return jsonify({'message': 'User not found'}), 404
+
+        # Get all tickets purchased by the user
+        tickets = Ticket.query.filter_by(customer_id=user.id).all()
+
+        # Serialize the tickets AND add the event title
+        ticket_list = []
+        for ticket in tickets:
+            ticket_data = ticket_schema.dump(ticket)  # Serialize the ticket data
+            ticket_data['event_title'] = ticket.event.title  # Add the event title from the relationship
+            ticket_list.append(ticket_data)
+
+        return jsonify({'tickets': ticket_list}), 200
+
+    except Exception as e:
+        logging.error(f"Error retrieving user tickets: {e}")
+        return jsonify({'message': f'Error retrieving user tickets: {str(e)}'}), 500
+    
 # ---- User Account Edit ----
 # Profile Edit Route
 @auth_bp.route('/user', methods=['PUT'])
@@ -136,18 +198,64 @@ def update_user_profile(user):
         return jsonify({'message': f'Error updating user profile: {str(e)}'}), 500
 
 #  ---- User Deletion ----
+#  ---- User Deletion ----
 @auth_bp.route('/user', methods=['DELETE'])
 @jwt_required()
 @get_user_from_token
 def delete_user(user):
     try:
+        # Delete the user's tickets first
+        for ticket in user.tickets:
+            # Delete associated payments first
+            for payment in ticket.payments:
+                db.session.delete(payment)
+            db.session.delete(ticket)
+
+        # Delete the user profile
+        if user.profile:
+            db.session.delete(user.profile)
+
+        # Finally, delete the user
         db.session.delete(user)
+
         db.session.commit()
         return jsonify({'message': 'User account deleted successfully'}), 200
     except Exception as e:
         db.session.rollback()
         logging.error(f"Error deleting user: {e}")
         return jsonify({'message': f'Error deleting user: {str(e)}'}), 500
+
+@auth_bp.route('/user/payments', methods=['GET'])
+@jwt_required()
+def get_user_payments():
+    """
+    Retrieves all payments made by the current user, including the event title.
+    """
+    try:
+        user_email = get_jwt_identity()
+        user = User.query.filter_by(email=user_email).first()
+
+        if not user:
+            return jsonify({'message': 'User not found'}), 404
+
+        # Get all tickets purchased by the user
+        user_tickets = [ticket.id for ticket in user.tickets]
+
+        # Fetch all payments associated with those tickets
+        payments = Payment.query.filter(Payment.ticket_id.in_(user_tickets)).all()
+
+        # Serialize the payments AND add the event title
+        payment_list = []
+        for payment in payments:
+            payment_data = payment_schema.dump(payment)  # Serialize the payment data
+            payment_data['event_title'] = payment.ticket.event.title  # Access event title through relationships
+            payment_list.append(payment_data)
+
+        return jsonify({'payments': payment_list}), 200
+
+    except Exception as e:
+        logging.error(f"Error retrieving user payments: {e}")
+        return jsonify({'message': f'Error retrieving user payments: {str(e)}'}), 500
 
 # --- Event Routes ---
 @event_bp.route('/events', methods=['GET'])
@@ -223,6 +331,23 @@ def create_event(user):
         logging.error(f"Error creating event: {e}")
         return jsonify({'message': f'Error creating event: {str(e)}'}), 500
 
+@event_bp.route('/events/<int:event_id>', methods=['GET'])
+def get_event(event_id):
+    """
+    Retrieves the details of a specific event by its ID.
+    """
+    try:
+        event = Event.query.get(event_id)
+
+        if event:
+            return jsonify(event_schema.dump(event)), 200
+        else:
+            return jsonify({'message': 'Event not found'}), 404
+
+    except Exception as e:
+        logging.error(f"Error retrieving event: {e}")
+        return jsonify({'message': f'Error retrieving event: {str(e)}'}), 500
+
 # ---- edit event ----
 @event_bp.route('/events/<int:event_id>', methods=['PUT'])
 @jwt_required()
@@ -254,6 +379,12 @@ def update_event(user, event_id):
         event.start_date = parser.parse(data['start_date'])
     if 'end_date' in data:
         event.end_date = parser.parse(data['end_date'])
+    if 'image_url' in data:
+        event.image_url = data['image_url']
+    if 'total_tickets' in data:
+        event.total_tickets = data['total_tickets']
+    if 'ticket_tiers' in data:
+        event.ticket_tiers = data['ticket_tiers'] # Update the ticket tiers
 
     try:
         db.session.commit()
@@ -262,7 +393,7 @@ def update_event(user, event_id):
         db.session.rollback()
         logging.error(f"Error updating event: {e}")
         return jsonify({'message': f'Error updating event: {str(e)}'}), 500
-
+    
 @event_bp.route('/events/<int:event_id>', methods=['DELETE'])
 @jwt_required()
 @get_user_from_token
@@ -321,6 +452,39 @@ def get_user_upcoming_events(user):
         'upcoming_events': upcoming_events
     }), 200
 
+@event_bp.route('/organizer/events', methods=['GET'])
+@jwt_required()
+def get_organizer_events():
+    """
+    Retrieves the details of all events created by the currently logged-in organizer,
+    including the number of tickets purchased for each event.
+    """
+    try:
+        user_email = get_jwt_identity()
+        user = User.query.filter_by(email=user_email).first()
+
+        if not user:
+            return jsonify({'message': 'User not found'}), 404
+
+        # Check if the user is an organizer
+        if user.role != 'organizer':
+            return jsonify({'message': 'Unauthorized: Only organizers can access this route'}), 403
+
+        # Get all events created by the organizer
+        events = Event.query.filter_by(organizer_id=user.id).all()
+
+        # Serialize the events AND add the number of tickets purchased
+        event_list = []
+        for event in events:
+            event_data = event_schema.dump(event)  # Serialize the event data
+            event_data['tickets_purchased'] = len(event.tickets)  # Count tickets and add to event data
+            event_list.append(event_data)
+
+        return jsonify({'events': event_list}), 200
+
+    except Exception as e:
+        logging.error(f"Error retrieving organizer events: {e}")
+        return jsonify({'message': f'Error retrieving organizer events: {str(e)}'}), 500
 
 # --- Ticket Routes ---
 @ticket_bp.route('/tickets', methods=['POST'])
@@ -333,6 +497,8 @@ def purchase_ticket(user):
     ticket_type  = data.get('ticket_type')
     phone_number = data.get('phone_number')  # Get phone number from the request
     amount       = data.get('amount')  # Get the ticket amount from the request.
+
+    print(f"mafabi: [{data}]")
 
     event = Event.query.get(event_id)
     if not event:
@@ -391,12 +557,36 @@ def purchase_ticket(user):
         return jsonify({
             'message': 'MPESA STK push initiated. Awaiting payment confirmation.',
             'checkout_request_id': checkout_request_id,  # Return ID to frontend for potential status checks
-            'account_reference': account_reference
+            'account_reference': account_reference,
+            'status': 'pending'
         }), 200
     else:
         # If STK push fails, rollback the ticket creation
         db.session.rollback()
         return jsonify({'message': f'MPESA STK push failed: {message}'}), 500
+
+@ticket_bp.route('/mpesa_transaction_status', methods=['POST'])
+@jwt_required()
+@get_user_from_token
+def query_transaction_status(user):
+    """
+    Queries the status of an MPESA transaction by CheckoutRequestID.
+    """
+    data = request.get_json()
+    checkout_request_id = data.get('checkout_request_id')
+
+    if not checkout_request_id:
+        return jsonify({'message': 'CheckoutRequestID is required'}), 400
+
+    success, message, transaction_status = services.query_mpesa_transaction_status(checkout_request_id)
+
+    if success:
+        return jsonify({
+            'message': message, 
+            'transaction_status': transaction_status,
+            'status': 'success'}), 200
+    else:
+        return jsonify({'message': message, 'status': 'failed'}), 500
 
 @ticket_bp.route('/mpesa_callback', methods=['POST'])
 def mpesa_callback():
@@ -446,24 +636,120 @@ def mpesa_callback():
 
             db.session.commit()
             logging.info(f"Payment completed successfully. Ticket ID: {payment.ticket_id}, MPESA Receipt: {mpesa_receipt_number}")
-            return jsonify({'message': 'Payment received successfully'}), 200
+            return jsonify({'message': 'Payment received successfully', 'status': 'success'}), 200
         else:
             if result_code == 1032:
                 # cancelled request...
                 payment.status = 'cancelled'
                 db.session.commit()
 
-                return jsonify({'message': f'Payment cancelled: {result_desc}'}), 200
+                return jsonify({'message': f'Payment cancelled: {result_desc}', 'status': 'cancelled'}), 200
             else:
                 # Payment failed
                 payment.status = 'failed'
                 db.session.commit()
 
-                return jsonify({'message': f'Payment failed: {result_desc}'}), 400
+                return jsonify({'message': f'Payment failed: {result_desc}', 'status': 'failed'}), 400
 
     except Exception as e:
         logging.error(f"Error processing MPESA callback: {e}")
-        return jsonify({'message': f'Error processing MPESA callback: {str(e)}'}), 500
+        # Attempt to query the transaction status as a fallback
+        success, message, transaction_status = services.query_mpesa_transaction_status(checkout_request_id)
+        if success:
+            logging.info(f"Transaction status query successful after callback error: {message}")
+            # You might want to update the payment status based on the query result here
+            # depending on your business logic.
+            return jsonify({'message': f'Callback error, but transaction status query successful: {message}'}), 200
+        else:
+            logging.error(f"Transaction status query failed after callback error: {message}")
+            return jsonify({'message': f'Error processing MPESA callback and status query failed: {str(e)}'}), 500
+
+# --- Search and filter functions ---
+@event_bp.route('/events/search', methods=['GET'])
+def search_events():
+    """
+    Searches for events based on a search term across title, category, location, and tags.
+    """
+    search_term = request.args.get('q')  # 'q' is a common convention for search query parameters
+    page        = request.args.get('page', 1, type=int) # Pagination
+    per_page    = request.args.get('per_page', 10, type=int) # Pagination
+
+    if not search_term:
+        return jsonify({'message': 'Search term is required'}), 400
+
+    # Construct the query: search across title, category, and tags
+    query = Event.query.filter(
+        db.or_(
+            Event.title.ilike(f"%{search_term}%"),
+            Event.category.ilike(f"%{search_term}%"),
+            Event.tags.ilike(f"%{search_term}%"),
+            Event.location.ilike(f"%{search_term}")
+        )
+    )
+
+    # Paginate the results
+    pagination = query.paginate(page=page, per_page=per_page)
+    events = pagination.items
+
+    # Serialize the events
+    event_list = [event_schema.dump(event) for event in events]
+
+    return jsonify({
+        'events': event_list,
+        'total_pages': pagination.pages,
+        'current_page': pagination.page,
+        'total_events': pagination.total,
+        'per_page': per_page
+    }), 200
+
+##  --- Category count ---
+@event_bp.route('/events/category_count/<string:category_name>', methods=['GET'])
+def get_event_category_count(category_name):
+    """
+    Returns the total number of events in a specified category.
+    """
+    try:
+        # Count the number of events in the specified category
+        event_count = Event.query.filter_by(category=category_name).count()
+        return jsonify({'count': event_count}), 200
+
+    except Exception as e:
+        logging.error(f"Error retrieving event category count: {e}")
+        return jsonify({'message': f'Error retrieving event category count: {str(e)}'}), 500
+    
+# --- Popular events ---
+@event_bp.route('/events/popular', methods=['GET'])
+def get_popular_events():
+    """
+    Returns three random events from the database as "popular" events.
+    """
+    try:
+        # Get all event IDs
+        all_event_ids = [event.id for event in Event.query.all()]
+
+        if not all_event_ids:
+            return jsonify({'message': 'No events available'}), 404
+
+        # Select three random event IDs
+        popular_event_ids = random.sample(all_event_ids, min(3, len(all_event_ids)))  # Ensure we don't try to sample more than exist
+
+        # Retrieve the actual events from the database
+        popular_events = Event.query.filter(Event.id.in_(popular_event_ids)).all()
+
+        # Serialize the popular events
+        event_list = [event_schema.dump(event) for event in popular_events]
+
+        return jsonify({'popular_events': event_list}), 200
+
+    except ValueError as ve:  # Catch the error if len(all_event_ids) < 3
+        logging.warning(f"Not enough events to select 3 random events: {ve}")
+        # Return all available events or an empty list, depending on your requirements
+        all_events = Event.query.all()
+        event_list = [event_schema.dump(event) for event in all_events]
+        return jsonify({'popular_events': event_list}), 200 #Return all the events.
+    except Exception as e:
+        logging.error(f"Error retrieving popular events: {e}")
+        return jsonify({'message': f'Error retrieving popular events: {str(e)}'}), 500
 
 # --- Debug Routes ---
 @auth_bp.route('/', methods=['GET'])

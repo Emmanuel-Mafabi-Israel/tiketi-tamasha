@@ -1,0 +1,56 @@
+/*
+    GLORY BE TO GOD,
+    TIKETI TAMASHA,
+    DISCOVER CARD,
+
+    BY ISRAEL MAFABI EMMANUEL
+*/
+
+.tiketi-tamasha-discover-card {
+    background: var(--tiketi-tamasha-theme-cool-dark-b-tr);
+
+    border: 1px solid var(--tiketi-tamasha-cool-gray);
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    gap: 7px;
+
+    width: 200px;
+    height: 80px;
+
+    .card-image {
+        width: 45px;
+    }
+
+    .card-info {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+
+        min-width: fit-content;
+        height: fit-content;
+
+        .title {
+            color: var(--tiketi-tamasha-cool-white);
+            font-size: 13px;
+        }
+
+        .count {
+            color: var(--tiketi-tamasha-cool-white-tr);
+            font-size: 12px;
+
+            width: inherit;
+        }
+    }
+}
+
+.tiketi-tamasha-discover-card:hover {
+    border: 1px solid var(--tiketi-tamasha-cool-gray-);
+    border-radius: 14px;
+}

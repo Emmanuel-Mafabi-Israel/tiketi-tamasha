@@ -1,0 +1,332 @@
+/*
+    GLORY BE TO GOD,
+    TIKETI TAMASHA - BACKEND,
+    By Israel Mafabi Emmanuel
+*/
+
+@import url('Button.css');
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --tiketi-tamasha-cool-black: rgb(0, 0, 0);
+    --tiketi-tamasha-cool-gray: #96b8f939;
+    --tiketi-tamasha-cool-gray-: #96b8f97b;
+    --tiketi-tamasha-cool-white: white;
+    --tiketi-tamasha-cool-white-d: rgb(210, 210, 210);
+    --tiketi-tamasha-cool-blue: rgb(38, 103, 176);
+    --tiketi-tamasha-cool-red: rgb(253, 82, 34);
+    --tiketi-tamasha-cool-green: rgb(118, 253, 34);
+
+    --tiketi-tamasha-cool-gray--: #9dbcf519;
+    --tiketi-tamasha-cool-white-tr: rgba(255, 255, 255, 0.6);
+    --tiketi-tamasha-cool-blue-br: rgb(69, 148, 239);
+    --tiketi-tamasha-theme-cool-blue: #0e398d;
+    --tiketi-tamasha-theme-cool-dark-blue: #081630;
+    --tiketi-tamasha-theme-cool-dark-b-tr: #0816308c;
+    --tiketi-tamasha-theme-cool-dark-d-tr: #051025ab;
+
+    --tiketi-tamasha-theme-cool-dark---: #030c1c7d;
+
+    --tiketi-tamasha-default-font: "Poppins", sans-serif;
+}
+
+* {
+    font-family: var(--tiketi-tamasha-default-font) !important;
+
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    outline: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+
+    transition: 500ms;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--tiketi-tamasha-cool-white);
+    border-radius: 4px;
+}
+
+body {
+    background: linear-gradient(135deg, var(--tiketi-tamasha-cool-black), var(--tiketi-tamasha-theme-cool-blue));
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100vw;
+    min-width: 280px;
+    height: fit-content;
+
+    .tiketi-tamasha-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+
+        width: 100vw;
+        height: 100vh;
+        min-height: 100vh;
+    }
+}
+
+.tiketi-tamasha-input::placeholder {
+    color: var(--tiketi-tamasha-cool-gray-);
+    font-size: 13px;
+
+    text-align: left;
+
+    margin: 0px;
+}
+
+.tiketi-tamasha-input {
+    background: transparent;
+    border: 1px solid var(--tiketi-tamasha-cool-gray);
+    border-radius: 14px;
+
+    font-size: 13px;
+    color: var(--tiketi-tamasha-cool-white);
+
+    text-align: left;
+
+    padding-left: 21px;
+    padding-right: 21px;
+
+    margin-left: 0;
+    margin-right: 0;
+
+    width: 300px;
+    height: 45px;
+}
+
+.tiketi-tamasha-input:focus {
+    background: var(--tiketi-tamasha-theme-cool-dark-d-tr);
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+input[type="datetime-local"] {
+    position: relative;
+    padding-right: 30px;
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}
+
+input[type="datetime-local"]::after {
+    background-image: url('../assets/tiketi-tamasha-doodle-calendar.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    content: "";
+
+    padding-right: 7px;
+    transform: translateY(-50%);
+    position: absolute;
+    top: 50%;
+    right: 5px;
+
+    width: 20px;
+    height: 20px;
+}
+
+.error-message {
+    color: var(--tiketi-tamasha-cool-red);
+    font-size: 12px;
+
+    width: fit-content;
+    height: 20px;
+    min-height: 20px;
+}
+
+/* THIRD PARTIES */
+.swal2-container {
+    background: var(--tiketi-tamasha-theme-cool-dark-b-tr);
+    /* backdrop-filter: blur(4px); */
+}
+
+.swal2-popup {
+    background: var(--tiketi-tamasha-theme-cool-dark-b-tr) !important;
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--tiketi-tamasha-cool-gray);
+    border-radius: 14px;
+
+    background: transparent;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+
+    /* gap: 14px; */
+    /* padding: 14px; */
+
+    /* width: 500px; */
+    height: fit-content;
+    min-height: 120px !important;
+
+    .swal2-title {
+        color: var(--tiketi-tamasha-cool-white) !important;
+        font-size: 28px !important;
+        font-weight: normal !important;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        overflow: hidden;
+
+        height: 65px;
+        min-height: 65px;
+        max-height: 65px;
+    }
+
+    .swal2-html-container {
+        color: var(--tiketi-tamasha-cool-white) !important;
+        font-size: 14px !important;
+        font-weight: normal !important;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        overflow: hidden;
+
+        margin: 0;
+
+        width: 400px;
+        height: 67px;
+        min-height: 67px;
+        max-height: 67px;
+    }
+
+    .swal2-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 21px;
+        margin: 0;
+
+        padding-left: 14px;
+        padding-right: 14px;
+
+        height: 50px !important;
+        min-height: 50px;
+        max-height: 50px;
+
+        button {
+            background: var(--tiketi-tamasha-cool-white) !important;
+            border: 1px solid var(--tiketi-tamasha-cool-white) !important;
+            border-radius: 20px !important;
+        
+            color: var(--tiketi-tamasha-cool-black);
+        
+            font-size: 13px !important;
+            font-weight: normal !important;
+        
+            display: flex;
+            align-items: center !important;
+            justify-content: center !important;
+        
+            cursor: pointer;
+        
+            margin: 0px !important;
+            padding: 0px !important;
+        
+            gap: 4px;
+
+            transition: 200ms;
+        
+            width: 122px !important;
+            height: 35px !important;
+        }
+
+        button:hover {
+            background: var(--tiketi-tamasha-cool-white-d) !important;
+            border: 1px solid var(--tiketi-tamasha-cool-white-d) !important;
+        }
+
+        button:active {
+            background: var(--tiketi-tamasha-cool-white);
+            border: 1px solid var(--tiketi-tamasha-cool-white);
+        }
+
+        .swal2-confirm  {
+            background: var(--tiketi-tamasha-cool-white);
+            border: 1px solid var(--tiketi-tamasha-cool-white);
+            border-radius: 20px;
+        
+            color: var(--tiketi-tamasha-cool-red);
+        
+            font-size: 13px;
+            font-weight: normal;
+        
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        
+            cursor: pointer;
+
+            box-shadow: none !important;
+        
+            margin: 0px;
+            padding: 0px;
+        
+            gap: 4px;
+        
+            width: 122px;
+            height: 35px;
+        }
+
+        .swal2-cancel {
+            background: var(--tiketi-tamasha-cool-white);
+            border: 1px solid var(--tiketi-tamasha-cool-white);
+            border-radius: 20px;
+        
+            /* color: var(--tiketi-tamasha-cool-blue); */
+        
+            font-size: 13px;
+            font-weight: normal;
+        
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        
+            cursor: pointer;
+        
+            margin: 0px;
+            padding: 0px;
+        
+            gap: 4px;
+        
+            width: 122px;
+            height: 35px;
+        }
+    }
+}

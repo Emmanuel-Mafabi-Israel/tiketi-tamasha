@@ -1,0 +1,34 @@
+/*
+	GLORY BE TO GOD,
+	TIKETI TAMASHA - FRONTEND,
+	BY TIKETI TAMASHA DEVELOPERS,
+
+	UPGRADE,
+	BY ISRAEL MAFABI EMMANUEL
+
+	STYLING AND DESIGN -> Footer
+*/
+
+@import url('globals.css');
+
+.tiketi-tamasha-footer {
+    background: transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100vw;
+    height: 50px;
+
+    p {
+        color: var(--tiketi-tamasha-cool-white);
+        font-size: 13px;
+
+        margin: 0px;
+        padding: 0px;
+
+        height: fit-content;
+        width: fit-content;
+    }
+}

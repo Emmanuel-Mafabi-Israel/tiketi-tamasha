@@ -1,0 +1,134 @@
+[
+    {
+        "title": "Gene Therapy",
+        "description": "An event discussing Gene Therapy in Nairobi.",
+        "location": "Venue 30, Kisumu",
+        "category": "Research",
+        "tags": "research, science, innovation",
+        "start_date": "2024-12-29T18:00:00",
+        "end_date": "2024-12-29T22:00:00",
+        "image_url": "https://images.unsplash.com/photo-1560439514-4e9645039924?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDA4MjgwODB8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Student": {
+                "price": 3
+            },
+            "Professional": {
+                "price": 15
+            },
+            "General Admission": {
+                "price": 13
+            }
+        },
+        "total_tickets": 203
+    },
+    {
+        "title": "Eco Action",
+        "description": "An event discussing Eco Action in Nairobi.",
+        "location": "Venue 88, Kisumu",
+        "category": "Conserve",
+        "tags": "conservation, environment, sustainability",
+        "start_date": "2024-12-10T17:00:00",
+        "end_date": "2024-12-10T19:00:00",
+        "image_url": "https://images.unsplash.com/photo-1667900736423-f94b49ef67f9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDA4MjgwODF8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Volunteer": {
+                "price": 1
+            },
+            "General": {
+                "price": 8
+            },
+            "Supporter": {
+                "price": 24
+            }
+        },
+        "total_tickets": 123
+    },
+    {
+        "title": "Run Club",
+        "description": "An event discussing Run Club in Kisumu.",
+        "location": "Venue 52, Kisumu",
+        "category": "Fitness",
+        "tags": "fitness, health, exercise",
+        "start_date": "2024-12-24T17:00:00",
+        "end_date": "2024-12-24T21:00:00",
+        "image_url": "https://images.unsplash.com/photo-1518619745898-93e765966dcd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDA4MjgwODF8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 9
+            },
+            "Regular": {
+                "price": 8
+            },
+            "VIP": {
+                "price": 18
+            }
+        },
+        "total_tickets": 630
+    },
+    {
+        "title": "Sleep Better",
+        "description": "An event discussing Sleep Better in Kisumu.",
+        "location": "Venue 69, Nairobi",
+        "category": "Wellness",
+        "tags": "wellness, health, mental health",
+        "start_date": "2024-12-31T19:00:00",
+        "end_date": "2024-12-31T22:00:00",
+        "image_url": "https://images.unsplash.com/photo-1492552296703-4ec0a2fb3715?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDA4MjgwODJ8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Basic": {
+                "price": 15
+            },
+            "Premium": {
+                "price": 28
+            },
+            "Deluxe": {
+                "price": 37
+            }
+        },
+        "total_tickets": 302
+    },
+    {
+        "title": "Crypto Talk",
+        "description": "An event discussing Crypto Talk in Nairobi.",
+        "location": "Venue 20, Mombasa",
+        "category": "Finance",
+        "tags": "finance, investment, money",
+        "start_date": "2024-12-01T16:00:00",
+        "end_date": "2024-12-01T19:00:00",
+        "image_url": "https://images.unsplash.com/photo-1559523275-98fb3c56faf6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDA4MjgwODJ8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Standard": {
+                "price": 20
+            },
+            "Advanced": {
+                "price": 25
+            },
+            "Expert": {
+                "price": 49
+            }
+        },
+        "total_tickets": 104
+    },
+    {
+        "title": "Rock Fest",
+        "description": "An event discussing Rock Fest in Nairobi.",
+        "location": "Venue 23, Nairobi",
+        "category": "Music",
+        "tags": "music, live, concert",
+        "start_date": "2024-12-14T16:00:00",
+        "end_date": "2024-12-14T20:00:00",
+        "image_url": "https://images.unsplash.com/photo-1574793954837-b7938eb5a662?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDA4MjgwODN8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 9
+            },
+            "VIP": {
+                "price": 25
+            },
+            "Regular": {
+                "price": 13
+            }
+        },
+        "total_tickets": 306
+    }
+]

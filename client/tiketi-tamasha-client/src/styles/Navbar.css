@@ -1,0 +1,441 @@
+/*
+    GLORY BE TO GOD,
+    TIKETI TAMASHA,
+    EVENT DETAILS PAGE,
+
+    BY ISRAEL MAFABI EMMANUEL
+*/
+
+@import url('globals.css');
+
+.tiketi-tamasha-navbar {
+    background: transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-left: 21px;
+    padding-right: 21px;
+
+    overflow-y: hidden;
+
+    width: 100vw;
+    height: 70px;
+
+    .tiketi-tamasha-logo {
+        color: var(--tiketi-tamasha-cool-gray-);
+
+        font-size: 45px;
+        font-weight: normal;
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        cursor: pointer;
+
+        width: fit-content;
+        height: fit-content;
+
+        .gray {
+            color: var(--tiketi-tamasha-cool-white);
+        }
+
+        .tiketi-tamasha-logo-image {
+            width: 42px;
+            height: 42px;
+        }
+
+        .tiketi-tamasha-logo-title {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction: column;
+
+            width: fit-content;
+            height: fit-content;
+
+            .head {
+                color: var(--tiketi-tamasha-cool-white);
+
+                font-size: 12px;
+
+                width: fit-content;
+                height: fit-content;
+            }
+
+            .enbold {
+                color: var(--tiketi-tamasha-cool-white);
+
+                font-size: 12px;
+
+                width: fit-content;
+                height: fit-content;
+            }
+        }
+    }
+
+    .tiketi-tamasha-logo.signed {
+        color: var(--tiketi-tamasha-cool-gray-);
+
+        font-size: 45px;
+        font-weight: normal;
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        cursor: pointer;
+
+        width: fit-content;
+        min-width: 264px;
+        height: fit-content;
+
+        .gray {
+            color: var(--tiketi-tamasha-cool-white);
+        }
+
+        .tiketi-tamasha-logo-image {
+            width: 42px;
+            height: 42px;
+        }
+
+        .tiketi-tamasha-logo-title {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction: column;
+
+            width: fit-content;
+            height: fit-content;
+
+            .head {
+                color: var(--tiketi-tamasha-cool-white);
+
+                font-size: 12px;
+
+                width: fit-content;
+                height: fit-content;
+            }
+
+            .enbold {
+                color: var(--tiketi-tamasha-cool-white);
+
+                font-size: 12px;
+
+                width: fit-content;
+                height: fit-content;
+            }
+        }
+    }
+
+    .tiketi-tamasha-nav-links {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: fit-content;
+        height: fit-content;
+
+        .tiketi-tamasha-navbar-signed {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 21px;
+            
+            overflow-y: hidden;
+
+            width: 100%;
+            height: 70px;
+
+            .access-links {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 14px;
+
+                /* padding-left: 141px; */
+                width: calc(100% - 285px);
+                height: inherit;
+
+                .link {
+                    border: 1px solid transparent;
+                    color: var(--tiketi-tamasha-cool-white);
+                    font-size: 13px;
+
+                    cursor: pointer;
+
+                    text-decoration: none;
+                    width: fit-content;
+                }
+
+                .link.selected {
+                    border-bottom: 1px solid var(--tiketi-tamasha-cool-white);
+                }
+
+                .link:hover {
+                    border-bottom: 1px solid var(--tiketi-tamasha-cool-white);
+                }
+            }
+
+            .tiketi-tamasha-navbar-signed-btns {
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                gap: 21px;
+
+                overflow-y: hidden;
+
+                width: 264px;
+                min-width: 264px;
+                max-width: 264px;
+                height: inherit;
+            }
+        }
+
+        .tiketi-tamasha-navbar-unsigned {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 21px;
+            
+            overflow-y: hidden;
+
+            width: fit-content;
+            height: 70px;
+
+            a {
+                text-decoration: none;
+
+                width: fit-content;
+                height: fit-content;
+            }
+
+            .tiketi-tamasha-navbar-unsigned-btns {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 21px;
+
+                overflow-y: hidden;
+
+                width: inherit;
+                height: inherit;
+            }
+        }
+
+        .tiketi-tamasha-btn {
+            background: var(--tiketi-tamasha-cool-white);
+            border-radius: 20px;
+
+            color: var(--tiketi-tamasha-cool-black);
+
+            font-size: 13px;
+            font-weight: normal;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: 0px;
+            padding: 0px;
+
+            gap: 4px;
+
+            width: 122px;
+            height: 35px;
+        }
+
+        .tiketi-tamasha-btn.special {
+            background: transparent;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 4px;
+
+            padding: 0px;
+
+            width: fit-content;
+            height: fit-content;
+
+            .text {
+                color: var(--tiketi-tamasha-cool-white);
+
+                font-size: 13.333px;
+                font-weight: normal;
+
+                width: fit-content;
+                height: fit-content;
+            }
+
+            .explore {
+                width: 20px;
+            }
+        }
+    }
+
+    .tiketi-tamasha-nav-links.signed {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: calc(100vw - 144px);
+        height: fit-content;
+
+        .tiketi-tamasha-navbar-signed {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 21px;
+            
+            overflow-y: hidden;
+
+            width: 100%;
+            height: 70px;
+
+            .access-links {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 14px;
+
+                /* padding-left: 141px; */
+
+                width: calc(100% - 264px);
+                height: inherit;
+
+                .link {
+                    border: 1px solid transparent;
+                    color: var(--tiketi-tamasha-cool-white);
+                    font-size: 13px;
+
+                    cursor: pointer;
+
+                    text-decoration: none;
+                    width: fit-content;
+                }
+                
+                .link.selected {
+                    border-bottom: 1px solid var(--tiketi-tamasha-cool-white);
+                }
+
+                .link:hover {
+                    border-bottom: 1px solid var(--tiketi-tamasha-cool-white);
+                }
+            }
+
+            .tiketi-tamasha-navbar-signed-btns {
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                gap: 21px;
+
+                overflow-y: hidden;
+
+                width: inherit;
+                min-width: 264px;
+                max-width: 264px;
+                height: inherit;
+            }
+        }
+
+        .tiketi-tamasha-navbar-unsigned {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 21px;
+            
+            overflow-y: hidden;
+
+            width: fit-content;
+            height: 70px;
+
+            a {
+                text-decoration: none;
+
+                width: fit-content;
+                height: fit-content;
+            }
+
+            .tiketi-tamasha-navbar-unsigned-btns {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 21px;
+
+                overflow-y: hidden;
+
+                width: inherit;
+                height: inherit;
+            }
+        }
+
+        .tiketi-tamasha-btn {
+            background: var(--tiketi-tamasha-cool-white);
+            border-radius: 20px;
+
+            color: var(--tiketi-tamasha-cool-black);
+
+            font-size: 13px;
+            font-weight: normal;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: 0px;
+            padding: 0px;
+
+            gap: 4px;
+
+            width: 122px;
+            height: 35px;
+        }
+
+        .tiketi-tamasha-btn.special {
+            background: transparent;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 4px;
+
+            padding: 0px;
+
+            width: fit-content;
+            height: fit-content;
+
+            .text {
+                color: var(--tiketi-tamasha-cool-white);
+
+                font-size: 13.333px;
+                font-weight: normal;
+
+                width: fit-content;
+                height: fit-content;
+            }
+
+            .explore {
+                width: 20px;
+            }
+        }
+    }
+
+    .tiketi-tamasha-subheading {
+        color: var(--tiketi-tamasha-cool-white);
+
+        font-size: 12px;
+        font-weight: normal;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: fit-content;
+        height: fit-content;
+    }
+}

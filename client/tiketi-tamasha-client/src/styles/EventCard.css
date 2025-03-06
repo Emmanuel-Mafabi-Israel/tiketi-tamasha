@@ -1,0 +1,329 @@
+/*
+    GLORY BE TO GOD,
+    TIKETI TAMASHA,
+    DISCOVER CARD,
+
+    BY ISRAEL MAFABI EMMANUEL
+*/
+
+.tiketi-tamasha-event-card {
+    background: transparent;
+    /* 
+    border: 1px solid var(--tiketi-tamasha-cool-gray);
+    border-radius: 14px; */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    gap: 7px;
+
+    width: 200px;
+    height: 100px;
+
+    .card-image {
+        border-radius: 14px;
+
+        object-fit: cover;
+
+        width: 50px;
+        min-width: 50px;
+        height: 68px;
+    }
+
+    .card-info {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+
+        min-width: fit-content;
+        height: fit-content;
+
+        .title {
+            color: var(--tiketi-tamasha-cool-white);
+            font-size: 13px;
+
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            width: 100px;
+            min-width: 100px;
+            max-width: 100px;
+        }
+
+        .time, .location {
+            color: var(--tiketi-tamasha-cool-white-tr);
+            font-size: 12px;
+
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            width: inherit;
+            max-width: 100px;
+        }
+
+        .time.expired {
+            color: var(--tiketi-tamasha-cool-red);
+        }
+    }
+}
+
+.tiketi-tamasha-event-card.explore {
+    background: transparent;
+    /* 
+    border: 1px solid var(--tiketi-tamasha-cool-gray);
+    border-radius: 14px; */
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding-left: 14px;
+
+    cursor: inherit;
+
+    gap: 14px;
+
+    width: 200px;
+    height: 100px;
+
+    .card-image {
+        border-radius: 7px;
+        width: 50px;
+        height: 68px;
+    }
+
+    .card-info {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+
+        min-width: fit-content;
+        height: fit-content;
+
+        .title {
+            color: var(--tiketi-tamasha-cool-white);
+            font-size: 13px;
+        }
+
+        .time, .location {
+            color: var(--tiketi-tamasha-cool-white-tr);
+            font-size: 12px;
+
+            width: inherit;
+        }
+    }
+}
+
+.tiketi-tamasha-event-card.explore:hover {
+    .card-image {
+        box-shadow: 0px 0px 0px 4px transparent;
+    }
+}
+
+.tiketi-tamasha-event-card.extra {
+    background: var(--tiketi-tamasha-theme-cool-dark-b-tr);
+
+    border: 1px solid var(--tiketi-tamasha-cool-gray);
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    cursor: pointer;
+
+    gap: 14px;
+
+    padding: 14px;
+
+    width: fit-content;
+    height: 100px;
+
+    .card-image {
+        border-radius: 14px;
+        width: 70px;
+    }
+
+    .card-info {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+
+        gap: 3px;
+
+        min-width: fit-content;
+        height: fit-content;
+
+        .title {
+            color: var(--tiketi-tamasha-cool-white);
+            font-size: 13px;
+        }
+
+        .time, .location {
+            color: var(--tiketi-tamasha-cool-white-tr);
+            font-size: 12px;
+
+            width: inherit;
+        }
+    }
+}
+
+.tiketi-tamasha-event-card.admin {
+    background: transparent;    
+    border: 1px solid var(--tiketi-tamasha-cool-gray);
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    cursor: default;
+
+    gap: 14px;
+
+    padding-left: 14px;
+    padding-right: 14px;
+
+    width: fit-content;
+    min-width: 470px;
+    height: fit-content;
+    min-height: 70px;
+
+    .card-image {
+        border-radius: 14px;
+
+        object-fit: contain;
+
+        width: 50px;
+        height: 68px;
+    }
+
+    .card-info {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+
+        width: fit-content;
+        min-width: 150px;
+        max-width: 150px;
+        height: fit-content;
+
+        .title {
+            color: var(--tiketi-tamasha-cool-white);
+            font-size: 13px;
+        }
+
+        .time, .location {
+            color: var(--tiketi-tamasha-cool-white-tr);
+            font-size: 12px;
+
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            width: inherit;
+            max-width: 150px;
+        }
+
+        .time.expired {
+            color: var(--tiketi-tamasha-cool-red);
+        }
+    }
+
+    .card-event-interest {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        width: 100px;
+        min-width: 100px;
+        height: fit-content;
+
+        .title {
+            color: var(--tiketi-tamasha-cool-white);
+            font-size: 21px;
+
+            width: fit-content;
+            height: fit-content;
+
+            span {
+                font-size: 12px;
+            }
+        }
+
+        .title.sold_out {
+            color: var(--tiketi-tamasha-cool-green);
+        }
+
+        .subtitle {
+            color: var(--tiketi-tamasha-cool-white-tr);
+            font-size: 12px;
+        }
+    }
+
+    .card-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 14px;
+
+        margin-left: 21px;
+
+        width: fit-content;
+        height: inherit;
+
+        button {
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 0;
+
+            color: var(--tiketi-tamasha-cool-white);
+            font-size: 13px;
+            font-weight: normal;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+
+            margin: 0;
+            padding: 0;
+
+            width: fit-content;
+            height: fit-content;
+        }
+
+        .red {
+            color: var(--tiketi-tamasha-cool-red);
+        }
+
+        .red:hover {
+            border-bottom: 1px solid var(--tiketi-tamasha-cool-red);
+        }
+
+        button:hover {
+            border-bottom: 1px solid var(--tiketi-tamasha-cool-white);
+        }
+    }
+}
+
+.tiketi-tamasha-event-card.admin:hover {
+    .card-image {
+        box-shadow: 0px 0px 0px 4px transparent;
+    }
+}
+
+.tiketi-tamasha-event-card:hover {
+    .card-image {
+        box-shadow: 0px 0px 0px 4px var(--tiketi-tamasha-cool-gray);
+    }
+}

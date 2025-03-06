@@ -1,0 +1,257 @@
+/*
+    GLORY BE TO GOD,
+    TIKETI TAMASHA,
+    EVENT DETAILS PAGE,
+
+    BY ISRAEL MAFABI EMMANUEL
+*/
+
+@import url('globals.css');
+
+.tiketi-tamasha-dialog-container {
+    background: var(--tiketi-tamasha-theme-cool-dark-b-tr);
+    backdrop-filter: blur(7px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: 1000;
+
+    /* padding: 21px; */
+
+    width: 100vw;
+    height: 100vh;
+
+    .tiketi-tamasha-dialog.new-event {
+        background: var(--tiketi-tamasha-theme-cool-dark-b-tr);
+
+        border: 1px solid var(--tiketi-tamasha-cool-gray);
+        border-radius: 14px;
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+
+        gap: 14px;
+
+        padding: 14px;
+
+        overflow-y: auto;
+        /* Enable vertical scrolling */
+        /* Hide scrollbar for Webkit browsers */
+        -webkit-overflow-scrolling: touch;
+        /* Enable momentum scrolling on iOS */
+        scrollbar-width: none;
+        /* Hide scrollbar for Firefox */
+        -ms-overflow-style: none;
+        /* Hide scrollbar for IE and Edge */
+
+        /* Hide scrollbar for Webkit browsers */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        width: 450px;
+        max-height: 95vh;
+        /* Limit the height to 90% of the viewport height */
+        overflow-y: auto;
+        /* Enable vertical scrolling */
+
+        .image-section {
+            border-radius: 7px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            gap: 14px;
+
+            position: relative;
+
+            width: 100%;
+            height: fit-content;
+            min-height: 300px;
+
+            .image-input {
+                display: none;
+            }
+
+            .custom-upload {
+                background: transparent;
+                border: 1px dashed var(--tiketi-tamasha-cool-gray);
+                border-radius: 7px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+                gap: 14px;
+
+                cursor: pointer;
+
+                transform: translate(-50%, -50%);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                z-index: 1;
+
+                width: 100%;
+                height: 300px;
+                min-height: 300px;
+
+                img {
+                    width: 50px;
+                }
+
+                .text {
+                    color: var(--tiketi-tamasha-cool-gray);
+                    font-size: 13px;
+                    font-weight: normal;
+                }
+            }
+
+            .custom-uploaded {
+                background: transparent;
+                border: 1px dashed var(--tiketi-tamasha-cool-gray);
+                border-radius: 7px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+                gap: 14px;
+
+                cursor: pointer;
+
+                transform: translate(-50%, -50%);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                z-index: 1;
+
+                width: 100%;
+                height: 300px;
+
+                img {
+                    display: none;
+                    width: 50px;
+                }
+
+                .text {
+                    color: transparent;
+                    font-size: 13px;
+                    font-weight: normal;
+
+                    /* display: none; */
+                }
+            }
+
+            .custom-uploaded:hover {
+                background: var(--tiketi-tamasha-theme-cool-dark---);
+                backdrop-filter: blur(7px);
+
+                .text {
+                    color: var(--tiketi-tamasha-cool-white-tr);
+                }
+            }
+
+            .upload-image {
+                width: 100%;
+            }
+
+            .uploaded {
+                border-radius: 7px;
+                object-fit: cover;
+
+                width: 100%;
+                max-height: 300px;
+                min-height: 300px;
+            }
+        }
+
+        .dialog-body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            gap: 14px;
+
+            width: 100%;
+            height: calc(100% - 300px);
+            min-height: 910px;
+
+            .linked-data {
+                display: flex;
+                align-items: flex-start;
+                justify-content: center;
+                flex-direction: column;
+
+                gap: 14px;
+
+                width: 100%;
+                height: fit-content;
+                min-height: 260px;
+
+                .title {
+                    color: var(--tiketi-tamasha-cool-white);
+                    font-size: 13px;
+                }
+
+                .inputs {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+
+                    gap: 14px;
+                    
+                    width: 100%;
+                    height: fit-content;
+                    min-height: 45px !important;
+
+                    input {
+                        margin: 0;
+                        width: 100%;
+                    }
+                }
+            }
+
+            .linked-data.event-title-details {
+                min-height: 200px;
+            }
+
+            .linked-data.event-short-details {
+                min-height: 140px;
+            }
+
+            .buttons {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+                gap: 21px;
+
+                width: 100%;
+                height: fit-content;
+                min-height: 104px;
+
+                .tiketi-tamasha-btn.auth {
+                    margin: 0;
+
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
