@@ -456,7 +456,8 @@ def get_user_upcoming_events(user):
 @jwt_required()
 def get_organizer_events():
     """
-    Retrieves the details of all events created by the currently logged-in organizer.
+    Retrieves the details of all events created by the currently logged-in organizer,
+    including the number of tickets purchased for each event.
     """
     try:
         user_email = get_jwt_identity()
@@ -472,8 +473,12 @@ def get_organizer_events():
         # Get all events created by the organizer
         events = Event.query.filter_by(organizer_id=user.id).all()
 
-        # Serialize the events
-        event_list = [event_schema.dump(event) for event in events]
+        # Serialize the events AND add the number of tickets purchased
+        event_list = []
+        for event in events:
+            event_data = event_schema.dump(event)  # Serialize the event data
+            event_data['tickets_purchased'] = len(event.tickets)  # Count tickets and add to event data
+            event_list.append(event_data)
 
         return jsonify({'events': event_list}), 200
 
@@ -552,7 +557,8 @@ def purchase_ticket(user):
         return jsonify({
             'message': 'MPESA STK push initiated. Awaiting payment confirmation.',
             'checkout_request_id': checkout_request_id,  # Return ID to frontend for potential status checks
-            'account_reference': account_reference
+            'account_reference': account_reference,
+            'status': 'pending'
         }), 200
     else:
         # If STK push fails, rollback the ticket creation
@@ -575,9 +581,12 @@ def query_transaction_status(user):
     success, message, transaction_status = services.query_mpesa_transaction_status(checkout_request_id)
 
     if success:
-        return jsonify({'message': message, 'transaction_status': transaction_status}), 200
+        return jsonify({
+            'message': message, 
+            'transaction_status': transaction_status,
+            'status': 'success'}), 200
     else:
-        return jsonify({'message': message}), 500
+        return jsonify({'message': message, 'status': 'failed'}), 500
 
 @ticket_bp.route('/mpesa_callback', methods=['POST'])
 def mpesa_callback():
@@ -627,20 +636,20 @@ def mpesa_callback():
 
             db.session.commit()
             logging.info(f"Payment completed successfully. Ticket ID: {payment.ticket_id}, MPESA Receipt: {mpesa_receipt_number}")
-            return jsonify({'message': 'Payment received successfully'}), 200
+            return jsonify({'message': 'Payment received successfully', 'status': 'success'}), 200
         else:
             if result_code == 1032:
                 # cancelled request...
                 payment.status = 'cancelled'
                 db.session.commit()
 
-                return jsonify({'message': f'Payment cancelled: {result_desc}'}), 200
+                return jsonify({'message': f'Payment cancelled: {result_desc}', 'status': 'cancelled'}), 200
             else:
                 # Payment failed
                 payment.status = 'failed'
                 db.session.commit()
 
-                return jsonify({'message': f'Payment failed: {result_desc}'}), 400
+                return jsonify({'message': f'Payment failed: {result_desc}', 'status': 'failed'}), 400
 
     except Exception as e:
         logging.error(f"Error processing MPESA callback: {e}")
