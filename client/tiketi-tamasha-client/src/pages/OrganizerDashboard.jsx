@@ -79,6 +79,7 @@ export default function OrganizerDashboard({ activeSection }) {
 				await updateUserProfile(updatedData, token);
 				const updatedUser = await getUserProfile(user.id);
 				localStorage.setItem("user", JSON.stringify(updatedUser));
+
 				const ok_pressed = await Swal.fire({
 					title: 'Profile Updated',
 					text: `${field.charAt(0).toUpperCase() + field.slice(1)} updated successfully!`
@@ -200,66 +201,58 @@ export default function OrganizerDashboard({ activeSection }) {
 		}
 	};
 
-	if (loading) {
-		return (
-			<>
-				<LoadingPage />
-				<div className="tiketi-tamasha-dashboard">
-					<img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
-				</div>
-			</>
-		);
-	}
-
 	return (
-		<div className="tiketi-tamasha-dashboard">
-			<img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
-			<div className="tiketi-tamasha-section">
-				{activeSection === 'home' && (
-					<div className="home">
-						<h1 className='tiketi-tamasha-section-heading'>Welcome, {user?.name || "Organizer"}!</h1>
-						<p className='tiketi-tamasha-landing-explainer'>Create events, see the events you've created, and explore new experiences.</p>
-						<Button className='tiketi-tamasha-btn' onClick={() => openNewEventDialog(null)} buttonText="Create a new Event?" />
-					</div>
-				)}
-				{activeSection === 'events' && (
-					<div className="events">
-						<h2 className='tiketi-tamasha-section-heading'>Events</h2>
-						<p className='tiketi-tamasha-page-disclaimer'>Here are the events you have created. You have the option to either edit or delete them. Additionally, you can remove any events that have <b>EXPIRED</b>.</p>
-						{eventsError && <div className="error-message">{eventsError}</div>}
-						<div className="container">
-							{organizerEvents.map(event => (
-								<EventCardAdmin key={event.id} event={event} onEdit={() => openNewEventDialog(event)} onDelete={handleDeleteEvent} />
-							))}
+		<>
+			{loading && <LoadingPage />}
+			<div className="tiketi-tamasha-dashboard">
+				<img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
+				<div className="tiketi-tamasha-section">
+					{activeSection === 'home' && (
+						<div className="home">
+							<h1 className='tiketi-tamasha-section-heading'>Welcome, {user?.name || "Organizer"}!</h1>
+							<p className='tiketi-tamasha-landing-explainer'>Create events, see the events you've created, and explore new experiences.</p>
+							<Button className='tiketi-tamasha-btn' onClick={() => openNewEventDialog(null)} buttonText="Create a new Event?" />
 						</div>
-					</div>
-				)}
-				{activeSection === 'settings' && (
-					<div className="settings">
-						<h2 className='tiketi-tamasha-section-heading'>Account Settings</h2>
-						<div className="tiketi-tamasha-settings-disclaimer">
-							To apply your changes, press the <b>ENTER</b> key in the field you’re working on. For example, after entering your new username in the 'Change Your Name' field, press Enter to save it.
-						</div>
-						<div className="container">
-							<div className="container-section">
-								<div className="container-section-title">Profile Settings</div>
-								<div className="container-section-action">
-									<input type="text" name="name" className="tiketi-tamasha-input" placeholder="Change Your Name" value={name} onChange={handleNameChange} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleUpdateProfile('name', name); } }} required />
-									<input type="tel" name="phone" className="tiketi-tamasha-input" placeholder="Change Your Phone Number" value={phone} onChange={handlePhoneChange} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleUpdateProfile('phone', phone); } }} required />
-								</div>
-							</div>
-							<div className="container-section">
-								<div className="container-section-title">Administrative functions</div>
-								<div className="container-section-action">
-									<Button className="tiketi-tamasha-btn red" buttonText="Delete Account" alt="DeleteAccount" onClick={handleDeleteAccount} />
-									<Button buttonText="Logout" alt="DeleteAccount" onClick={handleLogout} />
-								</div>
+					)}
+					{activeSection === 'events' && (
+						<div className="events">
+							<h2 className='tiketi-tamasha-section-heading'>Events</h2>
+							<p className='tiketi-tamasha-page-disclaimer'>Here are the events you have created. You have the option to either edit or delete them. Additionally, you can remove any events that have <b>EXPIRED</b>.</p>
+							{eventsError && <div className="error-message">{eventsError}</div>}
+							<div className="container">
+								{organizerEvents.map(event => (
+									<EventCardAdmin key={event.id} event={event} onEdit={() => openNewEventDialog(event)} onDelete={handleDeleteEvent} />
+								))}
 							</div>
 						</div>
-					</div>
-				)}
-				{isNewEventDialogOpen && <NewEvent onClose={closeNewEventDialog} event={selectedEvent} />}
+					)}
+					{activeSection === 'settings' && (
+						<div className="settings">
+							<h2 className='tiketi-tamasha-section-heading'>Account Settings</h2>
+							<div className="tiketi-tamasha-settings-disclaimer">
+								To apply your changes, press the <b>ENTER</b> key in the field you’re working on. For example, after entering your new username in the 'Change Your Name' field, press Enter to save it.
+							</div>
+							<div className="container">
+								<div className="container-section">
+									<div className="container-section-title">Profile Settings</div>
+									<div className="container-section-action">
+										<input type="text" name="name" className="tiketi-tamasha-input" placeholder="Change Your Name" value={name} onChange={handleNameChange} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleUpdateProfile('name', name); } }} required />
+										<input type="tel" name="phone" className="tiketi-tamasha-input" placeholder="Change Your Phone Number" value={phone} onChange={handlePhoneChange} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleUpdateProfile('phone', phone); } }} required />
+									</div>
+								</div>
+								<div className="container-section">
+									<div className="container-section-title">Administrative functions</div>
+									<div className="container-section-action">
+										<Button className="tiketi-tamasha-btn red" buttonText="Delete Account" alt="DeleteAccount" onClick={handleDeleteAccount} />
+										<Button buttonText="Logout" alt="DeleteAccount" onClick={handleLogout} />
+									</div>
+								</div>
+							</div>
+						</div>
+					)}
+					{isNewEventDialogOpen && <NewEvent onClose={closeNewEventDialog} event={selectedEvent} />}
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };

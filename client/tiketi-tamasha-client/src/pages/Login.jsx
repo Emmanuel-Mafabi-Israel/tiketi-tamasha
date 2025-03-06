@@ -54,67 +54,59 @@ export default function Login() {
             setLoading(false);
         }
     };
-
-    if (loading) {
-        return (
-            <>
-                <LoadingPage />
-                <div className="tiketi-tamasha-auth-page">
-                    <img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
-                </div>
-            </>
-        );
-    }
-
+    
     return (
-        <div className="tiketi-tamasha-auth-page">
-            <img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
-            <div className="tiketi-tamasha-auth-page-center">
-                <div className="tiketi-tamasha-auth-heading">
-                    <img className="image" src={logo} alt="Tiketi Tamasha Logo" />
-                    <span className="text">Login</span>
-                </div>
-                {error && <p className="error-message">{error}</p>}
-                <form className="tiketi-tamasha-form" onSubmit={handleSubmit}>
-                    <input
-                        type="email"
-                        name="email"
-                        className="tiketi-tamasha-input"
-                        placeholder="Registered Email"
-                        onChange={handleChange}
-                        required
-                    />
-                    <div className="password-container">
+        <>
+            {loading && <LoadingPage />}
+            <div className="tiketi-tamasha-auth-page">
+                <img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
+                <div className="tiketi-tamasha-auth-page-center">
+                    <div className="tiketi-tamasha-auth-heading">
+                        <img className="image" src={logo} alt="Tiketi Tamasha Logo" />
+                        <span className="text">Login</span>
+                    </div>
+                    {error && <p className="error-message">{error}</p>}
+                    <form className="tiketi-tamasha-form" onSubmit={handleSubmit}>
                         <input
-                            type={showPassword ? "text" : "password"}
-                            name="password"
+                            type="email"
+                            name="email"
                             className="tiketi-tamasha-input"
-                            placeholder="Account Password"
+                            placeholder="Registered Email"
                             onChange={handleChange}
                             required
                         />
-                        <div className="tools">
-                            <span
-                                onClick={() => setShowPassword(!showPassword)}
-                                className="password-toggle"
-                            >
-                                {showPassword ? "Hide Password" : "Show Password"}
-                            </span>
-                            <Link to="/forgot-password">Forgot Password?</Link>
+                        <div className="password-container">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                name="password"
+                                className="tiketi-tamasha-input"
+                                placeholder="Account Password"
+                                onChange={handleChange}
+                                required
+                            />
+                            <div className="tools">
+                                <span
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="password-toggle"
+                                >
+                                    {showPassword ? "Hide Password" : "Show Password"}
+                                </span>
+                                <Link to="/forgot-password">Forgot Password?</Link>
+                            </div>
                         </div>
-                    </div>
-                    <div className="auth-footer">
-                        <Button
-                            className="tiketi-tamasha-btn auth"
-                            buttonText="Login"
-                            type="submit"
-                        />
-                        <div className="link-text" onClick={() => navigate("/register")}>
-                            Don’t have an account? Signup
+                        <div className="auth-footer">
+                            <Button
+                                className="tiketi-tamasha-btn auth"
+                                buttonText="Login"
+                                type="submit"
+                            />
+                            <div className="link-text" onClick={() => navigate("/register")}>
+                                Don’t have an account? Signup
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
+        </>
     );
 };

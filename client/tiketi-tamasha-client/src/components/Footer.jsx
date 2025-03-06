@@ -1,3 +1,12 @@
+/*
+    GLORY BE TO GOD,
+    TIKETI TAMASHA,
+
+    FOOTER ELEMENT...
+    BY ISRAEL MAFABI EMMANUEL
+*/
+
+
 import React from "react";
 import "../styles/Footer.css";
 

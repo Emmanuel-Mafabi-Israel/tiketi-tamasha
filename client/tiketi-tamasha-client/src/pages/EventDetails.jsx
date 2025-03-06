@@ -78,12 +78,9 @@ export default function EventDetails({ eventId, onClose, flag, user, onPurchaseS
         setMessage("Please login First!");
     };
 
-    if (loading) {
-        return <LoadingPage />;
-    }
-
     return (
         <div className="tiketi-tamasha-dialog-container">
+            {loading && <LoadingPage />}
             <div className="tiketi-tamasha-dialog">
                 <div className="dialog-title">
                     <img className="dialog-image" src={event?.image_url} alt={event?.title} />

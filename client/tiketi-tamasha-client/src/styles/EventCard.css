@@ -25,7 +25,11 @@
 
     .card-image {
         border-radius: 14px;
+
+        object-fit: cover;
+
         width: 50px;
+        min-width: 50px;
         height: 68px;
     }
 
@@ -41,6 +45,13 @@
         .title {
             color: var(--tiketi-tamasha-cool-white);
             font-size: 13px;
+
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            width: 100px;
+            min-width: 100px;
+            max-width: 100px;
         }
 
         .time, .location {

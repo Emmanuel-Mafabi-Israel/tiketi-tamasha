@@ -7,7 +7,6 @@
 */
 
 import Button from "./Button";
-
 import tiketi_galactic_event from '../assets/tiketi-tamasha-galactic.svg';
 
 export default function EventCardAdmin({ className = "tiketi-tamasha-event-card admin", event, onEdit, onDelete }) {

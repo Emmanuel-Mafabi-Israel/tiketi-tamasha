@@ -112,85 +112,77 @@ export default function Discover() {
         setLoading(false); //stop loading.
     };
 
-    if (loading) {
-        return (
-            <>
-                <LoadingPage />
-                <div className="tiketi-tamasha-explore-page">
-                    <img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
-                </div>
-            </>
-        );
-    }
-
     return (
-        <div className="tiketi-tamasha-explore-page">
-            <img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
-            <div className="tiketi-tamasha-section">
-                <div className="section-browse-title">Browse By Category</div>
-                <div className="section-elements">
-                    <DiscoverCard
-                        cardImage={research}
-                        cardTitle="Research"
-                        cardCount={`${categoryCounts.Research} Events`}
-                        onClick={() => navigate("/explore?q=Research")}
-                    />
-                    <DiscoverCard
-                        cardImage={conserve}
-                        cardTitle="Conserve"
-                        cardCount={`${categoryCounts.Conserve} Events`}
-                        onClick={() => navigate("/explore?q=Conserve")}
-                    />
-                    <DiscoverCard
-                        cardImage={fitness}
-                        cardTitle="Fitness"
-                        cardCount={`${categoryCounts.Fitness} Events`}
-                        onClick={() => navigate("/explore?q=Fitness")}
-                    />
-                    <DiscoverCard
-                        cardImage={wellness}
-                        cardTitle="Wellness"
-                        cardCount={`${categoryCounts.Wellness} Events`}
-                        onClick={() => navigate("/explore?q=Wellness")}
-                    />
-                    <DiscoverCard
-                        cardImage={finance}
-                        cardTitle="Finance"
-                        cardCount={`${categoryCounts.Finance} Events`}
-                        onClick={() => navigate("/explore?q=Finance")}
-                    />
-                    <DiscoverCard
-                        cardImage={music}
-                        cardTitle="Music"
-                        cardCount={`${categoryCounts.Music} Events`}
-                        onClick={() => navigate("/explore?q=Music")}
-                    />
-                </div>
-            </div>
-            <div className="tiketi-tamasha-section">
-                <div className="section-browse-title">Randomized</div>
-                <div className="section-elements">
-                    {popularEvents.map(event => (
-                        <EventCard
-                            key={event.id}
-                            cardImage={event.image_url}
-                            cardTitle={event.title}
-                            cardTime={new Date(event.start_date).toLocaleString()}
-                            cardLocation={event.location}
-                            onClick={() => handleEventClick(event)}
+        <>
+            {loading && <LoadingPage />}
+            <div className="tiketi-tamasha-explore-page">
+                <img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
+                <div className="tiketi-tamasha-section">
+                    <div className="section-browse-title">Browse By Category</div>
+                    <div className="section-elements">
+                        <DiscoverCard
+                            cardImage={research}
+                            cardTitle="Research"
+                            cardCount={`${categoryCounts.Research} Events`}
+                            onClick={() => navigate("/explore?q=Research")}
                         />
-                    ))}
+                        <DiscoverCard
+                            cardImage={conserve}
+                            cardTitle="Conserve"
+                            cardCount={`${categoryCounts.Conserve} Events`}
+                            onClick={() => navigate("/explore?q=Conserve")}
+                        />
+                        <DiscoverCard
+                            cardImage={fitness}
+                            cardTitle="Fitness"
+                            cardCount={`${categoryCounts.Fitness} Events`}
+                            onClick={() => navigate("/explore?q=Fitness")}
+                        />
+                        <DiscoverCard
+                            cardImage={wellness}
+                            cardTitle="Wellness"
+                            cardCount={`${categoryCounts.Wellness} Events`}
+                            onClick={() => navigate("/explore?q=Wellness")}
+                        />
+                        <DiscoverCard
+                            cardImage={finance}
+                            cardTitle="Finance"
+                            cardCount={`${categoryCounts.Finance} Events`}
+                            onClick={() => navigate("/explore?q=Finance")}
+                        />
+                        <DiscoverCard
+                            cardImage={music}
+                            cardTitle="Music"
+                            cardCount={`${categoryCounts.Music} Events`}
+                            onClick={() => navigate("/explore?q=Music")}
+                        />
+                    </div>
                 </div>
+                <div className="tiketi-tamasha-section">
+                    <div className="section-browse-title">Randomized</div>
+                    <div className="section-elements">
+                        {popularEvents.map(event => (
+                            <EventCard
+                                key={event.id}
+                                cardImage={event.image_url}
+                                cardTitle={event.title}
+                                cardTime={new Date(event.start_date).toLocaleString()}
+                                cardLocation={event.location}
+                                onClick={() => handleEventClick(event)}
+                            />
+                        ))}
+                    </div>
+                </div>
+                {selectedEvent && (
+                    <EventDetails
+                        eventId={selectedEvent.id}
+                        onClose={handleCloseDialog}
+                        flag={user ? "signed" : "unsigned"}
+                        user={user ? user : null}
+                        onPurchaseSuccess={handlePurchaseSuccess} // Pass the callback
+                    />
+                )}
             </div>
-            {selectedEvent && (
-                <EventDetails
-                    eventId={selectedEvent.id}
-                    onClose={handleCloseDialog}
-                    flag={user ? "signed" : "unsigned"}
-                    user={user ? user : null}
-                    onPurchaseSuccess={handlePurchaseSuccess} // Pass the callback
-                />
-            )}
-        </div>
+        </>
     );
 }

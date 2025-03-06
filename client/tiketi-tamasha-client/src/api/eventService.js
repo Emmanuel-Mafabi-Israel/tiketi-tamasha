@@ -1,4 +1,3 @@
-// eventService.js
 import axios from "axios";
 import CONFIG from "../config";
 
@@ -28,7 +27,6 @@ export const getEventDetails = async (eventId) => {
 export const createEvent = async (eventData) => {
 	try {
 		const token = localStorage.getItem('access_token'); // Retrieve the token from local storage
-
 		const response = await axios.post(API_URL, eventData, {
 			headers: {
 				Authorization: `Bearer ${token}` // Add the Authorization header

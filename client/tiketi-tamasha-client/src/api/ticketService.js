@@ -8,7 +8,6 @@ const ticketService = {
     purchaseTicket: async (data) => {
         const token = localStorage.getItem('access_token');
         console.log(token);
-
         try {
             const response = await axios.post(`${API_URL}`, data, {
                 headers: {
@@ -16,8 +15,7 @@ const ticketService = {
                     "Content-Type": "application/json"
                 }
             });
-
-            console.log(response.data)
+            console.log(response.data); // we'll need a fix...
             return response.data
         } catch(error) {
             console.error("Error purchasing ticket:", error.response?.data || error.message);

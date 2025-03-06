@@ -15,7 +15,7 @@ export const loginUser = async (credentials) => {
 
 export const fetchUserDetails = async (token) => {
 	try {
-		const response = await axios.get(`${API_URL}user`, {
+		const response = await axios.get(`${API_URL}/user`, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},

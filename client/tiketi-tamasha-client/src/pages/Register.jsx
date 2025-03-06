@@ -131,105 +131,97 @@ export default function Register() {
         return true;
     };
 
-    if (loading) {
-        return (
-            <>
-                <LoadingPage />
-                <div className="tiketi-tamasha-auth-page">
-                    <img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
-                </div>
-            </>
-        );
-    }
-
     return (
-        <div className="tiketi-tamasha-auth-page">
-            <img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
-            <div className="tiketi-tamasha-auth-page-center">
-                <div className="tiketi-tamasha-auth-heading">
-                    <img className="image" src={logo} alt="Tiketi Tamasha Logo" />
-                    <span className="text">Register</span>
+        <>
+            {loading && <LoadingPage />}
+            <div className="tiketi-tamasha-auth-page">
+                <img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
+                <div className="tiketi-tamasha-auth-page-center">
+                    <div className="tiketi-tamasha-auth-heading">
+                        <img className="image" src={logo} alt="Tiketi Tamasha Logo" />
+                        <span className="text">Register</span>
+                    </div>
+                    <form className="tiketi-tamasha-form">
+                        {currentPage === 1 && (
+                            <>
+                                <input
+                                    type="text"
+                                    name="fullName"
+                                    className="tiketi-tamasha-input"
+                                    placeholder="Full Name"
+                                    value={formData.fullName}
+                                    onChange={handleChange}
+                                    required
+                                />
+                                <input
+                                    type="email"
+                                    name="email"
+                                    className="tiketi-tamasha-input"
+                                    placeholder="Email Address"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    required
+                                />
+                                <input
+                                    type="tel"
+                                    name="phone"
+                                    className="tiketi-tamasha-input"
+                                    placeholder="Phone Number"
+                                    value={formData.phone}
+                                    onChange={handleChange}
+                                    required
+                                />
+                                <div className="auth-footer register">
+                                    <Button
+                                        className="tiketi-tamasha-btn auth"
+                                        buttonText="Continue"
+                                        onClick={handleNextPage}
+                                    />
+                                </div>
+                            </>
+                        )}
+                        {currentPage === 2 && (
+                            <>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    className="tiketi-tamasha-input"
+                                    placeholder="Password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    required
+                                />
+                                <input
+                                    type="password"
+                                    name="confirmPassword"
+                                    className="tiketi-tamasha-input"
+                                    placeholder="Confirm Password"
+                                    value={formData.confirmPassword}
+                                    onChange={handleChange}
+                                    required
+                                />
+                                <div className="auth-footer register extra">
+                                    <Button
+                                        className="tiketi-tamasha-btn auth"
+                                        buttonText="Register as Customer"
+                                        onClick={(e) => handleSubmit(e, "customer")}
+                                    />
+                                    <Button
+                                        className="tiketi-tamasha-btn auth"
+                                        buttonText="Register as Organizer"
+                                        onClick={(e) => handleSubmit(e, "organizer")}
+                                    />
+                                    <Button
+                                        className="tiketi-tamasha-btn auth"
+                                        buttonText="Previous"
+                                        onClick={handlePreviousPage}
+                                    />
+                                </div>
+                            </>
+                        )}
+                    </form>
                 </div>
-                <form className="tiketi-tamasha-form">
-                    {currentPage === 1 && (
-                        <>
-                            <input
-                                type="text"
-                                name="fullName"
-                                className="tiketi-tamasha-input"
-                                placeholder="Full Name"
-                                value={formData.fullName}
-                                onChange={handleChange}
-                                required
-                            />
-                            <input
-                                type="email"
-                                name="email"
-                                className="tiketi-tamasha-input"
-                                placeholder="Email Address"
-                                value={formData.email}
-                                onChange={handleChange}
-                                required
-                            />
-                            <input
-                                type="tel"
-                                name="phone"
-                                className="tiketi-tamasha-input"
-                                placeholder="Phone Number"
-                                value={formData.phone}
-                                onChange={handleChange}
-                                required
-                            />
-                            <div className="auth-footer register">
-                                <Button
-                                    className="tiketi-tamasha-btn auth"
-                                    buttonText="Continue"
-                                    onClick={handleNextPage}
-                                />
-                            </div>
-                        </>
-                    )}
-                    {currentPage === 2 && (
-                        <>
-                            <input
-                                type="password"
-                                name="password"
-                                className="tiketi-tamasha-input"
-                                placeholder="Password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                required
-                            />
-                            <input
-                                type="password"
-                                name="confirmPassword"
-                                className="tiketi-tamasha-input"
-                                placeholder="Confirm Password"
-                                value={formData.confirmPassword}
-                                onChange={handleChange}
-                                required
-                            />
-                            <div className="auth-footer register extra">
-                                <Button
-                                    className="tiketi-tamasha-btn auth"
-                                    buttonText="Register as Customer"
-                                    onClick={(e) => handleSubmit(e, "customer")}
-                                />
-                                <Button
-                                    className="tiketi-tamasha-btn auth"
-                                    buttonText="Register as Organizer"
-                                    onClick={(e) => handleSubmit(e, "organizer")}
-                                />
-                                <Button
-                                    className="tiketi-tamasha-btn auth"
-                                    buttonText="Previous"
-                                    onClick={handlePreviousPage}
-                                />
-                            </div>
-                        </>
-                    )}
-                </form>
             </div>
-        </div>
+        </>
     );
 };

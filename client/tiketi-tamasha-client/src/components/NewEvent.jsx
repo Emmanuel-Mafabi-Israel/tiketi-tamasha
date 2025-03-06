@@ -11,10 +11,13 @@ import "../styles/NewEvent.css";
 import uploadIcon from '../assets/tiketi-tamasha-upload.svg';
 import Button from './Button';
 import { createEvent, updateEvent } from "../api/eventService";
-import CONFIG from "../config"; // Import Cloudinary config
+import CONFIG from "../config";
+import LoadingPage from "./LoadingPage";
 
-export default function NewEvent({ onClose, event }) { // event prop!
-    const [formData, setFormData] = useState({
+import Swal from "sweetalert2";
+
+export default function NewEvent({ onClose, event }) {
+    const initialFormData = {
         title: "",
         description: "",
         location: "",
@@ -22,17 +25,17 @@ export default function NewEvent({ onClose, event }) { // event prop!
         tags: "",
         start_date: "",
         end_date: "",
-        image_url: "",  // This will store the Cloudinary URL
+        image_url: "",
         earlyBirdPrice: "",
         vipPrice: "",
         regularPrice: "",
         total_tickets: "",
-    });
+    };
 
+    const [formData, setFormData] = useState(initialFormData);
     const [selectedImage, setSelectedImage] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    // useEffect to Initialize Form State with Event Data (if editing)
     useEffect(() => {
         if (event) {
             setFormData({
@@ -49,16 +52,13 @@ export default function NewEvent({ onClose, event }) { // event prop!
                 regularPrice: event.ticket_tiers?.["Regular"]?.price || "",
                 total_tickets: event.total_tickets || "",
             });
-            setSelectedImage(event.image_url || null); // Set the selected image if available
+            setSelectedImage(event.image_url || null);
         }
     }, [event]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value,
-        }));
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
     const handleImageUpload = async (e) => {
@@ -67,26 +67,24 @@ export default function NewEvent({ onClose, event }) { // event prop!
             const reader = new FileReader();
             reader.onloadend = async () => {
                 setSelectedImage(reader.result);
-                setLoading(true); // Start loading
-
+                setLoading(true);
                 try {
                     const cloudinaryImageUrl = await uploadImageToCloudinary(file);
-                    setFormData(prev => ({
-                        ...prev,
-                        image_url: cloudinaryImageUrl,
-                    }));
+                    setFormData(prev => ({ ...prev, image_url: cloudinaryImageUrl }));
                 } catch (error) {
                     console.error("Cloudinary upload error:", error);
-                    alert("Failed to upload image. Please try again.");
+                    Swal.fire({
+                        title: 'Cloudinary Upload',
+                        text: 'Failed to upload image. Please try again.!'
+                    });
                 } finally {
-                    setLoading(false); // Stop loading
+                    setLoading(false);
                 }
             };
             reader.readAsDataURL(file);
         }
     };
 
-    // Async function to upload the image to Cloudinary
     const uploadImageToCloudinary = async (imageFile) => {
         const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${CONFIG.CLOUDINARY.CLOUD_NAME}/image/upload`;
         const formDataForCloudinary = new FormData();
@@ -94,77 +92,76 @@ export default function NewEvent({ onClose, event }) { // event prop!
         formDataForCloudinary.append('upload_preset', CONFIG.CLOUDINARY.UPLOAD_PRESET);
 
         try {
-            const response = await fetch(cloudinaryUrl, {
-                method: 'POST',
-                body: formDataForCloudinary,
-            });
-
+            const response = await fetch(cloudinaryUrl, { method: 'POST', body: formDataForCloudinary });
             if (!response.ok) {
                 const errorText = await response.text();
                 console.error("Cloudinary error response:", errorText);
                 throw new Error(`Network response was not ok: ${response.statusText}`);
             }
-
             const data = await response.json();
             return data.secure_url;
         } catch (error) {
             console.error("Cloudinary upload error:", error);
-            throw error; // Re-throw to be caught by handleSubmit
+            throw error;
         }
+    };
+
+    const resetForm = () => {
+        setFormData(initialFormData);
+        setSelectedImage(null);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Construct the ticket_tiers object from the individual price fields
         const ticketTiers = {
             "Early Bird": { price: formData.earlyBirdPrice },
             "VIP": { price: formData.vipPrice },
             "Regular": { price: formData.regularPrice },
         };
-
         try {
             setLoading(true);
-            const finalFormData = {
-                ...formData,
-                ticket_tiers: ticketTiers,
-            };
-
+            const finalFormData = { ...formData, ticket_tiers: ticketTiers };
             let response;
             if (event) {
-                // Update existing event
                 response = await updateEvent(event.id, finalFormData);
-                console.log(formData);
-                console.log(finalFormData);
-                console.log(`ticket tiers: ${ticketTiers}`);
-                alert("Event updated successfully!");
+                const ok_pressed = await Swal.fire({
+                    title: 'Event Update',
+                    text: 'Event updated successfully!'
+                });
+                
+                if (ok_pressed.isConfirmed) {
+                    console.log('Event created/updated successfully:', response);
+                    // now we reload the page... ensuring the changes have been effected
+                    window.location.reload()
+                    resetForm();
+                    onClose();
+                }
             } else {
-                // Create a new event
                 response = await createEvent(finalFormData);
-                alert("Event created successfully!");
+                const ok_pressed = await Swal.fire({
+                    title: 'Event Creation',
+                    text: 'Event created successfully!'
+                });
+
+                if (ok_pressed.isConfirmed) {
+                    console.log('Event created/updated successfully:', response);
+                    // now we reload the page... ensuring the changes have been effected
+                    window.location.reload()
+                    resetForm();
+                    onClose();
+                }
             }
             console.log('Event created/updated successfully:', response);
-            // Reset form
-            setFormData({
-                title: "",
-                description: "",
-                location: "",
-                category: "",
-                tags: "",
-                start_date: "",
-                end_date: "",
-                image_url: "",
-                earlyBirdPrice: "",
-                vipPrice: "",
-                regularPrice: "",
-                total_tickets: "",
-            });
-            setSelectedImage(null);
-            onClose(); // Close the dialog after successful creation
-            window.location.reload(); // Refresh the page
+            // now we reload the page... ensuring the changes have been effected
+            window.location.reload()
+            resetForm();
+            onClose();
         } catch (error) {
+            Swal.fire({
+                title: 'Event Manipulation',
+                text: 'An error occurred while creating/updating the event. Please try again.!'
+            });
             console.error("Error creating/updating event:", error.message);
-            alert("An error occurred while creating/updating the event. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -172,8 +169,8 @@ export default function NewEvent({ onClose, event }) { // event prop!
 
     return (
         <>
-            {loading}
             <div className="tiketi-tamasha-dialog-container">
+                {loading && <LoadingPage />}
                 <form className="tiketi-tamasha-dialog new-event" onSubmit={handleSubmit}>
                     <div className="image-section">
                         <label htmlFor="image-upload" className={selectedImage ? 'custom-uploaded' : 'custom-upload'}>
@@ -312,20 +309,12 @@ export default function NewEvent({ onClose, event }) { // event prop!
                             </div>
                         </div>
                         <div className="buttons">
-                            <Button
-                                className="tiketi-tamasha-btn auth"
-                                buttonText={event ? "Update Event" : "Create Event"} // Update button text
-                                type="submit"
-                            />
-                            <Button
-                                className="tiketi-tamasha-btn auth"
-                                buttonText="Close"
-                                onClick={onClose}
-                            />
+                            <Button className="tiketi-tamasha-btn auth" buttonText={event ? "Update Event" : "Create Event"} type="submit" />
+                            <Button className="tiketi-tamasha-btn auth" buttonText="Close" onClick={onClose} />
                         </div>
                     </div>
                 </form>
             </div>
         </>
     );
-};
+}

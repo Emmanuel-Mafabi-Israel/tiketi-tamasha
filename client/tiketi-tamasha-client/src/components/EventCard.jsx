@@ -1,9 +1,17 @@
+/*
+    GLORY BE TO GOD,
+    TIKETI TAMASHA,
+
+    EVENT CARD - ALL USERS
+    BY ISRAEL MAFABI EMMANUEL
+*/
+
 import React from "react";
 import "../styles/EventCard.css";
 
 export default function EventCard({className = "tiketi-tamasha-event-card", cardImage, cardTitle, cardTime, cardLocation, onClick}) {
 	// const navigate = useNavigate()
-    console.log(cardImage);
+    // console.log(cardImage);
     return (
         <div className={className} onClick={onClick}>
             <img className="card-image" src={cardImage} alt="TiketiTamashaCard" />
