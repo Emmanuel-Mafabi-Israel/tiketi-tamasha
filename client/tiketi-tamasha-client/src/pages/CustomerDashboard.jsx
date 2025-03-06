@@ -6,7 +6,7 @@
     BY ISRAEL MAFABI EMMANUEL
 */
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 //import { useLoading } from "../context/LoadingContext"; // REMOVE LoadingContext import
@@ -20,6 +20,9 @@ import doodle_background from '../assets/tamasha_doodle_background.svg';
 import tiketi_event from '../assets/tiketi-tamasha-event.svg';
 import "../styles/Dashboard.css";
 import { updateUserProfile, getUserProfile, deleteUserAccount } from "../api/userService";
+import { queryPaymentStatus } from "../api/paymentService";
+
+import Swal from "sweetalert2";
 
 export default function CustomerDashboard({ activeSection }) {
     const { user, payments, tickets, myEvents, logout } = useContext(AuthContext);
@@ -27,6 +30,12 @@ export default function CustomerDashboard({ activeSection }) {
     const [name, setName] = useState(user?.name || "");
     const [phone, setPhone] = useState(user?.phone_number || "");
     const navigate = useNavigate();
+
+    const { refreshUserData } = useContext(AuthContext);
+
+    useEffect(() => {
+        refreshUserData();
+    }, [refreshUserData]);
 
     const handleLogout = () => {
         setLoading(true); // Trigger the spinner
@@ -46,9 +55,14 @@ export default function CustomerDashboard({ activeSection }) {
     };
 
     const handleUpdateProfile = async (field, value) => {
-        const shouldUpdate = window.confirm(`Are you sure you want to update your ${field} to ${value}?`);
-
-        if (shouldUpdate) {
+        const shouldUpdate = await Swal.fire({
+            title: 'Confirm Update',
+            text: `Are you sure you want to update your ${field} to ${value}?`,
+            showCancelButton: true,
+            confirmButtonText: 'Yes, update!',
+            cancelButtonText: 'No, cancel'
+        });
+        if (shouldUpdate.isConfirmed) {
             setLoading(true); // Trigger spinner during profile update
             try {
                 const updatedData = {};
@@ -57,19 +71,29 @@ export default function CustomerDashboard({ activeSection }) {
                 } else if (field === "phone") {
                     updatedData.phone_number = value;
                 }
-
                 const token = localStorage.getItem('access_token'); // Retrieve token
                 await updateUserProfile(updatedData, token); // Update user profile
-
                 // After successful update, fetch and store updated user profile
                 const updatedUser = await getUserProfile(user.id);
                 localStorage.setItem("user", JSON.stringify(updatedUser));
-
-                alert(`${field} updated successfully!`);
-                window.location.reload(); // Refresh page to reflect changes
+                const ok_pressed = await Swal.fire({
+                    title: 'Profile Updated',
+                    text: `${field.charAt(0).toUpperCase() + field.slice(1)} updated successfully!`
+                });
+                if (ok_pressed.isConfirmed) {
+                    window.location.reload();
+                }
+                window.location.reload();
             } catch (error) {
+                const ok_pressed = await Swal.fire({
+                    title: 'Update Failed!',
+                    text: `Failed to update ${field}, please try again.`
+                });
+                if (ok_pressed.isConfirmed) {
+                    window.location.reload();
+                }
+                window.location.reload();
                 console.error("Failed to update profile:", error);
-                alert(`Failed to update ${field}. Please try again.`);
             } finally {
                 setLoading(false); // Stop spinner
             }
@@ -77,24 +101,69 @@ export default function CustomerDashboard({ activeSection }) {
     };
 
     const handleDeleteAccount = async () => {
-        const shouldDelete = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
-
-        if (shouldDelete) {
+        const shouldDelete = await Swal.fire({
+            title: 'Confirm Delete',
+            text: 'Are you sure you want to delete your account? This action cannot be undone.',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete!',
+            cancelButtonText: 'No, cancel'
+        });
+        if (shouldDelete.isConfirmed) {
             setLoading(true); // Trigger spinner for account deletion
             try {
                 const token = localStorage.getItem('access_token');
                 await deleteUserAccount(token);
-                alert("Account deleted successfully.");
-                logout(); // Log the user out
-                navigate("/login"); // Redirect to login page
+                const ok_pressed = await Swal.fire({
+                    title: 'Delete Account',
+                    text: 'Account deleted successfully.'
+                });
+                if (ok_pressed.isConfirmed) {
+                    logout();
+                    navigate("/login");
+                }
+                logout();
+                navigate("/login");
             } catch (error) {
+                const ok_pressed = await Swal.fire({
+                    title: 'Delete Account',
+                    text: 'Failed to delete account, Please try again.'
+                });
+                if (ok_pressed.isConfirmed) {
+                    window.location.reload();
+                }
+                window.location.reload();
                 console.error("Failed to delete account:", error);
-                alert("Failed to delete account. Please try again.");
             } finally {
                 setLoading(false); // Stop spinner
             }
         }
     };
+
+    const handleQueryPaymentStatus = async (checkoutRequestId, token) => {
+        try {
+            setLoading(true);
+            const response = await queryPaymentStatus(checkoutRequestId, token);
+            return response;
+        } catch (error) {
+            console.error("Error querying payment status:", error);
+            throw error;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // for interactivity sake
+    const categories = ["Conserve", "Finance", "Fitness", "Music", "Research", "Wellness"]
+    const getRandomCategory = () => {
+        const randomIndex = Math.floor(Math.random() * categories.length);
+        // like each and every time we do a click a random category is selected...
+        return categories[randomIndex];
+    };
+
+    const handleSearchClick = () => {
+        const randomCategory = getRandomCategory();
+        navigate(`/explore?q=${randomCategory}`);
+    }
 
     if (loading) {
         return (
@@ -115,21 +184,24 @@ export default function CustomerDashboard({ activeSection }) {
                     <div className="home">
                         <h1 className="tiketi-tamasha-section-heading">Welcome, {user?.name || "Guest"}!</h1>
                         <p className="tiketi-tamasha-landing-explainer">Discover events, see your tickets, and explore new experiences.</p>
-                        <button className="tiketi-tamasha-btn" onClick={() => navigate("/register")}>Search for Events?</button>
+                        <button className="tiketi-tamasha-btn" onClick={handleSearchClick}>Search for Events?</button>
                     </div>
                 )}
                 {activeSection === 'tickets' && (
                     <div className="tickets">
                         <h2 className="tiketi-tamasha-section-heading">Tickets</h2>
                         <div className="container">
-                            {tickets.map(ticket => (
+                            {tickets.length > 0 ? (
+                                tickets.map(ticket => (
                                 <TicketCard
                                     key={ticket.id}
                                     ticketTitle={ticket.event_title}
                                     ticketType={ticket.ticket_type}
                                     ticketTime={ticket.purchase_date}
                                 />
-                            ))}
+                            ))) : (
+                                <p className="results-empty">You have no Tickets</p>
+                            )}
                         </div>
                     </div>
                 )}
@@ -137,15 +209,20 @@ export default function CustomerDashboard({ activeSection }) {
                     <div className="upcoming">
                         <h2 className="tiketi-tamasha-section-heading">My Events</h2>
                         <div className="container">
-                            {myEvents.map(event => (
-                                <TicketCard
-                                    key={event.id}
-                                    card_image={tiketi_event}
-                                    ticketTitle={event.title}
-                                    ticketType={event.start_date}
-                                    ticketTime={event.location}
-                                />
-                            ))}
+                            {myEvents.length > 0 ? (
+                                myEvents.map(event => (
+                                    <TicketCard
+                                        key={`${user?.id}-${event.id}`}
+                                        card_image={tiketi_event}
+                                        ticketTitle={event.title}
+                                        ticketType={event.start_date}
+                                        ticketTime={event.location}
+                                        {...console.log(event)}
+                                    />
+                                ))
+                            ) : (
+                                <p className="results-empty">You have no Events</p>
+                            )}
                         </div>
                     </div>
                 )}
@@ -153,7 +230,7 @@ export default function CustomerDashboard({ activeSection }) {
                     <div className="payments">
                         <h2 className="tiketi-tamasha-section-heading">Payments</h2>
                         <div className="container">
-                            {payments.map(payment => (
+                            {payments.length > 0 ? (payments.map(payment => (
                                 <PaymentCard
                                     key={payment.id}
                                     paymentTitle={payment.event_title}
@@ -162,8 +239,13 @@ export default function CustomerDashboard({ activeSection }) {
                                     transactionID={payment.transaction_id}
                                     paymentTime={payment.payment_date}
                                     amount={payment.amount}
+                                    checkoutRequestId={payment.transaction_id} // Pass checkout_request_id -> same as transaction ID
+                                    token={localStorage.getItem("access_token")} // Pass token
+                                    onClick={handleQueryPaymentStatus} // Pass handler
                                 />
-                            ))}
+                            ))) : (
+                                <p className="results-empty">You haven't made any payments yet</p>
+                            )}
                         </div>
                     </div>
                 )}

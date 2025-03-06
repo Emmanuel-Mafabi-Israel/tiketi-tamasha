@@ -25,9 +25,8 @@ import music from '../assets/tiketi-tamasha-doodle-microphone.svg';
 import LoadingPage from "../components/LoadingPage";
 
 export default function Discover() {
-    const { user } = useContext(AuthContext);
-    //const { loading, setLoading } = useLoading(); // Remove useLoading
-    const [loading, setLoading] = useState(true); // Local loading state
+    const { user, refreshUserData } = useContext(AuthContext); // Get refreshUserData from context
+    const [loading, setLoading] = useState(true);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [categoryCounts, setCategoryCounts] = useState({
         Research: 0,
@@ -73,23 +72,20 @@ export default function Discover() {
         };
 
         const fetchData = async () => {
-            setLoading(true); // Start loading
+            setLoading(true);
             try {
                 await Promise.all([fetchCategoryCounts(), fetchPopularEvents()]);
-                // Introduce the delay *before* setting loading to false
                 setTimeout(() => {
-                    setLoading(false); // Stop loading
+                    setLoading(false);
                 }, 1000);
             } catch (error) {
                 console.error("Error fetching data:", error);
-                // Handle the error appropriately (e.g., show an error message)
-                setLoading(false); // Ensure loading is stopped even on error
-
+                setLoading(false);
             }
         };
 
         fetchData();
-    }, []); // Remove setLoading from dependency array
+    }, []);
 
     useEffect(() => {
         const savedEvent = localStorage.getItem('selectedEvent');
@@ -106,6 +102,14 @@ export default function Discover() {
     const handleCloseDialog = () => {
         setSelectedEvent(null);
         localStorage.removeItem('selectedEvent');
+    };
+
+    const handlePurchaseSuccess = async () => {
+        handleCloseDialog();
+        setLoading(true); //start loading.
+        await new Promise((resolve) => setTimeout(resolve, 2000)); // 2-second delay - just to allow Safaricom to respond.
+        await refreshUserData(); // Refresh user data after the delay.
+        setLoading(false); //stop loading.
     };
 
     if (loading) {
@@ -184,8 +188,9 @@ export default function Discover() {
                     onClose={handleCloseDialog}
                     flag={user ? "signed" : "unsigned"}
                     user={user ? user : null}
+                    onPurchaseSuccess={handlePurchaseSuccess} // Pass the callback
                 />
             )}
         </div>
     );
-};
+}

@@ -272,6 +272,10 @@
                             padding-left: 14px;
                             padding-right: 14px;
 
+                            /* white-space: nowrap; */
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+
                             width: 300px;
                             height: inherit;
                             min-height: 45px;

@@ -9,8 +9,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-//import { useLoading } from "../context/LoadingContext";  // Remove the hook!
-
 import Button from "../components/Button";
 import LoadingPage from "../components/LoadingPage";
 import "../styles/Auth.css";
@@ -43,12 +41,10 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (!formData.email || !formData.password) {
             setError("All fields are required!");
             return;
         }
-
         try {
             setLoading(true);
             await login(formData, navigate);
@@ -63,9 +59,9 @@ export default function Login() {
         return (
             <>
                 <LoadingPage />
-                {/* <div className="tiketi-tamasha-auth-page">
+                <div className="tiketi-tamasha-auth-page">
                     <img className='tiketi-tamasha-doodle-background' src={doodle_background} alt="tamasha-doodle" />
-                </div> */}
+                </div>
             </>
         );
     }

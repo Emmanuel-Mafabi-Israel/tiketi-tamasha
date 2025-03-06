@@ -6,7 +6,7 @@
     BY ISRAEL MAFABI EMMANUEL
 */
 
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "../styles/Auth.css";
@@ -18,6 +18,8 @@ import "../styles/Auth.css";
 import doodle_background from '../assets/tamasha_doodle_background.svg';
 import logo from "../assets/logo.svg/tiketi-tamasha-icon-high-res-white.svg";
 
+import Swal from 'sweetalert2';
+
 export default function Register() {
     const { register } = useContext(AuthContext);
     const [formData, setFormData] = useState({
@@ -28,10 +30,19 @@ export default function Register() {
         confirmPassword: "",
     });
     const [currentPage, setCurrentPage] = useState(1);
-    const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const [showAlert, setShowAlert] = useState(false); // New state for the alert
     const navigate = useNavigate();
+    const [validationError, setValidationError] = useState(null);
+
+    useEffect(() => {
+        if (validationError) {
+            Swal.fire({
+                title: validationError.type === 'error' ? 'Error' : 'Warning',
+                text: validationError.message,
+            });
+            setValidationError(null); // Clear the error after displaying the message
+        }
+    }, [validationError]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,6 +50,9 @@ export default function Register() {
 
     const handleNextPage = (e) => {
         e.preventDefault();
+        if (!validatePageOne()) {
+            return;
+        }
         setCurrentPage(currentPage + 1);
     };
 
@@ -51,10 +65,12 @@ export default function Register() {
         e.preventDefault();
 
         if (formData.password !== formData.confirmPassword) {
-            setError("Passwords do not match!");
+            Swal.fire({
+                title: 'Error',
+                text: "Passwords do not match!",
+            });
             return;
         }
-
         const data = {
             email: formData.email,
             password: formData.password,
@@ -62,15 +78,57 @@ export default function Register() {
             role: role,
             name: formData.fullName
         };
-
         try {
             setLoading(true);
             await register(data, navigate);
-            setShowAlert(true); // Show the alert on successful registration
+            Swal.fire({
+                title: 'Registration Success',
+                text: "Registration successful! Welcome to TiketiTamasha!",
+                timer: 2000,
+                showConfirmButton: false
+            });
         } catch (err) {
-            setError("Registration failed. Please try again.");
+            Swal.fire({
+                title: 'Error',
+                text: "Error: " + err,
+            });
             setLoading(false);
         }
+    };
+
+    const validateEmail = (email) => {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    };
+
+    const validatePhoneNumber = (phone) => {
+        const phoneRegex1 = /^2547\d{8}$/; // 2547... format
+        const phoneRegex2 = /^07\d{8}$/; // 07... format
+        return phoneRegex1.test(phone) || phoneRegex2.test(phone);
+    };
+
+    const validatePageOne = () => {
+        if (!formData.fullName) {
+            setValidationError({ type: 'warning', message: 'Full Name is required!' });
+            return false;
+        }
+        if (!formData.email) {
+            setValidationError({ type: 'warning', message: 'Email is required!' });
+            return false;
+        }
+        if (!validateEmail(formData.email)) {
+            setValidationError({ type: 'error', message: 'Invalid email format!' });
+            return false;
+        }
+        if (!formData.phone) {
+            setValidationError({ type: 'warning', message: 'Phone number is required!' });
+            return false;
+        }
+        if (!validatePhoneNumber(formData.phone)) {
+            setValidationError({ type: 'warning', message: 'Invalid phone number format. Must be 2547... or 07...!' });
+            return false;
+        }
+        return true;
     };
 
     if (loading) {
@@ -92,12 +150,6 @@ export default function Register() {
                     <img className="image" src={logo} alt="Tiketi Tamasha Logo" />
                     <span className="text">Register</span>
                 </div>
-                {error && <p className="error-message">{error}</p>}
-                {showAlert && (
-                    <div className="success-message">
-                        Registration successful! You are being redirected...
-                    </div>
-                )}
                 <form className="tiketi-tamasha-form">
                     {currentPage === 1 && (
                         <>
@@ -137,7 +189,6 @@ export default function Register() {
                             </div>
                         </>
                     )}
-
                     {currentPage === 2 && (
                         <>
                             <input

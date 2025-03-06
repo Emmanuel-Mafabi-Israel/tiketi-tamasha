@@ -7,19 +7,20 @@ BY ISRAEL MAFABI EMMANUEL
 */
 
 import React, { useState, useEffect } from "react";
-import { getEventDetails } from "../api/eventService"; // Importing the function to get event details
-import ticketService from "../api/ticketService"; // Importing the ticket service
+import { getEventDetails } from "../api/eventService";
+import ticketService from "../api/ticketService";
 import "../styles/EventDetails.css";
 import "../styles/Button.css";
 import Button from '../components/Button';
 import locationIcon from '../assets/tiketi-tamasha-gps.svg';
 import LoadingPage from "../components/LoadingPage";
+import Swal from "sweetalert2";
 
-export default function EventDetails({ eventId, onClose, flag, user }) {
+export default function EventDetails({ eventId, onClose, flag, user, onPurchaseSuccess }) { // Receive onPurchaseSuccess
     const [event, setEvent] = useState(null);
-    const [loading, setLoading] = useState(true); // Add loading state and set it to true initially
+    const [loading, setLoading] = useState(true);
     const [selectedTier, setSelectedTier] = useState(null);
-    const [message, setMessage] = useState(null)
+    const [message, setMessage] = useState(null);
 
     useEffect(() => {
         const fetchEventDetails = async () => {
@@ -29,7 +30,7 @@ export default function EventDetails({ eventId, onClose, flag, user }) {
             } catch (error) {
                 console.error("Failed to fetch event details", error);
             } finally {
-                setTimeout(() => setLoading(false), 1000); // Delay of 1 second
+                setTimeout(() => setLoading(false), 1000);
             }
         };
 
@@ -41,22 +42,33 @@ export default function EventDetails({ eventId, onClose, flag, user }) {
         if (flag === "unsigned") {
             setSelectedTier(tier);
         } else {
-            // Handle tier selection for signed-in users
             try {
-                // let's construct the data required...
                 const data = {
                     event_id: eventId,
                     ticket_type: tier,
                     phone_number: user.phone_number,
-                    amount: amount
-                }
-
-                console.log(data);
+                    amount: amount,
+                };
+                // console.log(data); -> for debugging purposes...
                 await ticketService.purchaseTicket(data);
-                alert("STK Push Sent, Please check your Phone!");
+                const ok_pressed = await Swal.fire({
+                    title: 'STK Push Sent',
+                    text: 'Please do check your Phone!'
+                });
+                if (ok_pressed.isConfirmed) {
+                    if (onPurchaseSuccess) { // Call the callback on successful purchase
+                        onPurchaseSuccess();
+                    }
+                }
+                if (onPurchaseSuccess) { // Call the callback on successful purchase
+                    onPurchaseSuccess();
+                }
             } catch (error) {
+                Swal.fire({
+                    title: 'STK Push Sent Failed',
+                    text: 'Failed to send STK Push, Please try again later.'
+                });
                 console.error("Failed to send STK Push", error);
-                alert("Failed to send STK Push. Please try again.");
             }
         }
     };
@@ -64,7 +76,7 @@ export default function EventDetails({ eventId, onClose, flag, user }) {
     const handleUnsignedUser = (tier) => {
         setSelectedTier(tier);
         setMessage("Please login First!");
-    }
+    };
 
     if (loading) {
         return <LoadingPage />;
@@ -99,7 +111,7 @@ export default function EventDetails({ eventId, onClose, flag, user }) {
                         <div className="title">Select a tier below to enroll</div>
                         <div className="tiers">
                             {event && Object.entries(event.ticket_tiers).map(([tier, { price }]) => {
-                                const numericPrice = parseFloat(price); // Convert price to a number
+                                const numericPrice = parseFloat(price);
                                 return (
                                     <div key={tier} className="tier" onClick={flag === "signed" ? () => handleTierClick(tier, numericPrice) : () => handleUnsignedUser(tier)}>
                                         <div className="tier-name">{tier}</div>
@@ -110,22 +122,23 @@ export default function EventDetails({ eventId, onClose, flag, user }) {
                                                 ) : (
                                                     <><div>click to purchase</div></>
                                                 )}
-                                        </div>
-                                    )}
-                                    <div className="tier-price">Ksh{numericPrice.toFixed(2)}</div>
-                                </div>
-                            );
-                        })}
+                                            </div>
+                                        )}
+                                        <div className="tier-price">Ksh{numericPrice.toFixed(2)}</div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                    <div className="dialog-about">
+                        <div className="title">About Event</div>
+                        <div className="about">{event?.description}</div>
                     </div>
                 </div>
-                <div className="dialog-about">
-                    <div className="title">About Event</div>
-                    <div className="about">{event?.description}</div>
+                <div className="dialog-btns">
+                    <Button className="tiketi-tamasha-btn" buttonText="Close" onClick={onClose} />
                 </div>
             </div>
-            <div className="dialog-btns">
-                <Button className="tiketi-tamasha-btn" buttonText="Close" onClick={onClose} />
-            </div>
         </div>
-    </div>
-)};
+    );
+};

@@ -151,8 +151,21 @@
 				padding: 14px;
 				overflow-y: auto;
 
+				width: inherit;
 				height: 100%;
 				/* Adjusted */
+
+				.results-empty {
+					color: var(--tiketi-tamasha-cool-white);
+					font-size: 13px;
+
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					width: inherit;
+					height: inherit;
+				}
 			}
 		}
 
@@ -191,8 +204,21 @@
 				padding: 14px;
 				overflow-y: auto;
 
+				width: inherit;
 				height: 100%;
 				/* Adjusted */
+
+				.results-empty {
+					color: var(--tiketi-tamasha-cool-white);
+					font-size: 13px;
+
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					width: inherit;
+					height: inherit;
+				}
 			}
 		}
 
@@ -238,8 +264,21 @@
 				padding: 14px;
 				overflow-y: auto;
 
+				width: inherit;
 				height: 100%;
 				/* Adjusted */
+
+				.results-empty {
+					color: var(--tiketi-tamasha-cool-white);
+					font-size: 13px;
+
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					width: inherit;
+					height: inherit;
+				}
 			}
 		}
 
@@ -279,8 +318,21 @@
 				padding: 14px;
 				overflow-y: auto;
 
+				width: inherit;
 				height: 100%;
 				/* Adjusted */
+
+				.results-empty {
+					color: var(--tiketi-tamasha-cool-white);
+					font-size: 13px;
+
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					width: inherit;
+					height: inherit;
+				}
 			}
 		}
 

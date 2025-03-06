@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useCallback } from "react";
 import { loginUser, fetchUserDetails, registerUser, logoutUser } from "../api/authService";
 import { fetchPayments } from "../api/paymentService";
 import { fetchTickets } from "../api/ticketService";
@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem("user"));
-        const storedToken = localStorage.getItem("access_token")
+        const storedToken = localStorage.getItem("access_token");
         if (storedUser && storedToken) {
             setUser(storedUser);
             setPayments(JSON.parse(localStorage.getItem("payments")) || []);
@@ -41,27 +41,24 @@ export const AuthProvider = ({ children }) => {
                 localStorage.setItem("payments", JSON.stringify(userPayments));
                 localStorage.setItem("tickets", JSON.stringify(userTickets));
                 localStorage.setItem("myEvents", JSON.stringify(userEvents));
-                localStorage.setItem("access_token", response.access_token); // STORE THE TOKEN
+                localStorage.setItem("access_token", response.access_token);
                 navigate(userDetails.role === "organizer" ? "/organizer-dashboard" : "/dashboard");
             } else {
-                // Handle the case where login was "successful" (no error thrown) but no token was returned.
                 console.error("Login successful but no access token received.");
             }
         } catch (error) {
             console.error("Login failed:", error.response?.data || error.message);
             throw error;
         }
-
     };
 
     const register = async (userData, navigate) => {
         try {
-            console.log("Registering user with data:", userData);  // Log the data being sent
+            console.log("Registering user with data:", userData);
             const response = await registerUser(userData);
-            console.log("Register response:", response); // Log the full response
+            console.log("Register response:", response);
 
-            if (response && response.success) { // Ensure response and success is true
-                // Registration Successful then log the data..
+            if (response && response.success) {
                 const userDetails = await fetchUserDetails(response.access_token);
                 const userPayments = await fetchPayments(response.access_token);
                 const userTickets = await fetchTickets(response.access_token);
@@ -76,18 +73,15 @@ export const AuthProvider = ({ children }) => {
                 localStorage.setItem("payments", JSON.stringify(userPayments));
                 localStorage.setItem("tickets", JSON.stringify(userTickets));
                 localStorage.setItem("myEvents", JSON.stringify(userEvents));
-                localStorage.setItem("access_token", response.access_token); // STORE THE TOKEN
+                localStorage.setItem("access_token", response.access_token);
 
                 navigate(userDetails.role === "organizer" ? "/organizer-dashboard" : "/dashboard");
             } else {
-                // Registration was technically "successful" (no error thrown) but no token was returned.
                 console.error("Registration not successful");
-                // Optionally, set an error state here to inform the user.
             }
         } catch (error) {
             console.error("Registration failed:", error.response?.data || error.message);
-            // Handle the registration failure (e.g., show an error message)
-            throw error; // Re-throw the error so the Register component can handle it.
+            throw error;
         }
     };
 
@@ -101,11 +95,39 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem("payments");
         localStorage.removeItem("tickets");
         localStorage.removeItem("myEvents");
-        localStorage.removeItem("access_token"); // REMOVE THE TOKEN on logout
+        localStorage.removeItem("access_token");
     };
 
+    const refreshUserData = useCallback(async () => {
+        console.log("Refresh User Data is being called here...");
+        const accessToken = localStorage.getItem("access_token");
+        console.log(`access_token: ${accessToken}`);
+
+        if (accessToken) {
+            try {
+                const userPayments = await fetchPayments(accessToken);
+                const userTickets = await fetchTickets(accessToken);
+                const userEvents = await fetchMyEvents(accessToken);
+
+                setPayments(userPayments);
+                setTickets(userTickets);
+                setMyEvents(userEvents);
+
+                console.log(userPayments);
+
+                localStorage.setItem("payments", JSON.stringify(userPayments));
+                localStorage.setItem("tickets", JSON.stringify(userTickets));
+                localStorage.setItem("myEvents", JSON.stringify(userEvents));
+            } catch (error) {
+                console.error("Error refreshing user data:", error);
+            }
+        } else {
+            console.log("Access token not found in localStorage.");
+        }
+    }, []);
+
     return (
-        <AuthContext.Provider value={{ user, payments, tickets, myEvents, login, register, logout }}>
+        <AuthContext.Provider value={{ user, payments, tickets, myEvents, login, register, logout, refreshUserData }}>
             {children}
         </AuthContext.Provider>
     );
