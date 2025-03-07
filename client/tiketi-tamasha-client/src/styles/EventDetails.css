@@ -144,7 +144,8 @@
 
             gap: 14px;
 
-            width: 100%;
+            width: 472px;
+            min-width: 472px;
             height: fit-content;
             min-height: 356px;
 
@@ -153,7 +154,7 @@
                 align-items: center;
                 justify-content: space-between;
 
-                width: 100%;
+                width: inherit;
                 height: fit-content;
 
                 .time {
@@ -216,14 +217,15 @@
                 justify-content: center;
                 flex-direction: column;
 
-                width: 100%;
+                width: 472px;
+                min-width: 472px;
                 height: fit-content;
 
                 .title {
                     color: var(--tiketi-tamasha-cool-white);
                     font-size: 14px;
 
-                    width: 100%;
+                    width: inherit;
                     height: fit-content;
                 }
 
@@ -238,7 +240,8 @@
                     padding-top: 14px;
                     padding-bottom: 14px;
 
-                    width: 100%;
+                    width: 472px;
+                    min-width: 472px;
                     height: fit-content;
 
                     .tier {
@@ -254,7 +257,8 @@
 
                         cursor: pointer;
 
-                        width: 100%;
+                        width: 472px;
+                        min-width: 472px;
                         height: 40px;
 
                         .tier-name {
@@ -291,7 +295,8 @@
 
                         cursor: pointer;
 
-                        width: 100%;
+                        width: 472px;
+                        min-width: 472px;
                         height: 40px;
 
                         .tier-name {
@@ -338,14 +343,16 @@
                 justify-content: center;
                 flex-direction: column;
 
-                width: 100%;
+                width: 472px;
+                min-width: 472px;
                 height: fit-content;
 
                 .title {
                     color: var(--tiketi-tamasha-cool-white);
                     font-size: 14px;
 
-                    width: 100%;
+                    width: 472px;
+                    min-width: 472px;
                     height: fit-content;
                 }
 
@@ -364,7 +371,8 @@
             align-items: center;
             justify-content: flex-end;
 
-            width: 100%;
+            width: 472px;
+            min-width: 472px;
             height: fit-content;
             min-height: 35px;
         }
