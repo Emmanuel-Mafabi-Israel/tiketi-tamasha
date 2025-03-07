@@ -60,6 +60,7 @@
         }
 
         width: 500px;
+        min-width: 500px;
         max-height: 95vh;
         /* Limit the height to 90% of the viewport height */
         overflow-y: auto;
