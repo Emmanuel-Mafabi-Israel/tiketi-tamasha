@@ -44,6 +44,12 @@
         .title {
             color: var(--tiketi-tamasha-cool-white);
             font-size: 15px;
+
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            width: 250px;
+            max-width: 250px;
         }
 
         .status, .method, .transaction, .time, .amount {
