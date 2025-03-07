@@ -1,5 +1,5 @@
 const CONFIG = {
-	API_BASE_URL: "http://127.0.0.1:5000/",
+	API_BASE_URL: "https://tiketi-tamasha-fzri.onrender.com/",
 	CLOUDINARY: {
 		CLOUD_NAME: "mafabi",
 		API_KEY: "964532947221231",

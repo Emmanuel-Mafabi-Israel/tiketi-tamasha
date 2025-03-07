@@ -1,7 +1,7 @@
 import axios from "axios"
 import CONFIG from "../config";
 
-const API_URL = "http://localhost:5000/tickets";
+const API_URL = "https://tiketi-tamasha-fzri.onrender.com/tickets";
 const API_USER_URL = `${CONFIG.API_BASE_URL}/user/tickets`;
 
 const ticketService = {
