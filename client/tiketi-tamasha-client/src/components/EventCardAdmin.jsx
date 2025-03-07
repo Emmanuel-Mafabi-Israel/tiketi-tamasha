@@ -13,7 +13,7 @@ import { format, isPast, parseISO } from 'date-fns';
 export default function EventCardAdmin({ className = "tiketi-tamasha-event-card admin", event, onEdit, onDelete }) {
     let formatted_time = ""
     try {
-        const date = parseISO(event.start_date);
+        const date = parseISO(event.end_date);
         const formattedDate = format(date, 'EEE, MMM, d, yyyy h:m a');
         formatted_time = formattedDate
     } catch (error) {

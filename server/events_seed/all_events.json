@@ -1,134 +1,1529 @@
 [
     {
-        "title": "Gene Therapy",
-        "description": "An event discussing Gene Therapy in Nairobi.",
-        "location": "Venue 30, Kisumu",
+        "title": "Materials Science: The Next Generation",
+        "description": "An event discussing Materials Science: The Next Generation in Eldoret.",
+        "location": "Venue 53, Kisumu",
         "category": "Research",
-        "tags": "research, science, innovation",
-        "start_date": "2024-12-29T18:00:00",
-        "end_date": "2024-12-29T22:00:00",
-        "image_url": "https://images.unsplash.com/photo-1560439514-4e9645039924?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDA4MjgwODB8&ixlib=rb-4.0.3&q=80&w=1080",
+        "tags": "research, science, innovation, AI, quantum computing, gene therapy, data science, space tech, neuroscience, materials science, renewable energy, climate change, biotechnology",
+        "start_date": "2024-12-29T10:00:00",
+        "end_date": "2024-12-31T10:00:00",
+        "image_url": "https://images.unsplash.com/photo-1501290741922-b56c0d0884af?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTUxMjN8&ixlib=rb-4.0.3&q=80&w=1080",
         "ticket_tiers": {
-            "Student": {
+            "Early Bird": {
                 "price": 3
             },
-            "Professional": {
-                "price": 15
+            "Regular": {
+                "price": 19
             },
-            "General Admission": {
-                "price": 13
+            "VIP": {
+                "price": 38
             }
         },
-        "total_tickets": 203
+        "total_tickets": 508,
+        "sponsors": [
+            "National Science Foundation",
+            "Google AI",
+            "IBM Research",
+            "Bill & Melinda Gates Foundation"
+        ],
+        "speakers": [
+            "Dr. Alice Johnson (AI Ethicist)",
+            "Prof. Robert Williams (Quantum Computing)",
+            "Dr. Emily Chen (Gene Therapy)",
+            "Mr. David Brown (Data Science)",
+            "Ms. Sarah Davis (Space Tech)"
+        ],
+        "duration_days": 3
     },
     {
-        "title": "Eco Action",
-        "description": "An event discussing Eco Action in Nairobi.",
-        "location": "Venue 88, Kisumu",
+        "title": "Biodiversity Preservation",
+        "description": "An event discussing Biodiversity Preservation in Mombasa.",
+        "location": "Venue 32, Mombasa",
         "category": "Conserve",
-        "tags": "conservation, environment, sustainability",
-        "start_date": "2024-12-10T17:00:00",
-        "end_date": "2024-12-10T19:00:00",
-        "image_url": "https://images.unsplash.com/photo-1667900736423-f94b49ef67f9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDA4MjgwODF8&ixlib=rb-4.0.3&q=80&w=1080",
+        "tags": "conservation, environment, sustainability, eco action, forest watch, ocean save, wildlife care, green tech, sustainable agriculture, renewable energy, waste management, climate change, biodiversity",
+        "start_date": "2024-12-19T18:00:00",
+        "end_date": "2024-12-19T18:00:00",
+        "image_url": "https://images.unsplash.com/photo-1495465798138-718f86d1a4bc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTUxMjN8&ixlib=rb-4.0.3&q=80&w=1080",
         "ticket_tiers": {
-            "Volunteer": {
-                "price": 1
+            "Early Bird": {
+                "price": 3
             },
-            "General": {
-                "price": 8
+            "Regular": {
+                "price": 13
             },
-            "Supporter": {
-                "price": 24
+            "VIP": {
+                "price": 26
             }
         },
-        "total_tickets": 123
+        "total_tickets": 179,
+        "sponsors": [
+            "World Wildlife Fund",
+            "Greenpeace",
+            "The Nature Conservancy",
+            "Sierra Club"
+        ],
+        "speakers": [
+            "Jane Doe (Environmental Activist)",
+            "John Smith (Conservation Biologist)",
+            "Emily White (Sustainable Agriculture Expert)",
+            "David Brown (Renewable Energy Advocate)",
+            "Sarah Davis (Waste Management Innovator)"
+        ],
+        "duration_days": 1
     },
     {
-        "title": "Run Club",
-        "description": "An event discussing Run Club in Kisumu.",
-        "location": "Venue 52, Kisumu",
+        "title": "Ultimate Gym Challenge",
+        "description": "An event discussing Ultimate Gym Challenge in Nairobi.",
+        "location": "Venue 9, Kisumu",
         "category": "Fitness",
-        "tags": "fitness, health, exercise",
-        "start_date": "2024-12-24T17:00:00",
-        "end_date": "2024-12-24T21:00:00",
-        "image_url": "https://images.unsplash.com/photo-1518619745898-93e765966dcd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDA4MjgwODF8&ixlib=rb-4.0.3&q=80&w=1080",
+        "tags": "fitness, health, exercise, yoga, cross training, running, gym, dance, pilates, bootcamp, cycling, swimming, rock climbing",
+        "start_date": "2024-12-06T13:00:00",
+        "end_date": "2024-12-06T13:00:00",
+        "image_url": "https://images.unsplash.com/photo-1603987835113-841f232f6f70?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTUxMjR8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 14
+            },
+            "Regular": {
+                "price": 19
+            },
+            "VIP": {
+                "price": 30
+            }
+        },
+        "total_tickets": 531,
+        "sponsors": [
+            "Nike",
+            "Adidas",
+            "Under Armour",
+            "Lululemon",
+            "Reebok"
+        ],
+        "speakers": [
+            "Bob Johnson (Yoga Instructor)",
+            "Alice Smith (Cross Training Coach)",
+            "David Brown (Running Expert)",
+            "Emily White (Gym Trainer)",
+            "Sarah Davis (Dance Fitness Instructor)"
+        ],
+        "duration_days": 1
+    },
+    {
+        "title": "Mindfulness and Calm",
+        "description": "An event discussing Mindfulness and Calm in Mombasa.",
+        "location": "Venue 74, Mombasa",
+        "category": "Wellness",
+        "tags": "wellness, health, mental health, mindfulness, nutrition, stress relief, sleep, meditation, cooking, emotional wellbeing, nature therapy",
+        "start_date": "2024-12-22T17:00:00",
+        "end_date": "2024-12-25T17:00:00",
+        "image_url": "https://images.unsplash.com/photo-1593810451410-8fbb422cc15e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTUxMjV8&ixlib=rb-4.0.3&q=80&w=1080",
         "ticket_tiers": {
             "Early Bird": {
                 "price": 9
             },
             "Regular": {
-                "price": 8
+                "price": 25
             },
             "VIP": {
-                "price": 18
+                "price": 54
             }
         },
-        "total_tickets": 630
+        "total_tickets": 350,
+        "sponsors": [
+            "Headspace",
+            "Calm",
+            "Mayo Clinic",
+            "WebMD",
+            "Cleveland Clinic"
+        ],
+        "speakers": [
+            "Jane Doe (Mindfulness Expert)",
+            "John Smith (Nutritionist)",
+            "Emily White (Stress Management Coach)",
+            "David Brown (Sleep Specialist)",
+            "Sarah Davis (Meditation Teacher)"
+        ],
+        "duration_days": 4
     },
     {
-        "title": "Sleep Better",
-        "description": "An event discussing Sleep Better in Kisumu.",
-        "location": "Venue 69, Nairobi",
-        "category": "Wellness",
-        "tags": "wellness, health, mental health",
-        "start_date": "2024-12-31T19:00:00",
-        "end_date": "2024-12-31T22:00:00",
-        "image_url": "https://images.unsplash.com/photo-1492552296703-4ec0a2fb3715?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDA4MjgwODJ8&ixlib=rb-4.0.3&q=80&w=1080",
+        "title": "Personal Budgeting Strategies",
+        "description": "An event discussing Personal Budgeting Strategies in Kisumu.",
+        "location": "Venue 40, Mombasa",
+        "category": "Finance",
+        "tags": "finance, investment, money, crypto, budget, tax, retirement, real estate, stock market, debt management",
+        "start_date": "2024-12-15T16:00:00",
+        "end_date": "2024-12-16T16:00:00",
+        "image_url": "https://images.unsplash.com/photo-1560439513-74b037a25d84?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTUxMjZ8&ixlib=rb-4.0.3&q=80&w=1080",
         "ticket_tiers": {
-            "Basic": {
-                "price": 15
+            "Early Bird": {
+                "price": 14
             },
-            "Premium": {
+            "Regular": {
                 "price": 28
             },
-            "Deluxe": {
+            "VIP": {
+                "price": 50
+            }
+        },
+        "total_tickets": 79,
+        "sponsors": [
+            "Fidelity",
+            "Vanguard",
+            "Charles Schwab",
+            "Goldman Sachs",
+            "JP Morgan Chase"
+        ],
+        "speakers": [
+            "Bob Johnson (Investment Advisor)",
+            "Alice Smith (Financial Planner)",
+            "David Brown (Cryptocurrency Expert)",
+            "Emily White (Tax Consultant)",
+            "Sarah Davis (Real Estate Investor)"
+        ],
+        "duration_days": 2
+    },
+    {
+        "title": "Electronic Music Festival",
+        "description": "An event discussing Electronic Music Festival in Eldoret.",
+        "location": "Venue 39, Nairobi",
+        "category": "Music",
+        "tags": "music, live, concert, jazz, rock, pop, indie, classical, electronic, world music, acoustic, blues",
+        "start_date": "2024-12-05T20:00:00",
+        "end_date": "2024-12-06T20:00:00",
+        "image_url": "https://images.unsplash.com/photo-1501527459-2d5409f8cf9f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTUxMjZ8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 14
+            },
+            "Regular": {
+                "price": 12
+            },
+            "VIP": {
+                "price": 45
+            }
+        },
+        "total_tickets": 1235,
+        "sponsors": [
+            "Spotify",
+            "Apple Music",
+            "Live Nation",
+            "Ticketmaster",
+            "Warner Music Group"
+        ],
+        "speakers": [
+            "Lead Singer Band A",
+            "Guitarist Band B",
+            "Drummer Band C",
+            "DJ Artist D",
+            "Classical Musician E"
+        ],
+        "duration_days": 2
+    },
+    {
+        "title": "Cybersecurity threats and solutions",
+        "description": "An event discussing Cybersecurity threats and solutions in Kisumu.",
+        "location": "Venue 50, Mombasa",
+        "category": "Technology",
+        "tags": "Tech, Innovation, AI, Cybersecurity, Blockchain, Cloud Computing, Data analytics, IoT, VR,AR, Robotics, Automation, Digital Marketing",
+        "start_date": "2024-12-07T17:00:00",
+        "end_date": "2024-12-07T17:00:00",
+        "image_url": "https://images.unsplash.com/photo-1581092162384-8987c1d64718?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTUxMjd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 15
+            },
+            "Regular": {
+                "price": 34
+            },
+            "VIP": {
+                "price": 58
+            }
+        },
+        "total_tickets": 461,
+        "sponsors": [
+            "Microsoft",
+            "Amazon",
+            "Google",
+            "Intel",
+            "Samsung",
+            "Tesla",
+            "Meta"
+        ],
+        "speakers": [
+            "Sundar Pichai",
+            "Satya Nadella",
+            "Andy Jassy",
+            "Elon Musk",
+            "Mark Zuckerberg"
+        ],
+        "duration_days": 1
+    },
+    {
+        "title": "Art Exhibition",
+        "description": "An event discussing Art Exhibition in Eldoret.",
+        "location": "Venue 55, Nairobi",
+        "category": "Arts",
+        "tags": "Arts, exhibition, Modern Art, Classical art, Sculpture, Photography, Film, Digital Arts, Fashion, Dance, Theatre",
+        "start_date": "2024-12-19T20:00:00",
+        "end_date": "2024-12-20T20:00:00",
+        "image_url": "https://images.unsplash.com/photo-1503293050619-6048ffad0dc5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTUxMjh8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 7
+            },
+            "Regular": {
+                "price": 15
+            },
+            "VIP": {
+                "price": 31
+            }
+        },
+        "total_tickets": 278,
+        "sponsors": [
+            "National Arts Council",
+            "Art Galleries Association",
+            "Museum of Modern Art",
+            "Fashion designers Association",
+            "Film board",
+            "Theatre Foundation"
+        ],
+        "speakers": [
+            "Picasso Jnr.",
+            "Van Gogh III",
+            "Rembrandt son",
+            "Michelangelo Jnr",
+            "Da Vinci nephew"
+        ],
+        "duration_days": 2
+    },
+    {
+        "title": "Gene Therapy Breakthroughs",
+        "description": "An event discussing Gene Therapy Breakthroughs in Eldoret.",
+        "location": "Venue 44, Nakuru",
+        "category": "Research",
+        "tags": "research, science, innovation, AI, quantum computing, gene therapy, data science, space tech, neuroscience, materials science, renewable energy, climate change, biotechnology, astrophysics, cosmology, particle physics, condensed matter, theoretical physics, applied mathematics, computational science, statistical analysis, machine learning, deep learning",
+        "start_date": "2024-12-23T13:00:00",
+        "end_date": "2024-12-24T13:00:00",
+        "image_url": "https://images.unsplash.com/photo-1559523161-0fc0d8b38a7a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTU5OTV8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 3
+            },
+            "Regular": {
+                "price": 27
+            },
+            "VIP": {
+                "price": 44
+            }
+        },
+        "total_tickets": 255,
+        "sponsors": [
+            "National Science Foundation",
+            "Google AI",
+            "IBM Research",
+            "Bill & Melinda Gates Foundation",
+            "Microsoft Research",
+            "Amazon Web Services",
+            "Intel Corporation",
+            "Samsung Research",
+            "Facebook AI",
+            "NVIDIA",
+            "MIT",
+            "Stanford University",
+            "California Institute of Technology",
+            "Harvard University",
+            "Princeton University",
+            "University of Oxford",
+            "University of Cambridge",
+            "ETH Zurich",
+            "Tsinghua University",
+            "University of Tokyo"
+        ],
+        "speakers": [
+            "Dr. Alice Johnson (AI Ethicist)",
+            "Prof. Robert Williams (Quantum Computing)",
+            "Dr. Emily Chen (Gene Therapy)",
+            "Mr. David Brown (Data Science)",
+            "Ms. Sarah Davis (Space Tech)",
+            "Dr. Michael Lee (Neuroscience)",
+            "Prof. Jennifer Garcia (Materials Science)",
+            "Dr. Kevin Rodriguez (Renewable Energy)",
+            "Mr. Lisa Wilson (Climate Change)",
+            "Ms. Brian Davis (Biotechnology)",
+            "Prof. Anna Williams (Astrophysics)",
+            "Dr. James Brown (Cosmology)",
+            "Ms. Linda Johnson (Particle Physics)",
+            "Dr. Richard Smith (Condensed Matter)",
+            "Prof. Maria Garcia (Theoretical Physics)",
+            "Mr. Peter Wilson (Applied Mathematics)",
+            "Ms. Susan Brown (Computational Science)",
+            "Dr. John Davis (Statistical Analysis)",
+            "Prof. Emily Wilson (Machine Learning)",
+            "Mr. Kevin Smith (Deep Learning)"
+        ],
+        "duration_days": 2
+    },
+    {
+        "title": "Waste Management Innovation",
+        "description": "An event discussing Waste Management Innovation in Eldoret.",
+        "location": "Venue 5, Nairobi",
+        "category": "Conserve",
+        "tags": "conservation, environment, sustainability, eco action, forest watch, ocean save, wildlife care, green tech, sustainable agriculture, renewable energy, waste management, climate change, biodiversity, community gardening, urban farming, marine conservation, endangered species, reforestation, sustainable tourism, environmental education, pollution reduction, water conservation, land restoration",
+        "start_date": "2024-12-05T16:00:00",
+        "end_date": "2024-12-05T16:00:00",
+        "image_url": "https://images.unsplash.com/photo-1504805572947-34fad45aed93?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTU5OTZ8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 1
+            },
+            "Regular": {
+                "price": 13
+            },
+            "VIP": {
+                "price": 22
+            }
+        },
+        "total_tickets": 199,
+        "sponsors": [
+            "World Wildlife Fund",
+            "Greenpeace",
+            "The Nature Conservancy",
+            "Sierra Club",
+            "Environmental Defense Fund",
+            "National Geographic Society",
+            "Rainforest Alliance",
+            "Wildlife Conservation Society",
+            "Audubon Society",
+            "Oceana",
+            "Local NGO A",
+            "Local NGO B",
+            "Local NGO C",
+            "Local NGO D",
+            "Local NGO E",
+            "Local NGO F",
+            "Local NGO G",
+            "Local NGO H",
+            "Local NGO I",
+            "Local NGO J"
+        ],
+        "speakers": [
+            "Jane Doe (Environmental Activist)",
+            "John Smith (Conservation Biologist)",
+            "Emily White (Sustainable Agriculture Expert)",
+            "David Brown (Renewable Energy Advocate)",
+            "Sarah Davis (Waste Management Innovator)",
+            "Michael Lee (Climate Change Specialist)",
+            "Jennifer Garcia (Biodiversity Expert)",
+            "Kevin Rodriguez (Urban Farming)",
+            "Lisa Wilson (Marine Conservation)",
+            "Brian Davis (Endangered Species)",
+            "Anna Williams (Community Gardening)",
+            "James Brown (Sustainable Tourism)",
+            "Linda Johnson (Environmental Education)",
+            "Richard Smith (Pollution Reduction)",
+            "Maria Garcia (Water Conservation)",
+            "Peter Wilson (Land Restoration)",
+            "Susan Brown (Local Expert A)",
+            "John Davis (Local Expert B)",
+            "Emily Wilson (Local Expert C)",
+            "Kevin Smith (Local Expert D)"
+        ],
+        "duration_days": 1
+    },
+    {
+        "title": "Bodybuilding Showcase",
+        "description": "An event discussing Bodybuilding Showcase in Kisumu.",
+        "location": "Venue 93, Nairobi",
+        "category": "Fitness",
+        "tags": "fitness, health, exercise, yoga, cross training, running, gym, dance, pilates, bootcamp, cycling, swimming, rock climbing, calisthenics, weightlifting, HIIT, bodybuilding, functional fitness, strength and conditioning, aerobics, kickboxing, tai chi, meditation",
+        "start_date": "2024-12-04T13:00:00",
+        "end_date": "2024-12-05T13:00:00",
+        "image_url": "https://images.unsplash.com/photo-1544033527-b192daee1f5b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTU5OTZ8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 3
+            },
+            "Regular": {
+                "price": 11
+            },
+            "VIP": {
+                "price": 22
+            }
+        },
+        "total_tickets": 408,
+        "sponsors": [
+            "Nike",
+            "Adidas",
+            "Under Armour",
+            "Lululemon",
+            "Reebok",
+            "Puma",
+            "New Balance",
+            "ASICS",
+            "Brooks",
+            "Saucony",
+            "Local Gym A",
+            "Local Gym B",
+            "Local Gym C",
+            "Local Gym D",
+            "Local Gym E",
+            "Local Gym F",
+            "Local Gym G",
+            "Local Gym H",
+            "Local Gym I",
+            "Local Gym J"
+        ],
+        "speakers": [
+            "Bob Johnson (Yoga Instructor)",
+            "Alice Smith (Cross Training Coach)",
+            "David Brown (Running Expert)",
+            "Emily White (Gym Trainer)",
+            "Sarah Davis (Dance Fitness Instructor)",
+            "Michael Lee (Calisthenics Coach)",
+            "Jennifer Garcia (Weightlifting Trainer)",
+            "Kevin Rodriguez (HIIT Instructor)",
+            "Lisa Wilson (Bodybuilding Expert)",
+            "Brian Davis (Functional Fitness)",
+            "Anna Williams (Strength Coach)",
+            "James Brown (Aerobics Instructor)",
+            "Linda Johnson (Kickboxing Trainer)",
+            "Richard Smith (Tai Chi Master)",
+            "Maria Garcia (Meditation Guide)",
+            "Peter Wilson (Local Expert A)",
+            "Susan Brown (Local Expert B)",
+            "John Davis (Local Expert C)",
+            "Emily Wilson (Local Expert D)",
+            "Kevin Smith (Local Expert E)"
+        ],
+        "duration_days": 2
+    },
+    {
+        "title": "Meditation Mastery",
+        "description": "An event discussing Meditation Mastery in Mombasa.",
+        "location": "Venue 97, Nairobi",
+        "category": "Wellness",
+        "tags": "wellness, health, mental health, mindfulness, nutrition, stress relief, sleep, meditation, cooking, emotional wellbeing, nature therapy, aromatherapy, herbal remedies, ayurveda, TCM, holistic health, spiritual growth, positive psychology, relationships, work-life balance, financial wellness",
+        "start_date": "2024-12-13T18:00:00",
+        "end_date": "2024-12-15T18:00:00",
+        "image_url": "https://images.unsplash.com/photo-1523681504355-8b4860f99a58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTU5OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 14
+            },
+            "Regular": {
+                "price": 30
+            },
+            "VIP": {
+                "price": 51
+            }
+        },
+        "total_tickets": 386,
+        "sponsors": [
+            "Headspace",
+            "Calm",
+            "Mayo Clinic",
+            "WebMD",
+            "Cleveland Clinic",
+            "National Institutes of Health",
+            "American Psychological Association",
+            "WHO",
+            "Johns Hopkins Medicine",
+            "Harvard Medical School",
+            "Local Clinic A",
+            "Local Clinic B",
+            "Local Clinic C",
+            "Local Clinic D",
+            "Local Clinic E",
+            "Local Clinic F",
+            "Local Clinic G",
+            "Local Clinic H",
+            "Local Clinic I",
+            "Local Clinic J"
+        ],
+        "speakers": [
+            "Jane Doe (Mindfulness Expert)",
+            "John Smith (Nutritionist)",
+            "Emily White (Stress Management Coach)",
+            "David Brown (Sleep Specialist)",
+            "Sarah Davis (Meditation Teacher)",
+            "Michael Lee (Aromatherapy Specialist)",
+            "Jennifer Garcia (Herbalist)",
+            "Kevin Rodriguez (Ayurvedic Practitioner)",
+            "Lisa Wilson (TCM Expert)",
+            "Brian Davis (Holistic Health)",
+            "Anna Williams (Spiritual Guide)",
+            "James Brown (Positive Psychology)",
+            "Linda Johnson (Relationship Coach)",
+            "Richard Smith (Work-Life Balance)",
+            "Maria Garcia (Financial Wellness)",
+            "Peter Wilson (Local Expert A)",
+            "Susan Brown (Local Expert B)",
+            "John Davis (Local Expert C)",
+            "Emily Wilson (Local Expert D)",
+            "Kevin Smith (Local Expert E)"
+        ],
+        "duration_days": 3
+    },
+    {
+        "title": "Insurance Planning",
+        "description": "An event discussing Insurance Planning in Mombasa.",
+        "location": "Venue 91, Nakuru",
+        "category": "Finance",
+        "tags": "finance, investment, money, crypto, budget, tax, retirement, real estate, stock market, debt management, options trading, forex, venture capital, angel investing, financial modeling, wealth management, estate planning, insurance, credit score, financial literacy",
+        "start_date": "2024-12-19T10:00:00",
+        "end_date": "2024-12-19T10:00:00",
+        "image_url": "https://images.unsplash.com/photo-1623911381078-f95cba6d9f6f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTU5OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 22
+            },
+            "Regular": {
+                "price": 26
+            },
+            "VIP": {
+                "price": 57
+            }
+        },
+        "total_tickets": 216,
+        "sponsors": [
+            "Fidelity",
+            "Vanguard",
+            "Charles Schwab",
+            "Goldman Sachs",
+            "JP Morgan Chase",
+            "BlackRock",
+            "Morgan Stanley",
+            "Bank of America",
+            "Citigroup",
+            "Wells Fargo",
+            "Local Bank A",
+            "Local Bank B",
+            "Local Bank C",
+            "Local Bank D",
+            "Local Bank E",
+            "Local Bank F",
+            "Local Bank G",
+            "Local Bank H",
+            "Local Bank I",
+            "Local Bank J"
+        ],
+        "speakers": [
+            "Bob Johnson (Investment Advisor)",
+            "Alice Smith (Financial Planner)",
+            "David Brown (Cryptocurrency Expert)",
+            "Emily White (Tax Consultant)",
+            "Sarah Davis (Real Estate Investor)",
+            "Michael Lee (Options Trader)",
+            "Jennifer Garcia (Forex Trader)",
+            "Kevin Rodriguez (Venture Capitalist)",
+            "Lisa Wilson (Angel Investor)",
+            "Brian Davis (Financial Modeler)",
+            "Anna Williams (Wealth Manager)",
+            "James Brown (Estate Planner)",
+            "Linda Johnson (Insurance Advisor)",
+            "Richard Smith (Credit Specialist)",
+            "Maria Garcia (Financial Literacy)",
+            "Peter Wilson (Local Expert A)",
+            "Susan Brown (Local Expert B)",
+            "John Davis (Local Expert C)",
+            "Emily Wilson (Local Expert D)",
+            "Kevin Smith (Local Expert E)"
+        ],
+        "duration_days": 1
+    },
+    {
+        "title": "Electronic Music Festival",
+        "description": "An event discussing Electronic Music Festival in Mombasa.",
+        "location": "Venue 43, Kisumu",
+        "category": "Music",
+        "tags": "music, live, concert, jazz, rock, pop, indie, classical, electronic, world music, acoustic, blues, hip hop, reggae, country, metal, folk, chamber music, opera, DJ, production, songwriting",
+        "start_date": "2024-12-26T19:00:00",
+        "end_date": "2024-12-27T19:00:00",
+        "image_url": "https://images.unsplash.com/photo-1528720335838-3f602fea2f0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTU5OTh8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 1
+            },
+            "Regular": {
+                "price": 26
+            },
+            "VIP": {
+                "price": 33
+            }
+        },
+        "total_tickets": 1242,
+        "sponsors": [
+            "Spotify",
+            "Apple Music",
+            "Live Nation",
+            "Ticketmaster",
+            "Warner Music Group",
+            "Universal Music Group",
+            "Sony Music Entertainment",
+            "Pandora",
+            "iHeartRadio",
+            "SoundCloud",
+            "Local Venue A",
+            "Local Venue B",
+            "Local Venue C",
+            "Local Venue D",
+            "Local Venue E",
+            "Local Venue F",
+            "Local Venue G",
+            "Local Venue H",
+            "Local Venue I",
+            "Local Venue J"
+        ],
+        "speakers": [
+            "Lead Singer Band A",
+            "Guitarist Band B",
+            "Drummer Band C",
+            "DJ Artist D",
+            "Classical Musician E",
+            "Hip Hop Artist F",
+            "Reggae Artist G",
+            "Country Musician H",
+            "Metal Musician I",
+            "Folk Musician J",
+            "Chamber Musician K",
+            "Opera Singer L",
+            "Producer M",
+            "Songwriter N",
+            "Local Artist O",
+            "Local Artist P",
+            "Local Artist Q",
+            "Local Artist R",
+            "Local Artist S",
+            "Local Artist T"
+        ],
+        "duration_days": 2
+    },
+    {
+        "title": "Game Development Expo",
+        "description": "An event discussing Game Development Expo in Nakuru.",
+        "location": "Venue 2, Nakuru",
+        "category": "Technology",
+        "tags": "Tech, Innovation, AI, Cybersecurity, Blockchain, Cloud Computing, Data analytics, IoT, VR,AR, Robotics, Automation, Digital Marketing, Quantum Computing, Mobile App, Web Development, UI/UX, Game Development, Data Science, Cloud Security, Network Engineering, Software Engineering, AI Ethics",
+        "start_date": "2024-12-05T16:00:00",
+        "end_date": "2024-12-07T16:00:00",
+        "image_url": "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTU5OTl8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 25
+            },
+            "Regular": {
+                "price": 28
+            },
+            "VIP": {
+                "price": 69
+            }
+        },
+        "total_tickets": 241,
+        "sponsors": [
+            "Microsoft",
+            "Amazon",
+            "Google",
+            "Intel",
+            "Samsung",
+            "Tesla",
+            "Meta",
+            "Apple",
+            "IBM",
+            "Oracle",
+            "Local Tech Company A",
+            "Local Tech Company B",
+            "Local Tech Company C",
+            "Local Tech Company D",
+            "Local Tech Company E",
+            "Local Tech Company F",
+            "Local Tech Company G",
+            "Local Tech Company H",
+            "Local Tech Company I",
+            "Local Tech Company J"
+        ],
+        "speakers": [
+            "Sundar Pichai",
+            "Satya Nadella",
+            "Andy Jassy",
+            "Elon Musk",
+            "Mark Zuckerberg",
+            "Tim Cook",
+            "Jensen Huang",
+            "Arvind Krishna",
+            "Safra Catz",
+            "Local Expert A",
+            "Local Expert B",
+            "Local Expert C",
+            "Local Expert D",
+            "Local Expert E",
+            "Local Expert F",
+            "Local Expert G",
+            "Local Expert H",
+            "Local Expert I",
+            "Local Expert J"
+        ],
+        "duration_days": 3
+    },
+    {
+        "title": "Art Exhibition",
+        "description": "An event discussing Art Exhibition in Nakuru.",
+        "location": "Venue 66, Kisumu",
+        "category": "Arts",
+        "tags": "Arts, exhibition, Modern Art, Classical art, Sculpture, Photography, Film, Digital Arts, Fashion, Dance, Theatre, Creative Writing, Poetry, Music Composition, Drawing, Painting, Ceramics, Jewelry, Textile Art, Graphic Design, Animation",
+        "start_date": "2024-12-12T12:00:00",
+        "end_date": "2024-12-15T12:00:00",
+        "image_url": "https://images.unsplash.com/photo-1633326787875-f2f1a4406b77?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTU5OTl8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 9
+            },
+            "Regular": {
+                "price": 19
+            },
+            "VIP": {
+                "price": 34
+            }
+        },
+        "total_tickets": 484,
+        "sponsors": [
+            "National Arts Council",
+            "Art Galleries Association",
+            "Museum of Modern Art",
+            "Fashion designers Association",
+            "Film board",
+            "Theatre Foundation",
+            "Local Arts Council A",
+            "Local Arts Council B",
+            "Local Arts Council C",
+            "Local Arts Council D",
+            "Local Gallery A",
+            "Local Gallery B",
+            "Local Gallery C",
+            "Local Gallery D",
+            "Local Gallery E",
+            "Local Gallery F",
+            "Local Gallery G",
+            "Local Gallery H",
+            "Local Gallery I",
+            "Local Gallery J"
+        ],
+        "speakers": [
+            "Picasso Jnr.",
+            "Van Gogh III",
+            "Rembrandt son",
+            "Michelangelo Jnr",
+            "Da Vinci nephew",
+            "Local Artist A",
+            "Local Artist B",
+            "Local Artist C",
+            "Local Artist D",
+            "Local Artist E",
+            "Local Writer A",
+            "Local Poet A",
+            "Local Composer A",
+            "Local Painter A",
+            "Local Ceramicist A",
+            "Local Jeweler A",
+            "Local Textile Artist A",
+            "Local Graphic Designer A",
+            "Local Animator A",
+            "Local Photographer A"
+        ],
+        "duration_days": 4
+    },
+    {
+        "title": "Biotechnology Advancements",
+        "description": "An event discussing Biotechnology Advancements in Mombasa.",
+        "location": "Venue 13, Eldoret",
+        "category": "Research",
+        "tags": "research, science, innovation, AI, quantum computing, gene therapy, data science, space tech, neuroscience, materials science, renewable energy, climate change, biotechnology, astrophysics, cosmology, particle physics, condensed matter, theoretical physics, applied mathematics, computational science, statistical analysis, machine learning, deep learning, nanotechnology, bioinformatics, cognitive science, robotics, sustainable engineering, environmental science, geoscience, oceanography, astronomy, climate solutions",
+        "start_date": "2024-12-04T11:00:00",
+        "end_date": "2024-12-04T11:00:00",
+        "image_url": "https://images.unsplash.com/photo-1584268879905-f2e1fc9321e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTYyMDR8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 9
+            },
+            "Regular": {
+                "price": 18
+            },
+            "VIP": {
+                "price": 30
+            }
+        },
+        "total_tickets": 575,
+        "sponsors": [
+            "National Science Foundation",
+            "Google AI",
+            "IBM Research",
+            "Bill & Melinda Gates Foundation",
+            "Microsoft Research",
+            "Amazon Web Services",
+            "Intel Corporation",
+            "Samsung Research",
+            "Facebook AI",
+            "NVIDIA",
+            "MIT",
+            "Stanford University",
+            "California Institute of Technology",
+            "Harvard University",
+            "Princeton University",
+            "University of Oxford",
+            "University of Cambridge",
+            "ETH Zurich",
+            "Tsinghua University",
+            "University of Tokyo",
+            "Research Grant Agency A",
+            "Research Grant Agency B",
+            "Research Grant Agency C",
+            "Research Grant Agency D",
+            "Research Grant Agency E",
+            "Philanthropic Organization A",
+            "Philanthropic Organization B",
+            "Tech Startup A",
+            "Tech Startup B",
+            "Tech Startup C"
+        ],
+        "speakers": [
+            "Dr. Alice Johnson (AI Ethicist)",
+            "Prof. Robert Williams (Quantum Computing)",
+            "Dr. Emily Chen (Gene Therapy)",
+            "Mr. David Brown (Data Science)",
+            "Ms. Sarah Davis (Space Tech)",
+            "Dr. Michael Lee (Neuroscience)",
+            "Prof. Jennifer Garcia (Materials Science)",
+            "Dr. Kevin Rodriguez (Renewable Energy)",
+            "Mr. Lisa Wilson (Climate Change)",
+            "Ms. Brian Davis (Biotechnology)",
+            "Prof. Anna Williams (Astrophysics)",
+            "Dr. James Brown (Cosmology)",
+            "Ms. Linda Johnson (Particle Physics)",
+            "Dr. Richard Smith (Condensed Matter)",
+            "Prof. Maria Garcia (Theoretical Physics)",
+            "Mr. Peter Wilson (Applied Mathematics)",
+            "Ms. Susan Brown (Computational Science)",
+            "Dr. John Davis (Statistical Analysis)",
+            "Prof. Emily Wilson (Machine Learning)",
+            "Mr. Kevin Smith (Deep Learning)",
+            "Dr. Helen Green (Nanotechnology)",
+            "Prof. Simon White (Bioinformatics)",
+            "Dr. Rachel Black (Cognitive Science)",
+            "Mr. Tony Blue (Robotics)",
+            "Ms. Claire Grey (Sustainable Engineering)",
+            "Dr. Ian Indigo (Environmental Science)",
+            "Prof. Olivia Olive (Geoscience)",
+            "Mr. Victor Violet (Oceanography)",
+            "Ms. Wendy White (Astronomy)",
+            "Dr. Xavier Xray (Climate Solutions)"
+        ],
+        "duration_days": 1
+    },
+    {
+        "title": "Sustainable Tourism Forum",
+        "description": "An event discussing Sustainable Tourism Forum in Mombasa.",
+        "location": "Venue 18, Nairobi",
+        "category": "Conserve",
+        "tags": "conservation, environment, sustainability, eco action, forest watch, ocean save, wildlife care, green tech, sustainable agriculture, renewable energy, waste management, climate change, biodiversity, community gardening, urban farming, marine conservation, endangered species, reforestation, sustainable tourism, environmental education, pollution reduction, water conservation, land restoration, zero waste, plastic reduction, sustainable fisheries, ecosystem restoration, conservation easement, green building, renewable energy policy, climate justice, sustainable transportation, carbon sequestration",
+        "start_date": "2024-12-10T12:00:00",
+        "end_date": "2024-12-11T12:00:00",
+        "image_url": "https://images.unsplash.com/photo-1527342936031-b43dd5b7d71b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTYyMDV8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 7
+            },
+            "Regular": {
+                "price": 18
+            },
+            "VIP": {
+                "price": 21
+            }
+        },
+        "total_tickets": 296,
+        "sponsors": [
+            "World Wildlife Fund",
+            "Greenpeace",
+            "The Nature Conservancy",
+            "Sierra Club",
+            "Environmental Defense Fund",
+            "National Geographic Society",
+            "Rainforest Alliance",
+            "Wildlife Conservation Society",
+            "Audubon Society",
+            "Oceana",
+            "Local NGO A",
+            "Local NGO B",
+            "Local NGO C",
+            "Local NGO D",
+            "Local NGO E",
+            "Local NGO F",
+            "Local NGO G",
+            "Local NGO H",
+            "Local NGO I",
+            "Local NGO J",
+            "Corporate Sustainability Program A",
+            "Corporate Sustainability Program B",
+            "Corporate Sustainability Program C",
+            "Corporate Sustainability Program D",
+            "Corporate Sustainability Program E",
+            "Government Environmental Agency A",
+            "Government Environmental Agency B",
+            "Foundation for Environmental Research A",
+            "Foundation for Environmental Research B",
+            "Community Environmental Group A"
+        ],
+        "speakers": [
+            "Jane Doe (Environmental Activist)",
+            "John Smith (Conservation Biologist)",
+            "Emily White (Sustainable Agriculture Expert)",
+            "David Brown (Renewable Energy Advocate)",
+            "Sarah Davis (Waste Management Innovator)",
+            "Michael Lee (Climate Change Specialist)",
+            "Jennifer Garcia (Biodiversity Expert)",
+            "Kevin Rodriguez (Urban Farming)",
+            "Lisa Wilson (Marine Conservation)",
+            "Brian Davis (Endangered Species)",
+            "Anna Williams (Community Gardening)",
+            "James Brown (Sustainable Tourism)",
+            "Linda Johnson (Environmental Education)",
+            "Richard Smith (Pollution Reduction)",
+            "Maria Garcia (Water Conservation)",
+            "Peter Wilson (Land Restoration)",
+            "Susan Brown (Local Expert A)",
+            "John Davis (Local Expert B)",
+            "Emily Wilson (Local Expert C)",
+            "Kevin Smith (Local Expert D)",
+            "Dr. Helen Green (Zero Waste)",
+            "Prof. Simon White (Plastic Reduction)",
+            "Dr. Rachel Black (Sustainable Fisheries)",
+            "Mr. Tony Blue (Ecosystem Restoration)",
+            "Ms. Claire Grey (Conservation Easement)",
+            "Dr. Ian Indigo (Green Building)",
+            "Prof. Olivia Olive (Renewable Energy Policy)",
+            "Mr. Victor Violet (Climate Justice)",
+            "Ms. Wendy White (Sustainable Transportation)",
+            "Dr. Xavier Xray (Carbon Sequestration)"
+        ],
+        "duration_days": 2
+    },
+    {
+        "title": "Calisthenics Workshop",
+        "description": "An event discussing Calisthenics Workshop in Kisumu.",
+        "location": "Venue 96, Nakuru",
+        "category": "Fitness",
+        "tags": "fitness, health, exercise, yoga, cross training, running, gym, dance, pilates, bootcamp, cycling, swimming, rock climbing, calisthenics, weightlifting, HIIT, bodybuilding, functional fitness, strength and conditioning, aerobics, kickboxing, tai chi, meditation, parkour, crossfit, triathlon, spin, dance cardio, aqua aerobics, hiking, kayaking, beach volleyball",
+        "start_date": "2024-12-01T15:00:00",
+        "end_date": "2024-12-02T15:00:00",
+        "image_url": "https://images.unsplash.com/photo-1603987835113-841f232f6f70?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTYyMDV8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 13
+            },
+            "Regular": {
+                "price": 19
+            },
+            "VIP": {
+                "price": 22
+            }
+        },
+        "total_tickets": 582,
+        "sponsors": [
+            "Nike",
+            "Adidas",
+            "Under Armour",
+            "Lululemon",
+            "Reebok",
+            "Puma",
+            "New Balance",
+            "ASICS",
+            "Brooks",
+            "Saucony",
+            "Local Gym A",
+            "Local Gym B",
+            "Local Gym C",
+            "Local Gym D",
+            "Local Gym E",
+            "Local Gym F",
+            "Local Gym G",
+            "Local Gym H",
+            "Local Gym I",
+            "Local Gym J",
+            "Fitness Supplement Company A",
+            "Fitness Supplement Company B",
+            "Fitness App A",
+            "Fitness Tracker A",
+            "Sports Drink A",
+            "Healthy Food Brand A",
+            "Athletic Apparel Company A",
+            "Yoga Mat Company A",
+            "Cycling Equipment Brand A",
+            "Swimwear Brand A"
+        ],
+        "speakers": [
+            "Bob Johnson (Yoga Instructor)",
+            "Alice Smith (Cross Training Coach)",
+            "David Brown (Running Expert)",
+            "Emily White (Gym Trainer)",
+            "Sarah Davis (Dance Fitness Instructor)",
+            "Michael Lee (Calisthenics Coach)",
+            "Jennifer Garcia (Weightlifting Trainer)",
+            "Kevin Rodriguez (HIIT Instructor)",
+            "Lisa Wilson (Bodybuilding Expert)",
+            "Brian Davis (Functional Fitness)",
+            "Anna Williams (Strength Coach)",
+            "James Brown (Aerobics Instructor)",
+            "Linda Johnson (Kickboxing Trainer)",
+            "Richard Smith (Tai Chi Master)",
+            "Maria Garcia (Meditation Guide)",
+            "Peter Wilson (Local Expert A)",
+            "Susan Brown (Local Expert B)",
+            "John Davis (Local Expert C)",
+            "Emily Wilson (Local Expert D)",
+            "Kevin Smith (Local Expert E)",
+            "Helen Green (Parkour Instructor)",
+            "Simon White (CrossFit Coach)",
+            "Rachel Black (Triathlon Trainer)",
+            "Tony Blue (Spin Instructor)",
+            "Claire Grey (Dance Cardio)",
+            "Ian Indigo (Aqua Aerobics)",
+            "Olivia Olive (Hiking Guide)",
+            "Victor Violet (Kayaking Guide)",
+            "Wendy White (Volleyball Coach)",
+            "Xavier Xray (Beach Yoga)"
+        ],
+        "duration_days": 2
+    },
+    {
+        "title": "Compassion Cultivation",
+        "description": "An event discussing Compassion Cultivation in Nairobi.",
+        "location": "Venue 13, Nakuru",
+        "category": "Wellness",
+        "tags": "wellness, health, mental health, mindfulness, nutrition, stress relief, sleep, meditation, cooking, emotional wellbeing, nature therapy, aromatherapy, herbal remedies, ayurveda, TCM, holistic health, spiritual growth, positive psychology, relationships, work-life balance, financial wellness, grief counseling, anger management, anxiety relief, depression support, addiction recovery, trauma healing, self-esteem, conflict resolution, compassion, resilience",
+        "start_date": "2024-12-06T10:00:00",
+        "end_date": "2024-12-07T10:00:00",
+        "image_url": "https://images.unsplash.com/photo-1559595500-e15296bdbb48?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTYyMDZ8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 11
+            },
+            "Regular": {
+                "price": 29
+            },
+            "VIP": {
                 "price": 37
             }
         },
-        "total_tickets": 302
+        "total_tickets": 386,
+        "sponsors": [
+            "Headspace",
+            "Calm",
+            "Mayo Clinic",
+            "WebMD",
+            "Cleveland Clinic",
+            "National Institutes of Health",
+            "American Psychological Association",
+            "WHO",
+            "Johns Hopkins Medicine",
+            "Harvard Medical School",
+            "Local Clinic A",
+            "Local Clinic B",
+            "Local Clinic C",
+            "Local Clinic D",
+            "Local Clinic E",
+            "Local Clinic F",
+            "Local Clinic G",
+            "Local Clinic H",
+            "Local Clinic I",
+            "Local Clinic J",
+            "Mental Health Organization A",
+            "Mental Health Organization B",
+            "Wellness App A",
+            "Mindfulness Program A",
+            "Nutrition Brand A",
+            "Sleep Aid Brand A",
+            "Aromatherapy Company A",
+            "Herbal Supplement Company A",
+            "Holistic Health Center A",
+            "Spiritual Retreat Center A"
+        ],
+        "speakers": [
+            "Jane Doe (Mindfulness Expert)",
+            "John Smith (Nutritionist)",
+            "Emily White (Stress Management Coach)",
+            "David Brown (Sleep Specialist)",
+            "Sarah Davis (Meditation Teacher)",
+            "Michael Lee (Aromatherapy Specialist)",
+            "Jennifer Garcia (Herbalist)",
+            "Kevin Rodriguez (Ayurvedic Practitioner)",
+            "Lisa Wilson (TCM Expert)",
+            "Brian Davis (Holistic Health)",
+            "Anna Williams (Spiritual Guide)",
+            "James Brown (Positive Psychology)",
+            "Linda Johnson (Relationship Coach)",
+            "Richard Smith (Work-Life Balance)",
+            "Maria Garcia (Financial Wellness)",
+            "Peter Wilson (Local Expert A)",
+            "Susan Brown (Local Expert B)",
+            "John Davis (Local Expert C)",
+            "Emily Wilson (Local Expert D)",
+            "Kevin Smith (Local Expert E)",
+            "Helen Green (Grief Counselor)",
+            "Simon White (Anger Management)",
+            "Rachel Black (Anxiety Relief)",
+            "Tony Blue (Depression Support)",
+            "Claire Grey (Addiction Recovery)",
+            "Ian Indigo (Trauma Healing)",
+            "Olivia Olive (Self-Esteem)",
+            "Victor Violet (Conflict Resolution)",
+            "Wendy White (Compassion)",
+            "Xavier Xray (Resilience)"
+        ],
+        "duration_days": 2
     },
     {
-        "title": "Crypto Talk",
-        "description": "An event discussing Crypto Talk in Nairobi.",
-        "location": "Venue 20, Mombasa",
+        "title": "Stock Market Analysis",
+        "description": "An event discussing Stock Market Analysis in Mombasa.",
+        "location": "Venue 82, Mombasa",
         "category": "Finance",
-        "tags": "finance, investment, money",
-        "start_date": "2024-12-01T16:00:00",
-        "end_date": "2024-12-01T19:00:00",
-        "image_url": "https://images.unsplash.com/photo-1559523275-98fb3c56faf6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDA4MjgwODJ8&ixlib=rb-4.0.3&q=80&w=1080",
-        "ticket_tiers": {
-            "Standard": {
-                "price": 20
-            },
-            "Advanced": {
-                "price": 25
-            },
-            "Expert": {
-                "price": 49
-            }
-        },
-        "total_tickets": 104
-    },
-    {
-        "title": "Rock Fest",
-        "description": "An event discussing Rock Fest in Nairobi.",
-        "location": "Venue 23, Nairobi",
-        "category": "Music",
-        "tags": "music, live, concert",
-        "start_date": "2024-12-14T16:00:00",
-        "end_date": "2024-12-14T20:00:00",
-        "image_url": "https://images.unsplash.com/photo-1574793954837-b7938eb5a662?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDA4MjgwODN8&ixlib=rb-4.0.3&q=80&w=1080",
+        "tags": "finance, investment, money, crypto, budget, tax, retirement, real estate, stock market, debt management, options trading, forex, venture capital, angel investing, financial modeling, wealth management, estate planning, insurance, credit score, financial literacy, alternative investments, commodities trading, fintech, investment banking, hedge fund, corporate finance, risk management, behavioral economics, freelancing, sustainable investing",
+        "start_date": "2024-12-15T19:00:00",
+        "end_date": "2024-12-15T19:00:00",
+        "image_url": "https://images.unsplash.com/photo-1531058020387-3be344556be6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTYyMDd8&ixlib=rb-4.0.3&q=80&w=1080",
         "ticket_tiers": {
             "Early Bird": {
-                "price": 9
-            },
-            "VIP": {
-                "price": 25
+                "price": 20
             },
             "Regular": {
-                "price": 13
+                "price": 37
+            },
+            "VIP": {
+                "price": 57
             }
         },
-        "total_tickets": 306
+        "total_tickets": 89,
+        "sponsors": [
+            "Fidelity",
+            "Vanguard",
+            "Charles Schwab",
+            "Goldman Sachs",
+            "JP Morgan Chase",
+            "BlackRock",
+            "Morgan Stanley",
+            "Bank of America",
+            "Citigroup",
+            "Wells Fargo",
+            "Local Bank A",
+            "Local Bank B",
+            "Local Bank C",
+            "Local Bank D",
+            "Local Bank E",
+            "Local Bank F",
+            "Local Bank G",
+            "Local Bank H",
+            "Local Bank I",
+            "Local Bank J",
+            "FinTech Company A",
+            "FinTech Company B",
+            "Investment Firm A",
+            "Insurance Company A",
+            "Credit Union A",
+            "Financial Planning Firm A",
+            "Real Estate Brokerage A",
+            "Accounting Firm A",
+            "Law Firm (Estate Planning) A",
+            "Business School A"
+        ],
+        "speakers": [
+            "Bob Johnson (Investment Advisor)",
+            "Alice Smith (Financial Planner)",
+            "David Brown (Cryptocurrency Expert)",
+            "Emily White (Tax Consultant)",
+            "Sarah Davis (Real Estate Investor)",
+            "Michael Lee (Options Trader)",
+            "Jennifer Garcia (Forex Trader)",
+            "Kevin Rodriguez (Venture Capitalist)",
+            "Lisa Wilson (Angel Investor)",
+            "Brian Davis (Financial Modeler)",
+            "Anna Williams (Wealth Manager)",
+            "James Brown (Estate Planner)",
+            "Linda Johnson (Insurance Advisor)",
+            "Richard Smith (Credit Specialist)",
+            "Maria Garcia (Financial Literacy)",
+            "Peter Wilson (Local Expert A)",
+            "Susan Brown (Local Expert B)",
+            "John Davis (Local Expert C)",
+            "Emily Wilson (Local Expert D)",
+            "Kevin Smith (Local Expert E)",
+            "Helen Green (Alternative Investments)",
+            "Simon White (Commodities Trading)",
+            "Rachel Black (FinTech)",
+            "Tony Blue (Investment Banker)",
+            "Claire Grey (Hedge Fund Manager)",
+            "Ian Indigo (Corporate Finance)",
+            "Olivia Olive (Risk Manager)",
+            "Victor Violet (Behavioral Economics)",
+            "Wendy White (Freelance Finance)",
+            "Xavier Xray (Sustainable Investing)"
+        ],
+        "duration_days": 1
+    },
+    {
+        "title": "World Music Celebration",
+        "description": "An event discussing World Music Celebration in Nakuru.",
+        "location": "Venue 11, Mombasa",
+        "category": "Music",
+        "tags": "music, live, concert, jazz, rock, pop, indie, classical, electronic, world music, acoustic, blues, hip hop, reggae, country, metal, folk, chamber music, opera, DJ, production, songwriting, musical theatre, gospel, latin, african, asian, improvisation, early music, experimental, avant-garde, sound art",
+        "start_date": "2024-12-20T20:00:00",
+        "end_date": "2024-12-21T20:00:00",
+        "image_url": "https://images.unsplash.com/photo-1534327737286-52d27a912124?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTYyMDd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 6
+            },
+            "Regular": {
+                "price": 27
+            },
+            "VIP": {
+                "price": 36
+            }
+        },
+        "total_tickets": 1129,
+        "sponsors": [
+            "Spotify",
+            "Apple Music",
+            "Live Nation",
+            "Ticketmaster",
+            "Warner Music Group",
+            "Universal Music Group",
+            "Sony Music Entertainment",
+            "Pandora",
+            "iHeartRadio",
+            "SoundCloud",
+            "Local Venue A",
+            "Local Venue B",
+            "Local Venue C",
+            "Local Venue D",
+            "Local Venue E",
+            "Local Venue F",
+            "Local Venue G",
+            "Local Venue H",
+            "Local Venue I",
+            "Local Venue J",
+            "Music Instrument Brand A",
+            "Music Software Company A",
+            "Headphone Brand A",
+            "Speaker Company A",
+            "Amplifier Brand A",
+            "Record Label A",
+            "Music Education Program A",
+            "Live Sound Company A",
+            "Stage Lighting Company A",
+            "Music Streaming Service A"
+        ],
+        "speakers": [
+            "Lead Singer Band A",
+            "Guitarist Band B",
+            "Drummer Band C",
+            "DJ Artist D",
+            "Classical Musician E",
+            "Hip Hop Artist F",
+            "Reggae Artist G",
+            "Country Musician H",
+            "Metal Musician I",
+            "Folk Musician J",
+            "Chamber Musician K",
+            "Opera Singer L",
+            "Producer M",
+            "Songwriter N",
+            "Local Artist O",
+            "Local Artist P",
+            "Local Artist Q",
+            "Local Artist R",
+            "Local Artist S",
+            "Local Artist T",
+            "Musical Theatre Performer U",
+            "Gospel Musician V",
+            "Latin Musician W",
+            "African Musician X",
+            "Asian Musician Y",
+            "Improvisational Musician Z",
+            "Early Musician AA",
+            "Experimental Musician BB",
+            "Avant-Garde Musician CC",
+            "Sound Artist DD"
+        ],
+        "duration_days": 2
+    },
+    {
+        "title": "Digital Marketing Strategies",
+        "description": "An event discussing Digital Marketing Strategies in Kisumu.",
+        "location": "Venue 44, Nakuru",
+        "category": "Technology",
+        "tags": "Tech, Innovation, AI, Cybersecurity, Blockchain, Cloud Computing, Data analytics, IoT, VR,AR, Robotics, Automation, Digital Marketing, Quantum Computing, Mobile App, Web Development, UI/UX, Game Development, Data Science, Cloud Security, Network Engineering, Software Engineering, AI Ethics, 5G, Cybersecurity, Data Visualization, Machine Learning Engineering, NLP, Computer Vision, Cloud Native, DevOps, Cyber-Physical Systems, Edge Computing",
+        "start_date": "2024-12-05T12:00:00",
+        "end_date": "2024-12-05T12:00:00",
+        "image_url": "https://images.unsplash.com/photo-1421757350652-9f65a35effc7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTYyMDh8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 18
+            },
+            "Regular": {
+                "price": 38
+            },
+            "VIP": {
+                "price": 45
+            }
+        },
+        "total_tickets": 288,
+        "sponsors": [
+            "Microsoft",
+            "Amazon",
+            "Google",
+            "Intel",
+            "Samsung",
+            "Tesla",
+            "Meta",
+            "Apple",
+            "IBM",
+            "Oracle",
+            "Local Tech Company A",
+            "Local Tech Company B",
+            "Local Tech Company C",
+            "Local Tech Company D",
+            "Local Tech Company E",
+            "Local Tech Company F",
+            "Local Tech Company G",
+            "Local Tech Company H",
+            "Local Tech Company I",
+            "Local Tech Company J",
+            "Telecommunications Company A",
+            "Cloud Provider A",
+            "Cybersecurity Firm A",
+            "Data Analytics Company A",
+            "IoT Platform Provider A",
+            "VR/AR Headset Manufacturer A",
+            "Robotics Company A",
+            "Digital Marketing Agency A",
+            "Quantum Computing Startup A",
+            "AI Research Lab A"
+        ],
+        "speakers": [
+            "Sundar Pichai",
+            "Satya Nadella",
+            "Andy Jassy",
+            "Elon Musk",
+            "Mark Zuckerberg",
+            "Tim Cook",
+            "Jensen Huang",
+            "Arvind Krishna",
+            "Safra Catz",
+            "Local Expert A",
+            "Local Expert B",
+            "Local Expert C",
+            "Local Expert D",
+            "Local Expert E",
+            "Local Expert F",
+            "Local Expert G",
+            "Local Expert H",
+            "Local Expert I",
+            "Local Expert J",
+            "5G Expert A",
+            "Cybersecurity Analyst A",
+            "Data Visualization Specialist A",
+            "Machine Learning Engineer A",
+            "NLP Researcher A",
+            "Computer Vision Expert A",
+            "Cloud Native Developer A",
+            "DevOps Engineer A",
+            "Cyber-Physical Systems Expert A",
+            "Edge Computing Specialist A"
+        ],
+        "duration_days": 1
+    },
+    {
+        "title": "Theatre production",
+        "description": "An event discussing Theatre production in Kisumu.",
+        "location": "Venue 3, Eldoret",
+        "category": "Arts",
+        "tags": "Arts, exhibition, Modern Art, Classical art, Sculpture, Photography, Film, Digital Arts, Fashion, Dance, Theatre, Creative Writing, Poetry, Music Composition, Drawing, Painting, Ceramics, Jewelry, Textile Art, Graphic Design, Animation, Calligraphy, Street Art, Land Art, Performance Art, Interactive Art, Environmental Art, Costume Design, Set Design, Lighting Design, Sound Design",
+        "start_date": "2024-12-16T10:00:00",
+        "end_date": "2024-12-16T10:00:00",
+        "image_url": "https://images.unsplash.com/photo-1552728326-6807ec94b8a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MTYxMDB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NDEzMTYyMDl8&ixlib=rb-4.0.3&q=80&w=1080",
+        "ticket_tiers": {
+            "Early Bird": {
+                "price": 10
+            },
+            "Regular": {
+                "price": 15
+            },
+            "VIP": {
+                "price": 30
+            }
+        },
+        "total_tickets": 298,
+        "sponsors": [
+            "National Arts Council",
+            "Art Galleries Association",
+            "Museum of Modern Art",
+            "Fashion designers Association",
+            "Film board",
+            "Theatre Foundation",
+            "Local Arts Council A",
+            "Local Arts Council B",
+            "Local Arts Council C",
+            "Local Arts Council D",
+            "Local Gallery A",
+            "Local Gallery B",
+            "Local Gallery C",
+            "Local Gallery D",
+            "Local Gallery E",
+            "Local Gallery F",
+            "Local Gallery G",
+            "Local Gallery H",
+            "Local Gallery I",
+            "Local Gallery J",
+            "Art Supply Store A",
+            "Film Production Company A",
+            "Theatre Company A",
+            "Dance Studio A",
+            "Fashion Boutique A",
+            "Digital Art Platform A",
+            "Animation Studio A",
+            "Graphic Design Agency A",
+            "Jewelry Brand A",
+            "Textile Manufacturer A"
+        ],
+        "speakers": [
+            "Picasso Jnr.",
+            "Van Gogh III",
+            "Rembrandt son",
+            "Michelangelo Jnr",
+            "Da Vinci nephew",
+            "Local Artist A",
+            "Local Artist B",
+            "Local Artist C",
+            "Local Artist D",
+            "Local Artist E",
+            "Local Writer A",
+            "Local Poet A",
+            "Local Composer A",
+            "Local Painter A",
+            "Local Ceramicist A",
+            "Local Jeweler A",
+            "Local Textile Artist A",
+            "Local Graphic Designer A",
+            "Local Animator A",
+            "Local Photographer A",
+            "Calligraphy Artist A",
+            "Street Artist A",
+            "Land Artist A",
+            "Performance Artist A",
+            "Interactive Artist A",
+            "Environmental Artist A",
+            "Costume Designer A",
+            "Set Designer A",
+            "Lighting Designer A",
+            "Sound Designer A"
+        ],
+        "duration_days": 1
     }
 ]
